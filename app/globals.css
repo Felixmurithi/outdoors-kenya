@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color: #172013;
+    --bg-dark: #0c0f0a;
+    --bg-dark-50: rgba(12, 15, 10, 0.5);
+    --bg-dark-20: rgba(12, 15, 10, 0.2);
+  }
+  html {
+    height: 100%;
+
+    body {
+      height: 100%;
+    }
+  }
+
+  a:link,
+  a:visited {
+  }
+  a:hover,
+  a:active {
+  }
+  h1 {
+    @apply text-7xl font-semibold;
+  }
+
+  h2 {
+    @apply text-4xl font-semibold tracking-tight;
+  }
+  h3 {
+    @apply text-2xl font-semibold;
+  }
+
+  input {
+    height: 20px;
+    border: solid 1px;
+  }
+  li {
+    list-style: none;
+  }
+}
