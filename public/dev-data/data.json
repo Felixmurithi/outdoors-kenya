@@ -1,0 +1,70 @@
+{
+  "sites": [
+    {
+      "id": "1",
+      "name": "a title",
+      "location": "kiamumbi",
+      "coordinates": ["lat", "long"],
+      "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Beatae ex molestias, aliquid pariatur nihil vel enim architecto atque id unde similique eligendi sunt, minus consequuntur? Vel repellat debitis illo distinctio.",
+      "images": ["rock-climbing-events.jpg", "football-event.jpg"]
+    },
+    {
+      "id": "2",
+      "name": "a title",
+      "location": "kiamumbi",
+      "coordinates": ["lat", "long"],
+      "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Beatae ex molestias, aliquid pariatur nihil vel enim architecto atque id unde similique eligendi sunt, minus consequuntur? Vel repellat debitis illo distinctio.",
+      "images": ["rock-climbing-events.jpg", "football-event.jpg"]
+    },
+    {
+      "id": "3",
+      "name": "a title",
+      "location": "kiamumbi",
+      "coordinates": ["lat", "long"],
+      "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Beatae ex molestias, aliquid pariatur nihil vel enim architecto atque id unde similique eligendi sunt, minus consequuntur? Vel repellat debitis illo distinctio.",
+      "images": ["rock-climbing-events.jpg", "football-event.jpg"]
+    },
+    {
+      "id": "4",
+      "name": "a title",
+      "location": "kiamumbi",
+      "coordinates": ["lat", "long"],
+      "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Beatae ex molestias, aliquid pariatur nihil vel enim architecto atque id unde similique eligendi sunt, minus consequuntur? Vel repellat debitis illo distinctio.",
+      "images": ["rock-climbing-events.jpg", "football-event.jpg"]
+    }
+  ],
+  "events": [
+    {
+      "id": "1",
+      "organizer": "mimi",
+      "title": "1st event",
+      "cover-image": "TRAINING-outdoors.jpg",
+      "description": "a comment about post 1",
+      "phone": "0790909099"
+    },
+    {
+      "id": "2",
+      "organizer": "mimi",
+      "title": "1st event",
+      "cover-image": "TRAINING-outdoors.jpg",
+      "description": "a comment about post 1",
+      "phone": "0790909099"
+    },
+    {
+      "id": "3",
+      "organizer": "mimi",
+      "title": "1st event",
+      "cover-image": "TRAINING-outdoors.jpg",
+      "description": "a comment about post 1",
+      "phone": "0790909099"
+    },
+    {
+      "id": "4",
+      "organizer": "mimi",
+      "title": "1st event",
+      "cover-image": "TRAINING-outdoors.jpg",
+      "description": "a comment about post 1",
+      "phone": "0790909099"
+    }
+  ]
+}

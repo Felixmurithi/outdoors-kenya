@@ -13,8 +13,8 @@ function Header() {
       </Link>
       <div className="hidden mobile:flex gap-4  items-center">
         <Link href={"/events"}>Events</Link>
-        <Link href={"/sports"}>Sports</Link>
-        <Link href={"/explore"}>Explore</Link>
+        {/* <Link href={"/sports"}>Sports</Link> */}
+        {/* <Link href={"/explore"}>Explore</Link> */}
         <Button>Sign up</Button>
       </div>
       <Button classes={"mobile:hidden"}>🈶</Button>

@@ -12,7 +12,6 @@ export default function Card({ event }) {
           <p className="opacity-50 text-sm ">{event.location}</p>
         </div>
         <img
-          fill
           src={event.images[0]}
           alt={`explore image`}
           className="justify-self-center rounded-sm w-full"

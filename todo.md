@@ -128,3 +128,15 @@ w-min makes sdvg disspear
 father of the russian hydrogen bomb
 
 mismathc on the width of the html, body note cnetered.
+
+best way to filter.
+
+when do u need global state. and espially not using the context manager.
+
+lyon vs marseille comments
+
+max content vs full width
+
+tw- list item cannot be flexbox and flex canot be list item
+
+reset input of file

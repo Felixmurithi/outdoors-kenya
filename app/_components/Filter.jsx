@@ -1,8 +1,9 @@
+"use client";
 import Button from "@/app/_components/Button";
 import Input from "@/app/_components/Input";
 import Select from "@/app/_components/Select";
 
-function Filter() {
+function Filter({ filter, setFilter, search }) {
   const eventTypes = [
     "football",
     "athletics",
@@ -14,6 +15,16 @@ function Filter() {
   const locations = ["all", "nairobi", "mombasa"];
   const filterDurations = ["all", "today", "this-week", "this-month"];
 
+  function filterDisplay() {
+    setFilter((filters) => {
+      return { ...filters, card: !filters.card };
+    });
+  }
+  function filterLocation(e) {
+    setFilter((filters) => {
+      return { ...filters, location: e.target.value };
+    });
+  }
   return (
     <section className="grid gap-4 border p-2 mobile:p-4">
       <div className="flex justify-between flex-wrap md:flex-nowrap gap-4 text-sm mobile:text-base ">
@@ -27,6 +38,7 @@ function Filter() {
               text={"location"}
               classes={"w-20 mobile:w-24 "}
               options={locations}
+              onChange={filterLocation}
             />
             <Select
               text={"event type"}
@@ -42,8 +54,9 @@ function Filter() {
       <div className="flex text-sm mobile:text-base flex-wrap mobile:flex-nowrap justify-between gap-6">
         <div className="flex flex-wrap items-center gap-6 mobile:flex-nowrap">
           <div className="hidden mobile:flex">
-            <Button type="icon">🔢</Button>
-            <Button type="icon">1️⃣</Button>
+            <Button type="icon" onClick={filterDisplay}>
+              {filter.card ? "🔢" : "1️⃣"}
+            </Button>
           </div>
           <div className="flex w-full justify-between gap-1 mobile:gap-3">
             <Select options={filterDurations} text={"duration"} />
@@ -51,7 +64,9 @@ function Filter() {
           </div>
         </div>
 
-        <Button type="secondary">Search</Button>
+        <Button type="secondary" onClick={search}>
+          Search
+        </Button>
       </div>
     </section>
   );

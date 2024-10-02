@@ -1,6 +1,17 @@
-function Input({ classes, id, type = "text", children }) {
+function Input({
+  classes,
+  id,
+  type = "text",
+  name,
+  checked,
+  onChange,
+  children,
+}) {
   return (
     <input
+      onChange={onChange}
+      defaultChecked={checked}
+      name={name}
       id={id}
       type={`${type}`}
       placeholder={children}
