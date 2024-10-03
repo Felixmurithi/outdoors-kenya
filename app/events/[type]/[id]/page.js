@@ -1,4 +1,4 @@
-// for generating dynamic routes, inorder to render them statically.
+// for ting dynamic routes, inorder to render them statically.
 // export async function generateStaticParams() {
 //   const sites = await getData(`http://localhost:8000/sites`);
 //   console.log(sites);
