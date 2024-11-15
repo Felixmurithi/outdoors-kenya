@@ -1,0 +1,19 @@
+[
+  {
+    "eventName": "",
+    "organizer": "",
+    "description": "",
+    "location": {
+      "adress-jurisdiction": "",
+      "pin": ""
+    },
+    "free": true,
+    "date": "",
+    "time": "",
+    "repeats": "",
+    "guidelines": [],
+    "fees": [{ "cost": "breakdown" }],
+    "coverImage": "",
+    "otherImages": ""
+  }
+]

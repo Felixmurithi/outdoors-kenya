@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import Card from "../../_components/Card";
+import Card from "@/app/_components/Card";
 import Filter from "../../_components/Filter";
 import Button from "../Button";
 

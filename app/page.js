@@ -7,7 +7,7 @@ export default function Home() {
   function handleSubmit() {}
 
   return (
-    <main className="grid">
+    <main className="grid h-full">
       <section className="grid grid-rows-[auto_1fr] ">
         <div
           className="cover grid place-items-center w-full h-56 mobile:h-[300px] md:h-[400px] lg:h-[500px] tall:h-[600px]"

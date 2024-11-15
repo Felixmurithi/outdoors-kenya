@@ -14,6 +14,7 @@ export default function Button({
     secondary: " px-2 bg-main-color text-white border py-1 ",
     transparent: "px-2 bg-transparent text-stone-700 border py-1 ",
     icon: "px-0 py-0",
+    text: "",
   };
 
   return (

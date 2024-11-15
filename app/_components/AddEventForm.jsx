@@ -1,66 +1,95 @@
 "use client";
+
+import { useForm } from "react-hook-form";
+
 import Button from "@/app/_components/Button";
 import FormRow from "@/app/_components/FormRow";
 import Input from "@/app/_components/Input";
 import FileInput from "@/app/_components/FileInput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { addEvent } from "@/app/_utils/action";
-
-const images = {
-  img1: "",
-  img2: "",
-  img3: "",
-  img4: "",
-  img5: "",
-};
+import { DatePicker, defaultTheme, Provider } from "@adobe/react-spectrum";
+import { getLocalTimeZone, today, now } from "@internationalized/date";
 
 export default function EventForm() {
-  const [guidelines, setGuidelines] = useState(1);
+  const [guidelines, setGuidelines] = useState([""]);
   const [free, setFree] = useState(false);
-  const [priceGuidelines, setPriceGuidelines] = useState(1);
-  const [images, setImages] = useState({
-    img1: "",
-    img2: "",
-    img3: "",
-    img4: "",
-    img5: "",
-  });
+  const [priceGuidelines, setPriceGuidelines] = useState([["", ""]]);
+  const [blobs, setBlobs] = useState([]);
+  const [date, setDate] = useState(now(getLocalTimeZone()));
+  // const { register, formState, getValues, handleSubmit, reset } = useForm();
+  const { register, formState, reset } = useForm({ mode: "onBlur" });
+  const { errors } = formState;
 
-  function addGuideline() {
-    setGuidelines((prev) => prev + 1);
+  function add(setter) {
+    setter((prev) => [...prev, ""]);
   }
 
-  function addPriceGuideline() {
-    if (priceGuidelines > 4) return;
-    setPriceGuidelines((prev) => prev + 1);
+  function remove(setter) {
+    setter((prev) =>
+      prev.filter((_, i) => {
+        console.log(i, prev.length);
+
+        return prev.length !== i + 1;
+      })
+    );
   }
 
-  function handleChange(e, img) {
+  function handleImageChange(e, i) {
     if (e.target.files && e.target.files[0]) {
       const imgURL = URL.createObjectURL(e.target.files[0]);
       console.log(imgURL);
-      setImages((imgs) => {
-        return { ...imgs, [img]: imgURL };
+      setBlobs((imgUrls) => {
+        return (imgUrls[i] = imgURL);
       });
-      // URL.revokeObjectURL(imgURL);
+      //;
     }
   }
 
+  // useEffect(
+  //   function () {
+  //     return blobs.forEach((blob) => URL.revokeObjectURL(blob));
+  //   },
+  //   [blobs]
+  // );
+
+  function addEvent(formData) {
+    // console.log(formData);
+  }
+  const array = [""];
+  array[2] = "hello";
+  console.log(array);
+
   return (
     <form className="grid gap-6" action={addEvent}>
-      <FormRow label="title">
-        <Input id={"title"} name="title">
+      <FormRow label="title" error={errors.title?.message}>
+        <Input
+          id={"title"}
+          name="title"
+          reactHooKFormValidate={{
+            ...register("title", {
+              required: "THis field is required",
+              maxLength: {
+                value: 10,
+                message: "Password needs to be atleast 8 characters",
+              },
+            }),
+          }}
+        >
           event name
         </Input>
       </FormRow>
-      <FormRow label="Date $ time">
-        <Input id={"date"} name={"date"}>
-          Date
-        </Input>
-        <Input id={"time"} name={"time"}>
-          Time
-        </Input>
-      </FormRow>
+      {/* <FormRow label="Date and time" id="dateTime">
+        <Provider theme={defaultTheme}>
+          <DatePicker
+            aria-labelledby="dateTime"
+            granularity="minute"
+            value={date}
+            onChange={setDate}
+            hideTimeZone
+          />
+        </Provider>
+      </FormRow> */}
       <FormRow label="Location">
         <Input id={"location"} name={"Location"}>
           event location
@@ -79,10 +108,17 @@ export default function EventForm() {
       <FormRow label="guidelines" classes={"border px-2 py-2"}>
         <div className="w-full grid grid-cols-[1fr_auto] gap-8">
           <ul className="grid gap-3 list-decimal pl-4">
-            {Array.from({ length: guidelines }, (x, i) => {
+            {Array.from({ length: guidelines.length }, (x, i) => {
               return (
                 <li className="list-item pl-2" key={i}>
-                  <Input id={"guidelines"} name={`guideline-${i + 1}`}>
+                  <Input
+                    value={guidelines[i]}
+                    id={"guidelines"}
+                    name={`guideline-${i + 1}`}
+                    onChange={(e) =>
+                      setGuidelines((prev) => (prev[i] = e.target.value))
+                    }
+                  >
                     event guideline
                   </Input>
                 </li>
@@ -90,19 +126,27 @@ export default function EventForm() {
             })}
           </ul>
 
-          {guidelines < 10 && (
+          {guidelines.length < 3 ? (
             <Button
               type="icon"
-              onClick={addGuideline}
+              onClick={() => add(setGuidelines)}
               classes={"w-fit text-deepSeaweed-tints-100"}
             >
               ➕
+            </Button>
+          ) : (
+            <Button
+              type="icon"
+              onClick={() => remove(setGuidelines)}
+              classes={"w-fit text-deepSeaweed-tints-100"}
+            >
+              ➖
             </Button>
           )}
         </div>
       </FormRow>
 
-      <FormRow label="Event Fees" classes={"px-6 py-4 border"}>
+      {/* <FormRow label="Event Fees" classes={"px-6 py-4 border"}>
         <div className="w-full grid gap-4">
           <div className="flex min-w-full">
             <label htmlFor="" className="opacity-60 w-full">
@@ -123,7 +167,7 @@ export default function EventForm() {
           {!free && (
             <div className="grid gap-2 px-6 list-decimal ">
               <h4>Fees</h4>
-              {Array.from({ length: priceGuidelines }, (x, i) => {
+              {Array.from({ length: priceGuidelines.length }, (x, i) => {
                 return (
                   <div className="flex gap-2" key={i}>
                     <Input>0.00</Input>
@@ -138,43 +182,103 @@ export default function EventForm() {
                   </div>
                 );
               })}
-
-              <Button type="icon" onClick={addPriceGuideline} classes={"w-fit"}>
-                ➕
-              </Button>
+              {priceGuidelines < 5 ? (
+                <Button
+                  type="icon"
+                  onClick={() => add(setPriceGuidelines)}
+                  classes={"w-fit"}
+                >
+                  ➕
+                </Button>
+              ) : (
+                <Button
+                  type="icon"
+                  onClick={() => remove(setPriceGuidelines)}
+                  classes={"w-fit"}
+                >
+                  ➕
+                </Button>
+              )}
             </div>
           )}
         </div>
-      </FormRow>
-      <FormRow label="images">
-        <div>
-          <FileInput
-            type="file"
-            classes={"h-36 bg-stone-200"}
-            name="img-1"
-            onChange={(e) => handleChange(e, "img1")}
-          >
-            drop files or click to upload
-          </FileInput>
-          {images.img1 && (
-            <img src={images.img1} alt="" width={"600px"} height={"60px"} />
-          )}
-        </div>
+      </FormRow> */}
+      <FormRow label="images" classes={"gap-10"}>
+        <FileInput
+          id="coverImage"
+          num={0}
+          cover={true}
+          type="file"
+          classes={"h-36 bg-stone-200"}
+          handleChange={handleImageChange}
+          reactHooKFormValidate={{
+            ...register("coverImage", {
+              required: "This field is required",
+            }),
+          }}
+        >
+          Cover Image
+        </FileInput>
+
         <div className="grid grid-cols-2 items-stretch">
-          <Input type="file" classes={" bg-deepSeaweed-tints-500"}>
-            +
-          </Input>
-          <Input type="file" classes={" bg-stone-200"}>
-            +
-          </Input>
-          <Input type="file" classes={"bg-stone-200"}>
-            +
-          </Input>
-          <Input type="file" classes={" bg-stone-200"}>
-            +
-          </Input>
+          {Array.from({ length: 4 }, (x, i) => {
+            console.log(i);
+            return (
+              <FileInput
+                key={i}
+                id="coverImage"
+                num={i + 1}
+                cover={true}
+                type="file"
+                classes={"h-36 bg-stone-200"}
+                // name="cover-image"
+                // handleChange={handleImageChange}
+                reactHooKFormValidate={{
+                  ...register("coverImage", {
+                    required: "This field is required",
+                  }),
+                }}
+              >
+                image {i + 2}
+              </FileInput>
+            );
+          })}
         </div>
       </FormRow>
+
+      {/* <div class="flex items-center justify-center w-full">
+        <label
+          for="dropzone-file"
+          class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+        >
+          <div class="flex flex-col items-center justify-center pt-5 pb-6">
+            <svg
+              class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 20 16"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+              />
+            </svg>
+            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+              <span class="font-semibold">Click to upload</span> or drag and
+              drop
+            </p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">
+              SVG, PNG, JPG or GIF (MAX. 800x400px)
+            </p>
+          </div>
+          <input id="dropzone-file" type="file" class="hidden" />
+        </label>
+      </div> */}
+
       <Button type="secondary" s>
         Submit
       </Button>
@@ -182,4 +286,35 @@ export default function EventForm() {
   );
 }
 
-// get warning message before submission to say  that, they will  not be able to chnage pricing later
+// get warning message before submission to say  that, they will  not be able to chane pricing later
+
+// REQUIRED FIELD
+// {...register("fullName", { required: "THis field is required" })}
+
+//PASSWORD
+// {...register("password", {
+//   required: "THis field is required",
+//   minLength: {
+//     value: 8,
+//     message: "Password needs to be atleast 8 characters",
+//   },
+// })}
+
+//PASSWORD- CONFIRM
+//  {...register("passwordConfirm", {
+//   required: "THis field is required",
+//   validate: (value) =>
+//     value === getValues().password || " Passwords need to match",
+// })}
+
+//EMAIL
+// {...register("email", {
+//   required: "THis field is required",
+//   pattern: {
+//     value: /\S+@\S+\.\S+/,
+//     message: "provide a required email",
+//   },
+// })}
+
+// DATE
+// date string

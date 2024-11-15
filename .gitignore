@@ -38,4 +38,5 @@ next-env.d.ts
 ## 
 /dev-data/
 /inspo/
-.site.md
+/site.md
+/todo.md

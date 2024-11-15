@@ -25,7 +25,9 @@ export default function Card({ event }) {
           <Tag>{event.slots}</Tag>
         </div>
 
-        <Button link="events/type/id">see More</Button>
+        <Button link="events/type/id" type="icon">
+          see More
+        </Button>
       </div>
     </figure>
   );

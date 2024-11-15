@@ -3,7 +3,7 @@ import Button from "../Button";
 
 function Header() {
   return (
-    <header className="w-full flex py-2 justify-between">
+    <header className="w-full flex  p-4 justify-between">
       <Link
         href={"/"}
         className="text-deepSeaweed-shades-700 font-extrabold text-base mobile:text-lg"

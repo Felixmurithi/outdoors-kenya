@@ -17,9 +17,9 @@ export default function MainLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="">
       <body
-        className={`grid grid-rows-[max-content_1fr_auto] w-[90%] mx-auto md:mx-14 mobile:mx-7 text-deepSeaweed-shades-500`}
+        className={`grid grid-rows-[max-content_1fr_auto] text-deepSeaweed-shades-500`}
       >
         <Header />
         {children}
