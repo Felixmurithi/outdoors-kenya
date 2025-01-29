@@ -4,7 +4,7 @@ type InputProps = {
   type?: string;
   name?: string;
   checked?: boolean;
-  onChange: (e: { target: HTMLInputElement }) => void;
+  onChange?: (e: { target: HTMLInputElement }) => void;
   children: string;
   reactHooKFormValidate?: {};
   value?: string;
