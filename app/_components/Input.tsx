@@ -1,3 +1,15 @@
+type InputProps = {
+  classes?: string;
+  id?: string;
+  type?: string;
+  name?: string;
+  checked?: boolean;
+  onChange: (e: { target: HTMLInputElement }) => void;
+  children: string;
+  reactHooKFormValidate?: {};
+  value?: string;
+};
+
 function Input({
   classes,
   id,
@@ -8,7 +20,7 @@ function Input({
   children,
   reactHooKFormValidate,
   value,
-}) {
+}: InputProps) {
   return (
     <input
       value={value}

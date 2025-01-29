@@ -8,9 +8,7 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        // my_bg_image: "url('/cover-1.jpg')",
-      },
+      backgroundImage: {},
       colors: {
         "main-color": "#313f2a",
         "accent-color-100": "rgb(254, 125, 31)",
@@ -65,8 +63,9 @@ export default config;
 
 // <div class="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% ..."></div>
 
+// screen size queries
 // @media screen and (max-width: 800px),
 //        screen and (max-height: 600px) {
 //   ...
 // }
-//setting colors as part of the theme remobes other
+//setting colors as part of the theme removes the default colors

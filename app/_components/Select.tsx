@@ -1,4 +1,11 @@
-function Select({ text, options, classes, onChange }) {
+type SelectProps = {
+  text: any;
+  options?: any;
+  classes?: any;
+  onChange?: any;
+};
+
+function Select({ text, options, classes, onChange }: SelectProps) {
   return (
     <select
       name=""
@@ -9,7 +16,7 @@ function Select({ text, options, classes, onChange }) {
       <option hidden value="">
         {text}
       </option>
-      {options.map((option, i) => (
+      {options.map((option: string, i: number) => (
         <option value={option} key={i}>
           {option}
         </option>

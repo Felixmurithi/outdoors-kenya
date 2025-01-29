@@ -1,5 +1,5 @@
 "use client";
-
+// I tried building my own form and failed. this is the only way
 import { useForm } from "react-hook-form";
 
 import Button from "@/app/_components/Button";
@@ -12,20 +12,24 @@ import { DatePicker, defaultTheme, Provider } from "@adobe/react-spectrum";
 import { getLocalTimeZone, today, now } from "@internationalized/date";
 
 export default function EventForm() {
-  const [guidelines, setGuidelines] = useState([""]);
+  const [guidelines, setGuidelines] = useState<string[]>([""]);
   const [free, setFree] = useState(false);
   const [priceGuidelines, setPriceGuidelines] = useState([["", ""]]);
-  const [blobs, setBlobs] = useState([]);
+  const [blobs, setBlobs] = useState<Array<string[]>>([]);
   const [date, setDate] = useState(now(getLocalTimeZone()));
-  // const { register, formState, getValues, handleSubmit, reset } = useForm();
-  const { register, formState, reset } = useForm({ mode: "onBlur" });
-  const { errors } = formState;
+  const {
+    register,
+    formState: { errors },
+    getValues,
+    handleSubmit,
+    reset,
+  } = useForm({ mode: "onBlur" });
 
-  function add(setter) {
+  function add(setter: React.Dispatch<React.SetStateAction<string[]>>) {
     setter((prev) => [...prev, ""]);
   }
 
-  function remove(setter) {
+  function remove(setter: React.Dispatch<React.SetStateAction<string[]>>) {
     setter((prev) =>
       prev.filter((_, i) => {
         console.log(i, prev.length);
@@ -35,16 +39,16 @@ export default function EventForm() {
     );
   }
 
-  function handleImageChange(e, i) {
-    if (e.target.files && e.target.files[0]) {
-      const imgURL = URL.createObjectURL(e.target.files[0]);
-      console.log(imgURL);
-      setBlobs((imgUrls) => {
-        return (imgUrls[i] = imgURL);
-      });
-      //;
-    }
-  }
+  // function handleImageChange(e, i) {
+  //   if (e.target.files && e.target.files[0]) {
+  //     const imgURL = URL.createObjectURL(e.target.files[0]);
+  //     console.log(imgURL);
+  //     setBlobs((imgUrls: string[] | string) => {
+  //       return (imgUrls[i] = imgURL);
+  //     });
+  //     //;
+  //   }
+  // }
 
   // useEffect(
   //   function () {
@@ -53,16 +57,16 @@ export default function EventForm() {
   //   [blobs]
   // );
 
-  function addEvent(formData) {
-    // console.log(formData);
+  function addEvent(formData: {}) {
+    console.log(formData);
   }
   const array = [""];
   array[2] = "hello";
   console.log(array);
 
   return (
-    <form className="grid gap-6" action={addEvent}>
-      <FormRow label="title" error={errors.title?.message}>
+    <form className="grid gap-6" onSubmit={handleSubmit(addEvent)}>
+      <FormRow label="title" error={errors.title?.message?.toString()}>
         <Input
           id={"title"}
           name="title"
@@ -115,8 +119,11 @@ export default function EventForm() {
                     value={guidelines[i]}
                     id={"guidelines"}
                     name={`guideline-${i + 1}`}
-                    onChange={(e) =>
-                      setGuidelines((prev) => (prev[i] = e.target.value))
+                    onChange={(e: { target: HTMLInputElement }) =>
+                      setGuidelines((prev) => {
+                        prev[i] = e.target.value;
+                        return prev;
+                      })
                     }
                   >
                     event guideline
@@ -210,7 +217,7 @@ export default function EventForm() {
           cover={true}
           type="file"
           classes={"h-36 bg-stone-200"}
-          handleChange={handleImageChange}
+          // handleChange={handleImageChange}
           reactHooKFormValidate={{
             ...register("coverImage", {
               required: "This field is required",
@@ -279,9 +286,7 @@ export default function EventForm() {
         </label>
       </div> */}
 
-      <Button type="secondary" s>
-        Submit
-      </Button>
+      <Button type="secondary">Submit</Button>
     </form>
   );
 }

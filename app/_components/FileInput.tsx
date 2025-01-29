@@ -1,6 +1,17 @@
 "use client";
 import { useRef, useState } from "react";
 
+type FileInputProps = {
+  id?: String;
+  num?: number;
+  children?: React.ReactNode;
+  reactHooKFormValidate?: {};
+  handleChange?: () => void;
+  cover?: Boolean;
+  type?: String;
+  classes?: String;
+};
+
 export default function FileInput({
   id,
   num,
@@ -8,7 +19,9 @@ export default function FileInput({
   reactHooKFormValidate,
   handleChange,
   cover = false,
-}) {
+  type,
+  classes,
+}: FileInputProps) {
   const [activeDrag, setActiveDrag] = useState(false);
   const imageInput = useRef(null);
 
@@ -50,7 +63,10 @@ export default function FileInput({
 
   return (
     <div
-      onClick={() => document.getElementById("selectImage").click()}
+      onClick={() => {
+        // ignoring TS types
+        document!.getElementById("selectImage")!.click();
+      }}
       className={`${
         activeDrag ? "bg-deepSeaweed-tints-500" : "bg-deepSeaweed-tints-200"
       } w-full h-full`}
@@ -96,7 +112,7 @@ export default function FileInput({
         hidden
         // accept="image/*"
         id={"selectImage"}
-        onChange={(e) => handleImageChange(e)}
+        // onChange={(e) => handleImageChange(e)}
         // onChange={(e) => handleChange(e, num)}
         // {...reactHooKFormValidate}
       />

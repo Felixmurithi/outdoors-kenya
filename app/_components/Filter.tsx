@@ -2,8 +2,38 @@
 import Button from "@/app/_components/Button";
 import Input from "@/app/_components/Input";
 import Select from "@/app/_components/Select";
+import { SetStateAction } from "react";
 
-function Filter({ filter, setFilter, search }) {
+type FilterProps = {
+  setFilter: React.Dispatch<
+    SetStateAction<{
+      search: string;
+      location: string;
+      type: string;
+      date: string;
+      startDate: string;
+      endDate: string;
+      happening: string;
+      card: boolean;
+      free: boolean;
+    }>
+  >;
+  filter: {
+    search: string;
+    location: string;
+    type: string;
+    date: string;
+    startDate: string;
+    endDate: string;
+    happening: string;
+    card: boolean;
+    free: boolean;
+  };
+
+  search: () => void;
+};
+
+function Filter({ filter, setFilter, search }: FilterProps) {
   const eventTypes = [
     "football",
     "athletics",
@@ -20,7 +50,7 @@ function Filter({ filter, setFilter, search }) {
       return { ...filters, card: !filters.card };
     });
   }
-  function filterLocation(e) {
+  function filterLocation(e: { target: HTMLInputElement }) {
     setFilter((filters) => {
       return { ...filters, location: e.target.value };
     });

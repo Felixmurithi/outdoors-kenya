@@ -19,7 +19,7 @@ export default function MainLayout({
   return (
     <html lang="en" className="">
       <body
-        className={`grid grid-rows-[max-content_1fr_auto] text-deepSeaweed-shades-500`}
+        className={`grid grid-rows-[auto_1fr_auto] text-deepSeaweed-shades-500`}
       >
         <Header />
         {children}

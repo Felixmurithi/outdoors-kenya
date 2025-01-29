@@ -2,7 +2,21 @@
 import Button from "@/app/_components/Button";
 import Tag from "@/app/_components/Tag";
 
-export default function Card({ event }) {
+type EventProp = {
+  event: {
+    name: string;
+    location: string;
+    images: string[];
+    description: string;
+    type: string;
+    date: string;
+    time: string;
+    public: string;
+    slots: number;
+  };
+};
+
+export default function Card({ event }: EventProp) {
   // const { id, name, location, coordinates, images } = site;
   return (
     <figure className="border rounded-sm pb-4">
