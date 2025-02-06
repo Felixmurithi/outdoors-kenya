@@ -9,9 +9,9 @@ export default function Page() {
   // if (error || !locations) return <p>error</p>;
 
   return (
-    <main className="grid gap-8">
+    <main className="grid gap-8 grid-rows-[auto_1fr]">
       <section
-        className="w-full px-4 h-32 grid items-center text-deepSeaweed-tints-700"
+        className="w-full px-4  h-14 grid items-center text-deepSeaweed-tints-700"
         style={{
           backgroundImage: `linear-gradient(
       var(--bg-dark-50),

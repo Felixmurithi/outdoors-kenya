@@ -10,6 +10,7 @@ type FileInputProps = {
   cover?: Boolean;
   type?: String;
   classes?: String;
+  setBlobs: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 export default function FileInput({
@@ -21,11 +22,12 @@ export default function FileInput({
   cover = false,
   type,
   classes,
+  setBlobs,
 }: FileInputProps) {
   const [activeDrag, setActiveDrag] = useState(false);
   const imageInput = useRef(null);
 
-  function handleDrag(e) {
+  function handleDrag(e: React.DragEvent<HTMLDivElement>) {
     e.preventDefault();
     e.stopPropagation();
 
@@ -35,9 +37,11 @@ export default function FileInput({
       setActiveDrag(false);
     }
   }
-
-  function onDrop(e) {
+  // this event is isntead of the native drag event which has type issues
+  function onDrop(e: React.DragEvent<HTMLDivElement>) {
     e.preventDefault();
+
+    if (!e.dataTransfer) return;
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       const imgURL = URL.createObjectURL(e.dataTransfer.files[0]);
       // handleChange(num, e.dataTransfer.files[0]);
@@ -45,19 +49,19 @@ export default function FileInput({
       console.log(imgURL);
 
       // setBlobs((imgUrls) => {
-      //   return (imgUrls[i] = imgURL);
+      //   imgUrls[i] = imgURL;
+      //   return imgUrls;
       // });
-      //;
     }
   }
-  function handleImageChange(e, i) {
+  function handleImageChange(e: { target: HTMLInputElement }) {
     if (e.target.files && e.target.files[0]) {
       const imgURL = URL.createObjectURL(e.target.files[0]);
       console.log(imgURL);
       // setBlobs((imgUrls) => {
-      //   return (imgUrls[i] = imgURL);
+      //   imgUrls[i] = imgURL;
+      //   return imgUrls;
       // });
-      //;
     }
   }
 
@@ -73,7 +77,7 @@ export default function FileInput({
       onDragEnter={handleDrag}
       onDragLeave={handleDrag}
       onDragOver={(e) => e.preventDefault()}
-      onDrop={(e) => onDrop(e)}
+      onDrop={onDrop}
     >
       {cover ? (
         <div className="flex flex-col items-center justify-center pt-5 pb-6">

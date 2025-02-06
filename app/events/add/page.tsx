@@ -1,8 +1,8 @@
-import AddEventForm from "../../_components/AddEventForm";
+import AddEventForm from "../../_components/Events/AddEventForm";
 
 function AddEvent() {
   return (
-    <main className="grid gap-8">
+    <main className="grid h-full content-start">
       <h2>Add Event</h2>
       <AddEventForm />{" "}
     </main>

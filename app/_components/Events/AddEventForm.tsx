@@ -12,10 +12,10 @@ import { DatePicker, defaultTheme, Provider } from "@adobe/react-spectrum";
 import { getLocalTimeZone, today, now } from "@internationalized/date";
 
 export default function EventForm() {
-  const [guidelines, setGuidelines] = useState<string[]>([""]);
+  const [guidelines, setGuidelines] = useState([""]);
   const [free, setFree] = useState(false);
   const [priceGuidelines, setPriceGuidelines] = useState([["", ""]]);
-  const [blobs, setBlobs] = useState<Array<string[]>>([]);
+  const [blobs, setBlobs] = useState([""]);
   const [date, setDate] = useState(now(getLocalTimeZone()));
   const {
     register,
@@ -217,6 +217,7 @@ export default function EventForm() {
           cover={true}
           type="file"
           classes={"h-36 bg-stone-200"}
+          setBlobs={setBlobs}
           // handleChange={handleImageChange}
           reactHooKFormValidate={{
             ...register("coverImage", {
@@ -238,6 +239,7 @@ export default function EventForm() {
                 cover={true}
                 type="file"
                 classes={"h-36 bg-stone-200"}
+                setBlobs={setBlobs}
                 // name="cover-image"
                 // handleChange={handleImageChange}
                 reactHooKFormValidate={{

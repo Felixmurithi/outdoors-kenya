@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Card from "@/app/_components/Card";
+import Select from "@/app/_components/Select";
 import Filter from "../Filter";
 import Button from "../Button";
 
@@ -17,6 +18,8 @@ type EventsProp = {
     slots: number;
   }[];
 };
+
+const timelines = ["today", "this week", "this month"];
 
 function Events({ events }: EventsProp) {
   const [allevents, setAllEvents] = useState(events);
@@ -50,20 +53,21 @@ function Events({ events }: EventsProp) {
       });
     }
   }
+  //grid rows used when u have a scroll component to give the parent of teht compoinent height
   return (
-    <>
-      <Filter filter={filter} setFilter={setFilter} search={search} />
-
-      <Button link="events/add" type="icon">
+    <section className="px-8 grid">
+      <div className=" relative">
+        <Select text={"filter date"} />
+        {/* <Button link="events/add" type="icon">
         ➕
-      </Button>
-
-      <section className="max-w-full grid lg:grid-cols-4 mobile:grid-cols-2 rounded-md">
-        {allevents.map((event: any, i: number) => (
-          <Card key={i} event={event} />
-        ))}
-      </section>
-    </>
+      </Button> */}
+        <div className="absolute bottom-0 top-0 left-0 right-0 overflow-y-auto grid md:grid-cols-4 mobile:grid-cols-2">
+          {allevents.map((event: any, i: number) => (
+            <Card key={i} event={event} />
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
