@@ -8,7 +8,7 @@
 //   return ids;
 // }
 import Button from "@/app/_components/Button";
-import CustomImage from "@/app/_components/";
+import CustomImage from "@/app/_components/CustomImage";
 import Repeats from "../../../_components/Repeats";
 import ListItem from "@/app/_components/ListItem";
 export default async function Site({ params }) {

@@ -22,7 +22,7 @@ function Signup() {
                 <span></span>Sign up with Google
               </Button>
               <div className="flex gap-2">
-                <Input placeholder={"irst name*"}>First name*</Input>
+                <Input>First name*</Input>
                 <Input>Last name*</Input>
               </div>
               <Input>Email*</Input>

@@ -1,6 +1,6 @@
 type Props = {
   children: React.ReactNode;
-  color: string;
+  color?: string;
 };
 
 function Tag({ children, color = "bg-stone-300" }: Props) {
