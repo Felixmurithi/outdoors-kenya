@@ -1,4 +1,10 @@
-function SocialIcon({ link, svg, alt }) {
+type Props = {
+  link?: string;
+  svg?: string;
+  alt?: string;
+};
+
+function SocialIcon({ link, svg, alt }: Props) {
   return (
     <li className="rounded-full bg-red-500">
       <a href={link}>

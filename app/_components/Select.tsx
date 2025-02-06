@@ -1,6 +1,6 @@
 type SelectProps = {
   text: any;
-  options: [""];
+  options: string[];
   classes?: any;
   onChange?: any;
 };

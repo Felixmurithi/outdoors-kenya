@@ -57,7 +57,7 @@ function Events({ events }: EventsProp) {
   return (
     <section className="px-8 grid">
       <div className=" relative">
-        <Select text={"filter date"} />
+        <Select text={"filter date"} options={timelines} />
         {/* <Button link="events/add" type="icon">
         ➕
       </Button> */}
