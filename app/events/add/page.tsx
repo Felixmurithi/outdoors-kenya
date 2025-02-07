@@ -1,4 +1,4 @@
-import AddEventForm from "../../../_components/Events/AddEventForm";
+import AddEventForm from "@/app/_components/Events/AddEventForm";
 
 function AddEvent() {
   return (

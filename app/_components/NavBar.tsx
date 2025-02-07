@@ -25,3 +25,5 @@ function NavBar() {
 }
 
 export default NavBar;
+
+//TO-NOTe- if u find urself uisng Array.from in reacrt u are probably doing something wrong
