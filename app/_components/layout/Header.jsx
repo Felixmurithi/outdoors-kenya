@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Button from "../Button";
+import NavBar from "@/app/_components/NavBar";
 
 function Header() {
   return (
@@ -12,9 +13,7 @@ function Header() {
         <span className="text-green-700">Kenya</span>
       </Link>
       <div className="hidden mobile:flex gap-4  items-center">
-        <Link href={"/events"}>Events</Link>
-        {/* <Link href={"/sports"}>Sports</Link> */}
-        {/* <Link href={"/explore"}>Explore</Link> */}
+        <NavBar />
         <Button>Sign up</Button>
       </div>
       <Button classes={"mobile:hidden"}>🈶</Button>

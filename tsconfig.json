@@ -31,7 +31,7 @@
     "app/_components/LocationMap.tsx",
     "app/_components/Button.tsx",
     "app/_components/Events/SiteCard.jsx",
-    "app/events/page.js",
+    "app/(explore)/hiking-trails/page.js",
     "app/_components/AddEventForm.jsx"
   ],
   "exclude": ["node_modules"]
