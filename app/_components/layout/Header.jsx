@@ -1,6 +1,6 @@
 import Link from "next/link";
-import Button from "../Button";
-import NavBar from "@/app/_components/NavBar";
+import Button from "@/app/_components/generic/Button";
+import NavBar from "@/app/_components/layout/NavBar";
 
 function Header() {
   return (
@@ -12,11 +12,12 @@ function Header() {
         Outdoors
         <span className="text-green-700">Kenya</span>
       </Link>
-      <div className="hidden mobile:flex gap-4  items-center">
+      {/* navbar and signup */}
+      <div className="flex gap-4  items-center">
         <NavBar />
-        <Button>Sign up</Button>
+        {/* <Button>Sign up</Button> */}
       </div>
-      <Button classes={"mobile:hidden"}>🈶</Button>
+      {/* <Button classes={"mobile:hidden"}>🈶</Button> */}
     </header>
   );
 }

@@ -69,3 +69,13 @@
     }
   }
 }
+
+/* .link a:link,
+.link a:visited {
+  @apply text-blue-700;
+}
+.link a:hover a:active {
+  text-decoration: underline;
+} */
+
+/* Note that the order of the pseudo-classes is important. The :link pseudo-class should come before the :visited pseudo-class, as the :link pseudo-class will override the :visited pseudo-class if they are in the wrong order. */

@@ -4,7 +4,7 @@ function Profile() {
   return (
     <div className="div flex-col items-center gap-6">
       <img
-        src="/profile.jpg"
+        src="/imgs/profile.jpg"
         alt="profile"
         className="object-fit w-12 rounded-full object-left"
       />

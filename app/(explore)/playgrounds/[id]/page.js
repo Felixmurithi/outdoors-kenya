@@ -7,9 +7,10 @@
 
 //   return ids;
 // }
-import Button from "@/app/_components/Button";
-import CustomImage from "@/app/_components/CustomImage";
-import ListItem from "@/app/_components/ListItem";
+import Button from "@/app/_components/generic/Button";
+import CustomImage from "@/app/_components/generic/CustomImage";
+import Repeats from "@/app/_components/generic/Repeats";
+import ListItem from "@/app/_components/generic/ListItem";
 export default async function Site({ params }) {
   // console.log(params);
 

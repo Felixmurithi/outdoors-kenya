@@ -1,22 +1,18 @@
-// for ting dynamic routes, inorder to render them statically.
-// export async function generateStaticParams() {
-//   const sites = await getData(`http://localhost:8000/sites`);
-//   console.log(sites);
-//   //must be strings? TODO
-//   const ids = sites.map((site) => ({ siteId: String(site.id) }));
 
-//   return ids;
-// }
-import Button from "@/app/_components/Button";
-import CustomImage from "@/app/_components/CustomImage";
-import ListItem from "@/app/_components/ListItem";
-export default async function Site({ params }) {
-  // console.log(params);
+import Button from "@/app/_components/generic/Button";
+import CustomImage from "@/app/_components/generic/CustomImage";
+import Repeats from "@/app/_components/generic/Repeats";
+import ListItem from "@/app/_components/generic/ListItem";
 
-  // const site = await getData(`http://localhost:8000/sites/${params.siteId}`);
-  // console.log(site);
+// PAGE MAP
+//image, name, location(county )
+//type
+//activities and entrances for each acitivity and cost 
+//
 
-  // const { name, location, coordinates, description, images } = site;
+
+export default async function LocationPage({ params }) {
+ 
   return (
     <main className="grid gap-8">
       <img

@@ -28,9 +28,9 @@
     ".next/types/**/*.ts",
     "app/explore/page.js",
     "app/page.js",
-    "app/_components/LocationMap.tsx",
-    "app/_components/Button.tsx",
-    "app/_components/Events/SiteCard.jsx",
+    "app/_components/_generic/LocationMap.tsx",
+    "app/_components/_generic/Button.tsx",
+    "app/_components/add/SiteCard.jsx",
     "app/(explore)/hiking-trails/page.js",
     "app/_components/AddEventForm.jsx"
   ],

@@ -1,6 +1,6 @@
-import ActivityHighlight from "@/app/_components/Home/ActivityHighlight";
+import ActivityHighlight from "@/app/_components/home/ActivityHighlight";
 
-import Signup from "@/app/_components/Signup";
+import Signup from "@/app/_components/generic/Signup";
 import hike from "@/public/home/hike.jpg";
 
 export default function Home() {
