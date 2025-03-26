@@ -1,4 +1,4 @@
-import SocialIcon from "@/app/_components/generic/SocialIcon";
+import SocialIcon from "@/app/_components/generic/SocialIcons";
 
 function Footer() {
   return (

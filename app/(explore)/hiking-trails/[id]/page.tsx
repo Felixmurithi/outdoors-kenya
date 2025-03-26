@@ -1,5 +1,32 @@
 import EntranceFees from "@/app/_components/locations/EntranceFees";
-export default async function Site({ params }) {
+import SocialIcons from "@/app/_components/generic/SocialIcons";
+import Access from "@/app/_components/locations/Access";
+
+const icons = [
+  { name: "facebook", link: "https://www.facebook.com" },
+  { name: "twitter", link: "https://www.twitter.com" },
+  { name: "instagram", link: "https://www.instagram.com" },
+];
+
+const sampleLocations = [
+  {
+    label: "Main Entrance",
+    link: "https://example.com/main-entrance",
+    address: "123 Main St, Anytown, USA",
+  },
+  {
+    label: "North Gate",
+    link: "https://example.com/north-gate",
+    address: "456 North Rd, Anytown, USA",
+  },
+  {
+    label: "South Entry",
+    link: "https://example.com/south-entry",
+    address: "789 South Ave, Anytown, USA",
+  },
+];
+
+export default async function HikingTrails({ params }) {
   ////HTML
   //image
 
@@ -38,12 +65,14 @@ export default async function Site({ params }) {
         <p>longest trail : 15km</p>
       </div>
 
+      <Access locations={sampleLocations} />
+
       <EntranceFees tableData={tableData} />
 
       <div>
         <p>official website </p>
         <div>
-          <span>x</span>
+          <SocialIcons icons={icons} />
         </div>
         social media
       </div>
