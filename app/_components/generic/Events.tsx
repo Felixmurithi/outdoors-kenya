@@ -20,15 +20,13 @@ type EventsProp = {
 };
 
 function Events({ events }: EventsProp) {
-
-
   return (
     <div className="grid gap-8">
       {/* <Filter setFilter={setFilter} /> */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {events.map((event) => (
+        {/* {events.map((event) => (
           <Card key={event.id} event={event} />
-        ))}
+        ))} */}
       </div>
     </div>
   );

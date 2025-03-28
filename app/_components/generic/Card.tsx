@@ -31,9 +31,9 @@ function Card({ event }: EventProp) {
         </div>
       </div>
       <div className="flex flex-wrap gap-2">
-        {event.items.map((item) => (
+        {/* {event.items.map((item) => (
           <Tag key={item.item}>{item.item}</Tag>
-        ))}
+        ))} */}
       </div>
       <Button>View Details</Button>
     </div>
