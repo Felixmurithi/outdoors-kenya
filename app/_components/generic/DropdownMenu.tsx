@@ -32,7 +32,7 @@ function DropdownMenu({ options, openMenu, setOpenMenu, id }: Props) {
         <ul className="grid gap-2 py-4 bg-stone-100">
           {options.map((option, i) => (
             <li key={i} className="hover:bg-stone-200 py-2 px-6">
-              <Link href={`/${option}`} className=" p-1">
+              <Link href={`/explore/${option}`} className=" p-1">
                 {option}
               </Link>
             </li>
