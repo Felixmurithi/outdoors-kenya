@@ -1,18 +1,15 @@
-
 import Button from "@/app/_components/generic/Button";
-import CustomImage from "@/app/_components/generic/CustomImage";
+
 import Repeats from "@/app/_components/generic/Repeats";
 import ListItem from "@/app/_components/generic/ListItem";
 
 // PAGE MAP
 //image, name, location(county )
 //type
-//activities and entrances for each acitivity and cost 
+//activities and entrances for each acitivity and cost
 //
 
-
-export default async function LocationPage({ params }) {
- 
+export default async function LocationPage({}) {
   return (
     <main className="grid gap-8">
       <img
@@ -74,9 +71,6 @@ export default async function LocationPage({ params }) {
           </div>
           <div className="grid gap-4">
             <h3>Socials</h3>
-            <CustomImage image={"/social-media/instagram.svg"} width={"w-44"} />
-            <CustomImage image={"/social-media/tiktok.svg"} width={"w-44"} />
-            <CustomImage image={"/social-media/youtube.svg"} width={"w-44"} />
           </div>
         </div>
         <div className="grid gap-4">

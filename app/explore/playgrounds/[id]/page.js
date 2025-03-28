@@ -8,9 +8,8 @@
 //   return ids;
 // }
 import Button from "@/app/_components/generic/Button";
-import CustomImage from "@/app/_components/generic/CustomImage";
 import Repeats from "@/app/_components/generic/Repeats";
-import ListItem from "@/app/_components/generic/ListItem";
+
 export default async function Site({ params }) {
   // console.log(params);
 
@@ -69,19 +68,11 @@ export default async function Site({ params }) {
             <ul className="grid gap-2">
               <p className="font-bold text-lg">Event guidelines</p>
               <ul></ul>
-              <ListItem>
-                This is a intermediate level event (heartrate: 160+)
-              </ListItem>
-              <ListItem>Wear Athleisure</ListItem>
-              <ListItem>Carry a sun cap</ListItem>
             </ul>
             <img src="/imgs/social-media/googlemaps.svg" alt="" />
           </div>
           <div className="grid gap-4">
             <h3>Socials</h3>
-            <CustomImage image={"/social-media/instagram.svg"} width={"w-44"} />
-            <CustomImage image={"/social-media/tiktok.svg"} width={"w-44"} />
-            <CustomImage image={"/social-media/youtube.svg"} width={"w-44"} />
           </div>
         </div>
         <div className="grid gap-4">

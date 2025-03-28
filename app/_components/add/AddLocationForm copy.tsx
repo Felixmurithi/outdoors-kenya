@@ -3,10 +3,10 @@
 
 import { useForm, useFieldArray } from "react-hook-form";
 
-import Button from "@/app/_components/_generic/Button";
-import FormRow from "@/app/_components/_generic/FormRow";
-import Input from "@/app/_components/_generic/Input";
-import FileInput from "@/app/_components/_generic/FileInput";
+import Button from "@/app/_components/generic/Button";
+import FormRow from "@/app/_components/generic/FormRow";
+import Input from "@/app/_components/generic/Input";
+import FileInput from "@/app/_components/generic/FileInput";
 import { useEffect, useState } from "react";
 import { addEvent } from "@/app/_utils/action";
 import { DatePicker, defaultTheme, Provider } from "@adobe/react-spectrum";
@@ -36,12 +36,18 @@ export default function AddLocationForm() {
     reset,
   } = useForm({ mode: "onBlur" });
 
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
-    {
-      control, // control props comes from useForm (optional: if you are using FormContext)
-      name: "items", // unique name for your Field Array
-    }
-  );
+  const {
+    fields,
+    append,
+    prepend,
+    remove: removeArray,
+    swap,
+    move,
+    insert,
+  } = useFieldArray({
+    control, // control props comes from useForm (optional: if you are using FormContext)
+    name: "items", // unique name for your Field Array
+  });
 
   function add(setter: React.Dispatch<React.SetStateAction<string[]>>) {
     setter((prev) => [...prev, ""]);

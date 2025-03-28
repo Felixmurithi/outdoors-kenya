@@ -1,6 +1,6 @@
 import { events } from "@/app/_lib/events";
 
-import Card from "@/app/_components/Card";
+import Card from "@/app/_components/generic/Card";
 import Profile from "@/app/_components/user/Profile";
 
 export default function Page() {

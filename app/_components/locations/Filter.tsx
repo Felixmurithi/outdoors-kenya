@@ -1,10 +1,17 @@
-"use client"
+"use client";
 import { useState } from "react";
 import { useEffect } from "react";
+import Select from "../generic/Select";
 // FILTER
 // county, distance  from ur loctaion. longest trail length
-export function Filter({ locations, setLocations }: { locations: LocationCardProps[]; setLocations: (locations: LocationCardProps[]) => void }) {
-  const counties = [...new Set(locations.map(location => location.county))];
+export function Filter({
+  locations,
+  setLocations,
+}: {
+  locations: LocationCardProps[];
+  setLocations: (locations: LocationCardProps[]) => void;
+}) {
+  const counties = [...new Set(locations.map((location) => location.county))];
   const longestTrailLengths = [
     { value: "1-5", label: "1-5" },
     { value: "5-10", label: "5-10" },
@@ -15,16 +22,21 @@ export function Filter({ locations, setLocations }: { locations: LocationCardPro
     { value: "30-40", label: "30-40" },
   ];
   const [selectedCounty, setSelectedCounty] = useState("");
-  const [selectedLongestTrailLength, setSelectedLongestTrailLength] = useState("");
+  const [selectedLongestTrailLength, setSelectedLongestTrailLength] =
+    useState("");
   const [closestToUser, setClosestToUser] = useState(false);
 
   const handleCountyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCounty(event.target.value);
   };
-  const handleLongestTrailLengthChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleLongestTrailLengthChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     setSelectedLongestTrailLength(event.target.value);
   };
-  const handleClosestToUserChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleClosestToUserChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setClosestToUser(event.target.checked);
   };
 
@@ -32,8 +44,10 @@ export function Filter({ locations, setLocations }: { locations: LocationCardPro
     const filters = [
       selectedCounty ? location.county === selectedCounty : true,
       selectedLongestTrailLength
-        ? location.longestTrailLength >= Number(selectedLongestTrailLength.split("-")[0]) &&
-          location.longestTrailLength <= Number(selectedLongestTrailLength.split("-")[1])
+        ? location.longestTrailLength >=
+            Number(selectedLongestTrailLength.split("-")[0]) &&
+          location.longestTrailLength <=
+            Number(selectedLongestTrailLength.split("-")[1])
         : true,
       closestToUser ? location.distanceFromUser < 10 : true,
     ];

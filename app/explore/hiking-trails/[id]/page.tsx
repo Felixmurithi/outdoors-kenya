@@ -26,7 +26,7 @@ const sampleLocations = [
   },
 ];
 
-export default async function HikingTrails({ params }) {
+export default async function HikingTrails({}) {
   ////HTML
   //image
 

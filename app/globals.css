@@ -70,6 +70,10 @@
   }
 }
 
+/* Show dropdown when hovering over the parent li */
+
+/* Keep dropdown visible when hovering over it */
+
 /* .link a:link,
 .link a:visited {
   @apply text-blue-700;
@@ -78,4 +82,7 @@
   text-decoration: underline;
 } */
 
-/* Note that the order of the pseudo-classes is important. The :link pseudo-class should come before the :visited pseudo-class, as the :link pseudo-class will override the :visited pseudo-class if they are in the wrong order. */
+/* Note that the order of the pseudo-classes is important. The :link pseudo-class should come before the :visited pseudo-class, as the :link pseudo-class will override the :visited pseudo-class if they are in the wrong order. 
+
+U donnt need to style these using css because they are styled by tailwind
+*/

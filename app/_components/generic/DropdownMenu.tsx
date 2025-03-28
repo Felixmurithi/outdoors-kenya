@@ -18,7 +18,7 @@ function DropdownMenu({ options, openMenu, setOpenMenu, id }: Props) {
   //TO-NOTE- React does not update state when passed in the same value which ensures that there no unnecessary renders.
 
   return (
-    <div className="relative">
+    <div className="relative group">
       <Link
         href={"/explore"}
         onMouseEnter={() => setOpenMenu(id)}
@@ -27,14 +27,17 @@ function DropdownMenu({ options, openMenu, setOpenMenu, id }: Props) {
         explore
       </Link>
 
-      <div className="absolute bg-stone-100 hidden  group-hover:block  ">
-        {options.map((option, i) => (
-          <div key={i}>
-            <Link href={`/${option}`} className="hover:bg-stone-200 p-1">
-              {option}
-            </Link>
-          </div>
-        ))}
+      <div className="absolute    -right-2 group-focus-within:block group-hover:block hidden   top-full ">
+        <span className="tranparent h-4 block"></span>
+        <ul className="grid gap-2 py-4 bg-stone-100">
+          {options.map((option, i) => (
+            <li key={i} className="hover:bg-stone-200 py-2 px-6">
+              <Link href={`/${option}`} className=" p-1">
+                {option}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
