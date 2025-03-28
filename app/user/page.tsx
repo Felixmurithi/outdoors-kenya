@@ -20,8 +20,8 @@ export default function Page() {
           filter
         </div>
         <div className="grid grid-cols-2">
-          {events.map((event, i) => (
-            <Card key={i} event={event} vertical={false} />
+          {events?.map((event, i) => (
+            <Card key={i} event={event} />
           ))}
         </div>
       </div>
