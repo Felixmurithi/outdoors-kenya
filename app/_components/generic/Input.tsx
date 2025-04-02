@@ -8,6 +8,7 @@ type InputProps = {
   placeholder?: string;
   reactHooKFormValidate?: {};
   value?: string;
+  label: string;
 };
 
 function Input({
@@ -20,19 +21,23 @@ function Input({
   placeholder,
   reactHooKFormValidate,
   value,
+  label,
 }: InputProps) {
   return (
-    <input
-      value={value}
-      onChange={onChange}
-      defaultChecked={checked}
-      name={name}
-      id={id}
-      type={`${type}`}
-      placeholder={placeholder}
-      className={`${classes} rounded-sm h-8  border border-deepSeaweed-tints-300 text-deepSeaweed-tints-300 w-full px-2`}
-      {...reactHooKFormValidate}
-    />
+    <div className="grid">
+      <label htmlFor={id}>{label}</label>
+      <input
+        value={value}
+        onChange={onChange}
+        defaultChecked={checked}
+        name={name}
+        id={id}
+        type={`${type}`}
+        placeholder={placeholder}
+        className={`${classes} rounded-sm h-8  border border-deepSeaweed-tints-300 text-deepSeaweed-tints-300 w-full px-2`}
+        {...reactHooKFormValidate}
+      />
+    </div>
   );
 }
 

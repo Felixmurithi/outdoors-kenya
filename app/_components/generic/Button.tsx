@@ -41,7 +41,7 @@ export default function Button({
       type={`${link || onClick ? "button" : "submit"}`}
       className={` ${
         buttonStyles[type as keyof ButtonStylesProps]
-      }  rounded-md ${classes} w-max self-center h-8`}
+      }  rounded-md ${classes} w-max h-8`}
       onClick={onClick}
     >
       {/* <button type="submit"> */}

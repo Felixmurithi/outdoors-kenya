@@ -1,10 +1,10 @@
 "use client";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import Input from "@/app/_components/generic/Input";
 import FormRow from "@/app/_components/generic/FormRow";
 import FileInput from "@/app/_components/generic/FileInput";
-import Tag from "@/app/_components/generic/Tag";
+import Button from "@/app/_components/generic/Button";
+import SelectCurrency from "../generic/SelectCurrency";
 
 //enerla lo cation county. constiuency, neraby landmarks
 // activities allowed
@@ -13,92 +13,162 @@ import Tag from "@/app/_components/generic/Tag";
 // acess points ,location of map cordinates, routes points. for each activity if more than included.
 //
 
-const outdoorActivities = ["Picnic", "Hiking", "Running", "Cycling"];
+// const outdoorActivities "Picnic", "Hiking", "Running", "Cycling"
 
 export default function AddLocationForm() {
-  const { register, handleSubmit } = useForm();
-  const [activities, setActivities] = useState([""]);
+  const { register, control, handleSubmit } = useForm({
+    defaultValues: {
+      accessPoints: [
+        {
+          address: "",
+          link: "",
+        },
+      ],
+      basic: {
+        name: "",
+        county: "",
+        locality: "",
+      },
+      charges: {
+        kenyan: {
+          currency: "",
+          adult: "",
+          child: "",
+        },
+        resident: {
+          currency: "",
+          adult: "",
+          child: "",
+        },
+        nonResident: {
+          currency: "",
+          adult: "",
+          child: "",
+        },
+      },
+    },
+  });
+  const { fields, append, prepend, remove } = useFieldArray({
+    control,
+    name: "accessPoints",
+  });
 
-  const handleTagClick = (activity: string) => {
-    const isSelected = activities.includes(activity);
-    if (isSelected) {
-      setActivities(activities.filter((t) => t !== activity));
-    } else {
-      setActivities([...activities, activity]);
-    }
-  };
-
-  const onSubmit = async (data:any) => {
+  const onSubmit = async (data: any) => {
     console.log(data);
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6 pa">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
       {/* name, details, levenat links */}
-
       <FormRow label="Basic Details" classes="flex ">
-        <Input {...register("name")} placeholder="Name" />
-        <Input {...register("details")} placeholder="Details" />
-        <Input {...register("relevantLinks")} placeholder="Relevant Links" />
+        <Input {...register("basic.name")} placeholder="Name" label="Name" />
+        <Input
+          {...register("basic.county")}
+          placeholder="County"
+          label="County"
+        />
+        <Input
+          {...register("basic.locality")}
+          placeholder="Locality"
+          label="Locality"
+        />
       </FormRow>
       {/* type of location - grounds,trails, picnics, running trails - can habe to type of venues */}
-      <FormRow label="Type of Location">
-        <select {...register("typeOfLocation")}>
-          <option value="">Select Type of Location</option>
-          <option value="grounds">Grounds</option>
-          <option value="trails">Trails</option>
-          <option value="picnics">Picnics</option>
-          <option value="runningTrails">Running Trails</option>
-        </select>
-      </FormRow>
-      <FormRow label="General Location">
-        <Input {...register("location.county")} placeholder="County" />
-        <Input
-          {...register("location.constituency")}
-          placeholder="Constituency"
-        />
-        <Input
-          {...register("location.nearbyLandmarks")}
-          placeholder="Nearby Landmarks"
-        />
-      </FormRow>
-      <FormRow label="Activities Allowed">
-        <div>
-          {outdoorActivities.map((activity, i) => (
-            <Tag
-              key={i}
-              color={activities.includes(activity) ? "green-300" : ""}
-              onClick={() => handleTagClick(activity)}
+      <FormRow label="Acess Points" classes="border-t pb-2">
+        {fields.map((field, index) => (
+          <div key={field.id} className="  gap-2 flex">
+            <Input
+              {...register(`accessPoints.${index}.address`)}
+              placeholder="Address"
+              label="Address"
+            />
+            <Input
+              {...register(`accessPoints.${index}.link`)}
+              placeholder="Link"
+              label="Link"
+            />
+            <Button
+              classes="self-end"
+              type="button"
+              onClick={() => remove(index)}
             >
-              {activity}
-            </Tag>
-          ))}
-        </div>
-        <input
-          type="hidden"
-          {...register("activities")}
-          value={activities.join(",")}
-        />
+              ❌
+            </Button>
+          </div>
+        ))}
+        {fields.length < 3 && (
+          <Button
+            type="button"
+            onClick={() => append({ address: "", link: "" })}
+          >
+            Add Access point
+          </Button>
+        )}
       </FormRow>
-      <FormRow label="Charges">
-        <Input {...register("charges.children")} placeholder="Children" />
-        <Input
-          {...register("charges.costBreakdown")}
-          placeholder="Cost Breakdown"
-        />
-      </FormRow>
+
+      <div className="grid">
+        <h4>Charges</h4>
+        <FormRow label="Kenyan">
+          <SelectCurrency
+            register={register("charges.kenyan.currency")}
+            id="kenyan"
+          />
+          <Input
+            {...register("charges.kenyan.adult")}
+            placeholder="Adult"
+            label="Adult"
+          />
+          <Input
+            {...register("charges.kenyan.child")}
+            placeholder="Child"
+            label="Child"
+          />
+        </FormRow>
+        <FormRow label="Resident">
+          <SelectCurrency
+            register={register("charges.resident.currency")}
+            id="resident"
+          />
+          <Input
+            {...register("charges.resident.adult")}
+            placeholder="Adult"
+            label="Adult"
+          />
+          <Input
+            {...register("charges.resident.child")}
+            placeholder="Child"
+            label="Child"
+          />
+        </FormRow>
+        <FormRow label="Non-Resident">
+          <SelectCurrency
+            register={register("charges.nonResident.currency")}
+            id="nonResident"
+          />
+          <Input
+            {...register("charges.nonResident.adult")}
+            placeholder="Adult"
+            label="Adult"
+          />
+          <Input
+            {...register("charges.nonResident.child")}
+            placeholder="Child"
+            label="Child"
+          />
+        </FormRow>
+      </div>
       <FormRow label="Relevant Images">
         <FileInput num={0} classes={"sm:w-2/5"} />
-        <div className="grid grid-cols-2 gap-4 sm:w-3/5 place-items-center">
-          <FileInput classes={"aspect-square h-40"} />
-          <FileInput classes={"aspect-square h-40"} />
-          <FileInput classes={"aspect-square h-40"} />
-          <FileInput classes={"aspect-square h-40"} />
-        </div>
       </FormRow>
+      <Button type="submit">Submit</Button>
     </form>
   );
 }
 
+// I want a input of acess points with adress and link, should be up to 3 acess points, use the useArrya hoook of react hook forms to add  the acess points
+
 //flex iotems stretch
+
+// always add space inside of the container
+
 // always add space inside of the container
