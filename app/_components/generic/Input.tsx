@@ -8,7 +8,7 @@ type InputProps = {
   placeholder?: string;
   reactHooKFormValidate?: {};
   value?: string;
-  label: string;
+  label?: string;
 };
 
 function Input({

@@ -16,7 +16,7 @@ const AccessPointsForm = () => {
     name: "accessPoints",
   });
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: any) => {
     console.log(data);
   };
 
