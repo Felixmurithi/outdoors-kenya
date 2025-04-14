@@ -34,7 +34,7 @@ function Input({
         id={id}
         type={`${type}`}
         placeholder={placeholder}
-        className={`${classes} rounded-sm h-8  border border-deepSeaweed-tints-300 text-deepSeaweed-tints-300 w-full px-2`}
+        className={`${classes} rounded-sm h-8  border border-deepSeaweed-tints-300 text-deepSeaweed-tints-300 w-full px-2 bg-deepSeaweed-tints-700`}
         {...reactHooKFormValidate}
       />
     </div>

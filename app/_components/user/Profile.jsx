@@ -1,6 +1,10 @@
+"use client";
+
 import Button from "@/app/_components/generic/Button";
+import { signup } from "@/app/_lib/action";
 
 function Profile() {
+  signup();
   return (
     <div className="div flex-col items-center gap-6">
       <img
@@ -15,3 +19,5 @@ function Profile() {
 }
 
 export default Profile;
+
+// server actyions are used to learn

@@ -1,88 +1,35 @@
 "use server";
 
-import fsp from "fs/promises";
-import path from "path";
+import { cookies } from "next/headers";
 
-import readFileData from "@/app/_lib/readFileData";
-import writeImage from "../_utils/writeImage";
+import { hashPassword, generateSalt } from "@/app/_lib/auth";
+import { createUserSession } from "./session";
 
-// export async function signup(signupData) {
-//   const dataFilePath = path.join(process.cwd(), "/app/_lib/users.json");
+export async function signup() {
+  const password = "password";
+  const salt = generateSalt();
 
-//   const jsonData = await readFileData("/app/_lib/users.json");
+  //check if user exits
 
-//   const writeData = {
-//     ...jsonData,
-//     [`${signupData.firstName}_${signupData.lastName}`.toLowerCase()]: {
-//       signupData,
-//     },
-//   };
+  //hashpassowrd
 
-//   await fsp.writeFile(dataFilePath, JSON.stringify(writeData));
+  const hashedPassword = await hashPassword(password, salt);
 
-//   // return "user sign up success";
-// }
+  //insert user , hash, salt
 
-export async function uploadEventImage(image) {
-  //imag set at formData
-  const imageFilename = await writeImage(
-    image.get("image"),
-    image.get("name"),
-    "events"
-  );
-
-  const dataFilePath = path.join(process.cwd(), "/app/_lib/events.json");
-  const jsonData = await readFileData("/app/_lib/users.json");
-
-  const writeData = {
-    ...jsonData,
-    [user]: {
-      ...jsonData[user],
-      profileImage: `${imageFilename}`,
-    },
-  };
-
-  await fsp.writeFile(dataFilePath, JSON.stringify(writeData));
+  //create userSession
+  // const cookie = await cookies() ; //NEXT.JS 15 implementation
+  // await createUserSession(user, cookie);
+  return await createUserSession(hashPassword, cookies());
 }
 
-export async function deleteEventImage({ profileImage, user }) {
-  // console.log(profileImage);
-  await fsp.rm(`./public/events/${profileImage}`, {
-    recursive: true,
-    force: true,
-  });
-
-  //fix json data
-  const dataFilePath = path.join(process.cwd(), "/app/_lib/users.json");
-  const jsonData = await readFileData("/app/_lib/users.json");
-
-  const writeData = {
-    ...jsonData,
-    [user]: {
-      ...jsonData[user],
-      profileImage: "",
-    },
-  };
-
-  await fsp.writeFile(dataFilePath, JSON.stringify(writeData));
+export async function signin(password) {
+  // parse Schema
+  // if false rewturn true
+  //check if user exits
+  // const user={ hashedPassword, salt }
+  //check if password matches
+  // verifyPassword(password, salt, hashedPassword);
+  //create userSession
+  // await createUserSession(user, cookies());
 }
-
-export async function updateProfile(updateData) {
-  const dataFilePath = path.join(process.cwd(), "/app/_lib/users.json");
-  const jsonData = await readFileData("/app/_lib/users.json");
-
-  const writeData = {
-    ...jsonData,
-    [updateData.user]: {
-      ...jsonData[updateData.user],
-      [updateData.item]: updateData.data,
-    },
-  };
-
-  console.log(updateData);
-  await fsp.writeFile(dataFilePath, JSON.stringify(writeData));
-}
-// in the node process
-
-// TO DO
-// u cant use num,bers as object keys

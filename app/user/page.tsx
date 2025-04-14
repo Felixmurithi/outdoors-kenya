@@ -2,6 +2,7 @@ import { events } from "@/app/_lib/events";
 
 import Card from "@/app/_components/generic/Card";
 import Profile from "@/app/_components/user/Profile";
+import { signup } from "@/app/_lib/action";
 
 export default function Page() {
   return (
