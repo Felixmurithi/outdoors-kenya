@@ -33,3 +33,7 @@ export async function signin(password) {
   //create userSession
   // await createUserSession(user, cookies());
 }
+
+export async function signout() {
+  await removeUserFromSession(cookies());
+}

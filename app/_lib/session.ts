@@ -22,9 +22,7 @@ const COOKIE_SESSION_KEY = "session-id";
 export function getUserFromSession(cookies: Pick<Cookies, "get">) {
   const sessionId = cookies.get(COOKIE_SESSION_KEY)?.value;
 
-  if (sessionId == null) {
-    return null;
-  }
+  if (sessionId == null) return null;
 
   //return user details using sessionId- return id and role
   return getUserBySessionId(sessionId);
@@ -54,4 +52,31 @@ function setCookie(sessionId: string, cookies: Pick<Cookies, "set">) {
 function getUserBySessionId(sessionId: string) {
   // get user frtom DB based on the sessionId
   //u can verify sess
+}
+
+export async function removeUserFromSession(
+  cookies: Pick<Cookies, "get" | "delete">
+) {
+  const sessionId = cookies.get(COOKIE_SESSION_KEY)?.value;
+
+  if (sessionId == null) return null;
+
+  // remove from DB // TODO
+
+  cookies.delete(COOKIE_SESSION_KEY);
+}
+
+export async function updateUserSessionExpiration(
+  cookies: Pick<Cookies, "get" | "set">
+) {
+  //get user using teh existing session ID
+  const sessionId = cookies.get(COOKIE_SESSION_KEY)?.value;
+  if (sessionId == null) return null;
+  const user = getUserBySessionId(sessionId);
+  if (user == null) return;
+
+  // write session to DB
+
+  //set session cookie
+  setCookie(sessionId, cookies);
 }
