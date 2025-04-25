@@ -1,6 +1,7 @@
-import EntranceFees from "@/app/_components/locations/EntranceFees";
+import EntranceFees from "@/app/_components/explore/EntranceFees";
 import SocialIcons from "@/app/_components/generic/SocialIcons";
-import Access from "@/app/_components/locations/Access";
+import Access from "@/app/_components/explore/Access";
+import RouteHighlight from "@/app/_components/explore/RouteHighlight";
 
 const icons = [
   { name: "facebook", link: "https://www.facebook.com" },
@@ -44,6 +45,7 @@ export default async function HikingTrails({}) {
   //
 
   const tableData = [
+    ["kshs", "kshs", "USD"],
     [100, 100, 400],
     [50, 50, 300],
   ];
@@ -68,6 +70,8 @@ export default async function HikingTrails({}) {
       <Access locations={sampleLocations} />
 
       <EntranceFees tableData={tableData} />
+
+      <RouteHighlight />
 
       <div>
         <p>official website </p>
