@@ -1,10 +1,13 @@
 import Link from "next/link";
 
 // cuureny array is mao
+
+type EntranceFeesTable = [string[], number[], number[]];
+
 export default function EntranceFees({
   tableData,
 }: {
-  tableData: (number[] | string[])[];
+  tableData: EntranceFeesTable;
 }) {
   // the fees should be passed as an array with 3 nested arrays with fees, the two arrays map two rows with the nested arrays as data
   return (

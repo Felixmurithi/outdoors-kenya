@@ -5,35 +5,35 @@ import { cookies } from "next/headers";
 import { hashPassword, generateSalt } from "@/app/_lib/auth";
 import { createUserSession } from "./session";
 
-export async function signup() {
-  const password = "password";
-  const salt = generateSalt();
+// export async function signup() {
+//   const password = "password";
+//   const salt = generateSalt();
 
-  //check if user exits
+//   //check if user exits
 
-  //hashpassowrd
+//   //hashpassowrd
 
-  const hashedPassword = await hashPassword(password, salt);
+//   const hashedPassword = await hashPassword(password, salt);
 
-  //insert user , hash, salt
+//   //insert user , hash, salt
 
-  //create userSession
-  // const cookie = await cookies() ; //NEXT.JS 15 implementation
-  // await createUserSession(user, cookie);
-  return await createUserSession(hashPassword, cookies());
-}
+//   //create userSession
+//   // const cookie = await cookies() ; //NEXT.JS 15 implementation
+//   // await createUserSession(user, cookie);
+//   return await createUserSession(hashPassword, cookies());
+// }
 
-export async function signin(password) {
-  // parse Schema
-  // if false rewturn true
-  //check if user exits
-  // const user={ hashedPassword, salt }
-  //check if password matches
-  // verifyPassword(password, salt, hashedPassword);
-  //create userSession
-  // await createUserSession(user, cookies());
-}
+// export async function signin(password) {
+//   // parse Schema
+//   // if false rewturn true
+//   //check if user exits
+//   // const user={ hashedPassword, salt }
+//   //check if password matches
+//   // verifyPassword(password, salt, hashedPassword);
+//   //create userSession
+//   // await createUserSession(user, cookies());
+// }
 
-export async function signout() {
-  await removeUserFromSession(cookies());
-}
+// export async function signout() {
+//   await removeUserFromSession(cookies());
+// }

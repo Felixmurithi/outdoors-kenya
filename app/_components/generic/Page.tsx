@@ -1,7 +1,7 @@
 import Banner from "@/app/_components/generic/Banner";
 type Props = {
   children: React.ReactNode;
-  banner: string;
+  banner?: string;
   headline: string;
   params: { slug: string };
   searchParams?: { [key: string]: string | string[] | undefined };
@@ -15,8 +15,7 @@ function Page({ children, banner, headline, params, searchParams }: Props) {
 
   return (
     <main className="grid gap-8">
-      <Banner image={banner}>{headline}</Banner>
-
+      {banner ? <Banner image={banner}>{headline}</Banner> : ""}
       {children}
     </main>
   );

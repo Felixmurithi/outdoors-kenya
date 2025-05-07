@@ -1,17 +1,23 @@
 "use client";
 
-type Props = {
+type TagProps = {
   children: React.ReactNode;
   color?: string;
-  onClick?: () => void;
 };
 
-function Tag({ children, color = "bg-stone-300", onClick }: Props) {
-  return (
-    <span className={`${color}  px-1 rounded-lg w-fit`} onClick={() => onClick?.()}>
-      {children}
-    </span>
-  );
+type RouteTagProps = TagProps & {
+  difficulty: string;
+};
+
+export default function Tag({ children, color = "bg-stone-300" }: TagProps) {
+  return <span className={`${color}  px-1 rounded-lg w-fit`}>{children}</span>;
 }
 
-export default Tag;
+export function RouteTag({ children, difficulty, color }: RouteTagProps) {
+  return (
+    <div>
+      <Tag>{children}</Tag>
+      <span>{difficulty}</span>
+    </div>
+  );
+}

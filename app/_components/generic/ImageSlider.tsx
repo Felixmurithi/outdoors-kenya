@@ -1,5 +1,7 @@
 "use client";
 import { useState } from "react";
+import { SliderButton } from "@/app/_components/generic/Button";
+// the image is lider by the fact that the tanslateX value is 100% the width of the image which is inhited from the parent. The Image is mapped to a number of elements all with the same width as the parent. On translating 100% the next element is shown and the   next element is displayed and the prev hidden because of the oveflow hidden property. translating is like scrrolling.
 
 function ImageSlider({ images }: { images: string[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -15,10 +17,8 @@ function ImageSlider({ images }: { images: string[] }) {
     setTranslateX(translateX - 100); // adjust the value to match the width of the images
   };
 
-  // the image is lider by the fact that the tanslateX value is 100% the width of the image which is inhited from the parent. The Image is mapped to a number of elements all with the same width as the parent. On translating 100% the next element is shown and the   next element is displayed and the prev hidden because of the oveflow hidden property. translating is like scrrolling.
-
   return (
-    <div className="relative w-80 overflow-hidden">
+    <div className="relative overflow-hidden">
       <div
         className="flex transition-transform duration-500 relative"
         style={{ transform: `translateX(${translateX}%)` }}
@@ -32,18 +32,13 @@ function ImageSlider({ images }: { images: string[] }) {
           />
         ))}
       </div>
-      <button
-        className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-white border-none p-4 text-lg cursor-pointer"
-        onClick={handlePrevClick}
-      >
-        Prev
-      </button>
-      <button
-        className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white border-none p-4 text-lg cursor-pointer"
+
+      <SliderButton onClick={handlePrevClick} icon="/icons/arrow-left.svg" />
+      <SliderButton
         onClick={handleNextClick}
-      >
-        Next
-      </button>
+        icon="/icons/arrow-right.svg"
+        direction="right-0"
+      />
     </div>
   );
 }

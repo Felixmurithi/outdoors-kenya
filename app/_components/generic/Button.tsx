@@ -50,4 +50,23 @@ export default function Button({
   );
 }
 
+export function SliderButton({
+  onClick,
+  icon,
+  direction = "left-0",
+}: {
+  onClick: () => void;
+  icon: string;
+  direction?: string;
+}) {
+  return (
+    <button
+      className={`absolute top-1/2 ${direction} transform -translate-y-1/2 bg-white border-none p-4 text-lg cursor-pointer opacity-25 hover:opacity-70`}
+      onClick={onClick}
+    >
+      <img src={icon} alt="arrow right button" />
+    </button>
+  );
+}
+
 //typescript noty smart enough to know when u pas in teh wrong values

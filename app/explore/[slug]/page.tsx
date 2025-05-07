@@ -1,7 +1,14 @@
 import EntranceFees from "@/app/_components/explore/EntranceFees";
 import SocialIcons from "@/app/_components/generic/SocialIcons";
 import Access from "@/app/_components/explore/Access";
-import RouteHighlight from "@/app/_components/explore/RouteHighlight";
+import Route from "@/app/_components/explore/PopularRoute";
+
+type EntranceFeesTable = [string[], number[], number[]];
+const tableData: EntranceFeesTable = [
+  ["kshs", "kshs", "USD"],
+  [100, 100, 400],
+  [50, 50, 300],
+];
 
 const icons = [
   { name: "facebook", link: "https://www.facebook.com" },
@@ -27,51 +34,23 @@ const sampleLocations = [
   },
 ];
 
-export default async function HikingTrails({}) {
-  ////HTML
-  //image
-
-  //BASIC
-  // basic details- name-description,  count &adress,
-  // longets trail
-  // managed by- contacts, links,
-
-  //DETAILS
-  // entrance cost
-  //entrance place id map icon- if its 1 its a location 2 or more entrances
-
-  // oher activties- tags
-
-  //
-
-  const tableData = [
-    ["kshs", "kshs", "USD"],
-    [100, 100, 400],
-    [50, 50, 300],
-  ];
-
+export default async function Location({}) {
   return (
-    <main className="px-4">
-      <img
-        src="/imgs/bike_riding-event.jpg"
-        alt=""
-        className="mobile:w-[50%] h-72 object-cover"
-      />
-
+    <main className="px-24">
       <div className="py-4">
         <p className="uppercase text-[12px] tracking-widest opacity-75">
           nairobi, kimende
         </p>
         <h2>Karura Forest</h2>
-
-        <p>longest trail : 15km</p>
       </div>
 
-      <Access locations={sampleLocations} />
+      <div className="flex justify-between bg-slate-500">
+        <Access locations={sampleLocations} />
 
-      <EntranceFees tableData={tableData} />
+        <EntranceFees tableData={tableData} />
+      </div>
 
-      <RouteHighlight />
+      <Route />
 
       <div>
         <p>official website </p>

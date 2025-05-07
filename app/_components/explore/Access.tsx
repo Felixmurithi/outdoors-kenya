@@ -9,11 +9,13 @@ export default function Access({
   if (locations.length > 1) {
     return (
       <div className="text-sm">
-        <IconText iconLink="/social-icons/location.svg">Access</IconText>
+        <div className="py-2">
+          <IconText iconLink="/social-icons/location.svg">Access</IconText>
+        </div>
         <ul>
           {locations.map((entrance, index) => (
             <li key={index}>
-              <p>{entrance.label}</p>
+              <h4>{entrance.label}</h4>
               <LinkText link={entrance.link}>{entrance.address}</LinkText>
             </li>
           ))}

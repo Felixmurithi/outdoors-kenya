@@ -41,3 +41,4 @@ next-env.d.ts
 site.md
 todo.md
 /code/
+/untracked/
