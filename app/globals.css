@@ -70,6 +70,15 @@
   }
 }
 
+.slider-button {
+  opacity: 0.6;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.image-slider:hover .slider-button {
+  opacity: 1;
+}
+
 /* Show dropdown when hovering over the parent li */
 
 /* Keep dropdown visible when hovering over it */

@@ -1,7 +1,7 @@
 import EntranceFees from "@/app/_components/explore/EntranceFees";
 import SocialIcons from "@/app/_components/generic/SocialIcons";
 import Access from "@/app/_components/explore/Access";
-import Route from "@/app/_components/explore/PopularRoute";
+import PopularRoutes from "@/app/_components/explore/PopularRoutes";
 
 type EntranceFeesTable = [string[], number[], number[]];
 const tableData: EntranceFeesTable = [
@@ -36,21 +36,26 @@ const sampleLocations = [
 
 export default async function Location({}) {
   return (
-    <main className="px-24">
-      <div className="py-4">
-        <p className="uppercase text-[12px] tracking-widest opacity-75">
-          nairobi, kimende
-        </p>
-        <h2>Karura Forest</h2>
+    <main className="px-2 mobile:px-8 sm:px-16 lg:px-32 border-t  grid gap-16 ">
+      <div className="grid gap-6">
+        <div className="">
+          <h2>Karura Forest</h2>
+          <h4 className="uppercase text-xs tracking-widest opacity-75">
+            nairobi (Muthaiga),{" "}
+            <span className="bg-stone-400 px-1  text-yellow-300">
+              Kenya Forest Reserve
+            </span>
+          </h4>
+        </div>
+
+        <div className="flex justify-between flex-wrap gap-8">
+          <Access locations={sampleLocations} />
+
+          <EntranceFees tableData={tableData} />
+        </div>
       </div>
 
-      <div className="flex justify-between bg-slate-500">
-        <Access locations={sampleLocations} />
-
-        <EntranceFees tableData={tableData} />
-      </div>
-
-      <Route />
+      <PopularRoutes />
 
       <div>
         <p>official website </p>
@@ -62,3 +67,5 @@ export default async function Location({}) {
     </main>
   );
 }
+
+//TODO - figure out why media queries are not working for lg device size pd

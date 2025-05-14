@@ -11,18 +11,24 @@ export default function EntranceFees({
 }) {
   // the fees should be passed as an array with 3 nested arrays with fees, the two arrays map two rows with the nested arrays as data
   return (
-    <table className="border border-stone-600">
-      <caption className=" text-deepSeaweed-tints-800 font-semibold p-2 text-left text-base">
-        Fees
+    <table className="border border-stone-600  font-semibold ">
+      <caption className=" text-stone-800 font-semibold p-2 text-left text-base ">
+        <div className="flex gap-3">
+          <img src="/icons/toll.svg" alt="fees icon" />
+          <span>Fees</span>
+        </div>
       </caption>
       <thead>
         <tr>
           <th></th>
-          {["Kenyan", "Kenyan Resident", "Non-Resident"].map((type, index) => (
-            <th className="p-2 border border-stone-600 " key={index}>
+          {["Kenyan", "Kenyan resident", "non-resident"].map((type, index) => (
+            <th
+              className="p-2 border border-stone-600 text-stone-600"
+              key={index}
+            >
               <div className="flex flex-col">
-                <span className="font-normal">{type}</span>
-                <span className="font-light text-sm">
+                <span className="">{type}</span>
+                <span className="text-stone-500 text-sm font-medium">
                   {tableData[0][index]}
                 </span>
               </div>
@@ -34,12 +40,12 @@ export default function EntranceFees({
         {tableData.map((row: number[], i) => {
           if (i === 0) return;
           return (
-            <tr key={i}>
-              <td className="border border-stone-600 p-2">
+            <tr key={i} className="text-stone-500">
+              <td className="border border-stone-600  p-4">
                 {["adult", "child"][i - 1]}
               </td>
               {row.map((fee, i) => (
-                <td className="p-2 border border-stone-600" key={i}>
+                <td className=" border border-stone-600 p-4" key={i}>
                   {fee}
                 </td>
               ))}
