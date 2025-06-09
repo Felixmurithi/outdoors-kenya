@@ -33,14 +33,16 @@ function Route() {
       <ImageSlider images={["football.jpg", "bike_riding-event.jpg"]} />
 
       <div className="grid gap-2 pl-2">
-        <h4 className="font-semibold text-stone-500">Ngong Hills 6th Hill</h4>
+        <h4 className="font-semibold text-stone-500">
+          <LinkText link="#">Ngong Hills 6th Hill</LinkText>
+        </h4>
 
         <div className="grid gap-1">
-          <div className="text-sm text-stone-400">
+          <div className="text-sm text-stone-500">
             length: 14km elevation: 200m
           </div>
           <div>
-            <Tag color="bg-green-500">hiking</Tag> <Tag>cycling</Tag>
+            <Tag color="bg-orange-500">hiking</Tag> <Tag>cycling</Tag>
           </div>
         </div>
       </div>

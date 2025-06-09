@@ -16,7 +16,7 @@ export default function LocationCard({
   location: LocationCardProps;
 }) {
   return (
-    <Link href="/explore/hiking-trails/1">
+    <Link href="/explore/1">
       <div className="flex flex-col rounded-lg shadow-lg hover:shadow-2xl">
         <img
           className="h-40 w-full object-cover"

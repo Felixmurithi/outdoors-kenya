@@ -4,7 +4,46 @@ import Input from "@/app/_components/generic/Input";
 import FormRow from "@/app/_components/generic/FormRow";
 import FileInput from "@/app/_components/generic/FileInput";
 import Button from "@/app/_components/generic/Button";
-import SelectCurrency from "../generic/SelectCurrency";
+import SelectCurrency from "@/app/_components/generic/SelectCurrency";
+import AddWayPoint from "@/app/_components/add/AddWayPoint";
+import AddAccessPoints from "@/app/_components/add/AddAccessPoints";
+import { useState } from "react";
+
+const defaultValues = {
+  accessPoints: [
+    {
+      accessPoint: {
+        address: "",
+        placeId: "",
+      },
+      wayPoints: ["hi"],
+    },
+  ],
+  basic: {
+    name: "",
+    county: "",
+    locality: "",
+  },
+  charges: {
+    kenyan: {
+      currency: "",
+      adult: "",
+      child: "",
+    },
+    resident: {
+      currency: "",
+      adult: "",
+      child: "",
+    },
+    nonResident: {
+      currency: "",
+      adult: "",
+      child: "",
+    },
+  },
+};
+
+export type DefaultValuesType = typeof defaultValues;
 
 //enerla lo cation county. constiuency, neraby landmarks
 // activities allowed
@@ -16,150 +55,45 @@ import SelectCurrency from "../generic/SelectCurrency";
 // const outdoorActivities "Picnic", "Hiking", "Running", "Cycling"
 
 export default function AddLocationForm() {
-  const { register, control, handleSubmit } = useForm({
-    defaultValues: {
-      accessPoints: [
-        {
-          address: "",
-          link: "",
-        },
-      ],
-      basic: {
-        name: "",
-        county: "",
-        locality: "",
-      },
-      charges: {
-        kenyan: {
-          currency: "",
-          adult: "",
-          child: "",
-        },
-        resident: {
-          currency: "",
-          adult: "",
-          child: "",
-        },
-        nonResident: {
-          currency: "",
-          adult: "",
-          child: "",
-        },
-      },
-    },
-  });
-  const { fields, append, prepend, remove } = useFieldArray({
-    control,
-    name: "accessPoints",
+  const { register, control, handleSubmit, watch } = useForm({
+    defaultValues,
   });
 
   const onSubmit = async (data: any) => {
     console.log(data);
   };
 
+  const basic = watch("hi");
+  console.log(basic);
+
+  // const access = watch("accessPoints");
+  // console.log(access);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
       {/* name, details, levenat links */}
       <FormRow label="Basic Details" classes="flex ">
-        <Input {...register("basic.name")} placeholder="Name" label="Name" />
         <Input
-          {...register("basic.county")}
+          register={{ ...register("basic.name") }}
+          placeholder="Name"
+          label="Name"
+        />
+        <Input
+          register={{ ...register("basic.county") }}
           placeholder="County"
           label="County"
         />
         <Input
-          {...register("basic.locality")}
+          register={{ ...register("basic.locality") }}
           placeholder="Locality"
           label="Locality"
         />
       </FormRow>
-      {/* type of location - grounds,trails, picnics, running trails - can habe to type of venues */}
-      <FormRow label="Acess Points" classes="border-t pb-2">
-        {fields.map((field, index) => (
-          <div key={field.id} className="  gap-2 flex">
-            <Input
-              {...register(`accessPoints.${index}.address`)}
-              placeholder="Address"
-              label="Address"
-            />
-            <Input
-              {...register(`accessPoints.${index}.link`)}
-              placeholder="Link"
-              label="Link"
-            />
-            <Button
-              classes="self-end"
-              type="button"
-              onClick={() => remove(index)}
-            >
-              ❌
-            </Button>
-          </div>
-        ))}
-        {fields.length < 3 && (
-          <Button
-            type="button"
-            onClick={() => append({ address: "", link: "" })}
-          >
-            Add Access point
-          </Button>
-        )}
-      </FormRow>
 
-      <div className="grid">
-        <h4>Charges</h4>
-        <FormRow label="Kenyan">
-          <SelectCurrency
-            register={register("charges.kenyan.currency")}
-            id="kenyan"
-          />
-          <Input
-            {...register("charges.kenyan.adult")}
-            placeholder="Adult"
-            label="Adult"
-          />
-          <Input
-            {...register("charges.kenyan.child")}
-            placeholder="Child"
-            label="Child"
-          />
-        </FormRow>
-        <FormRow label="Resident">
-          <SelectCurrency
-            register={register("charges.resident.currency")}
-            id="resident"
-          />
-          <Input
-            {...register("charges.resident.adult")}
-            placeholder="Adult"
-            label="Adult"
-          />
-          <Input
-            {...register("charges.resident.child")}
-            placeholder="Child"
-            label="Child"
-          />
-        </FormRow>
-        <FormRow label="Non-Resident">
-          <SelectCurrency
-            register={register("charges.nonResident.currency")}
-            id="nonResident"
-          />
-          <Input
-            {...register("charges.nonResident.adult")}
-            placeholder="Adult"
-            label="Adult"
-          />
-          <Input
-            {...register("charges.nonResident.child")}
-            placeholder="Child"
-            label="Child"
-          />
-        </FormRow>
-      </div>
-      <FormRow label="Relevant Images">
-        <FileInput num={0} classes={"sm:w-2/5"} />
-      </FormRow>
+      <Input register={{ ...register("hi") }} placeholder="hi" label="hi" />
+
+      <AddAccessPoints control={control} register={register} watch={watch} />
+
       <Button type="submit">Submit</Button>
     </form>
   );
@@ -172,3 +106,16 @@ export default function AddLocationForm() {
 // always add space inside of the container
 
 // always add space inside of the container
+
+// if find urself trring to add comments between the react html elements, u need to compose that components
+
+//DOCS
+//u neeed to to do thei examples and read
+// libraries have rules dont try fit your own- read docs
+//practice docs- dont assume rules.
+
+// RESULTs
+//new conepts will always be anxiety raising especilly when they are not getting through overc ome that by reducing the maount of time spent reaading to
+
+//INSIGHT
+//summarsise the google directiosn api- this tyo the AI gives toom much of a summary

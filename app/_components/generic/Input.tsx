@@ -1,41 +1,48 @@
 type InputProps = {
   classes?: string;
-  id?: string;
+
   type?: string;
   name?: string;
   checked?: boolean;
-  onChange?: (e: { target: HTMLInputElement }) => void;
-  placeholder?: string;
+  // onChange?: (e: { target: HTMLInputElement }) => void;
+  placeholder: string;
   reactHooKFormValidate?: {};
   value?: string;
-  label?: string;
+  label: string;
+  size?: "normal" | "small";
+  register?: any;
 };
 
+//
 function Input({
   classes,
-  id,
-  type = "text",
+  label,
+  type = "text", //to specify input type text or number
   name,
-  checked,
-  onChange,
+  checked, // for checkbox to create checkbox input
   placeholder,
   reactHooKFormValidate,
   value,
-  label,
+  size = "normal",
+  register,
 }: InputProps) {
+  //set the htmlfor id at lobel wuisng teh label of that input
+  const id = `${label.toLowerCase().replace(" ", "-")}-input`;
+
   return (
     <div className="grid">
       <label htmlFor={id}>{label}</label>
       <input
         value={value}
-        onChange={onChange}
         defaultChecked={checked}
         name={name}
         id={id}
         type={`${type}`}
         placeholder={placeholder}
-        className={`${classes} rounded-sm h-8  border border-deepSeaweed-tints-300 text-deepSeaweed-tints-300 w-full px-2 bg-deepSeaweed-tints-700`}
-        {...reactHooKFormValidate}
+        className={`${classes} rounded-sm  border border-deepSeaweed-tints-300 text-deepSeaweed-tints-300 w-full px-2 bg-stone-50  ${
+          size === "normal" ? "h-8" : "h-6"
+        }`}
+        {...register}
       />
     </div>
   );

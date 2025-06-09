@@ -10,7 +10,7 @@ function AddEvent({
   console.log(searchParams);
 
   return (
-    <main className="grid h-full content-start p-4 lg:px-8 mx-44">
+    <main className="grid h-full content-start lg:px-8 px-8">
       <h2>Add Event</h2>
       <AddLocationForm />
     </main>

@@ -42,7 +42,7 @@ export default async function Location({}) {
           <h2>Karura Forest</h2>
           <h4 className="uppercase text-xs tracking-widest opacity-75">
             nairobi (Muthaiga),{" "}
-            <span className="bg-stone-400 px-1  text-yellow-300">
+            <span className="bg-deepSeaweed-tints-200 px-1 font-semibold text-yellow-300">
               Kenya Forest Reserve
             </span>
           </h4>
