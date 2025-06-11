@@ -3,26 +3,29 @@ import Button from "@/app/_components/generic/Button";
 import FormRow from "@/app/_components/generic/FormRow";
 import Input from "@/app/_components/generic/Input";
 import AddWayPoint from "@/app/_components/add/AddWayPoint";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 import { DefaultValuesType } from "@/_components/add/AddLocationForm";
+import { get } from "http";
 
-export default function AddAcessPoint({ control, register, watch }: any) {
+export default function AddAcessPoint({
+  control,
+  register,
+  watch,
+  trigger,
+}: any) {
   const [form, setForm] = useState(null);
   const { fields, append, prepend, remove, update } = useFieldArray({
     name: "accessPoints",
     control,
   });
 
-  console.log(fields);
-
   return (
     <FormRow label="Acess Points" classes="flex flex-col">
       {fields.map((field, index) => (
-        <>
-          <div></div>
-          <div key={field.id}>
+        <div key={field.id}>
+          <div>
             <Input
               register={{
                 ...register(`accessPoints.${index}.accessPoint.address`),
@@ -32,10 +35,12 @@ export default function AddAcessPoint({ control, register, watch }: any) {
             />
             <Input
               register={{
-                ...register(`accessPoints.${index}.accessPoint.placeId`),
+                ...register(`accessPoints.${index}.accessPoint.url`, {
+                  required: "THis field is required",
+                }),
               }}
-              placeholder="PlaceId"
-              label="PlaceId"
+              placeholder="place url"
+              label="place url"
             />
             <AddWayPoint
               nestIndex={index}
@@ -47,16 +52,26 @@ export default function AddAcessPoint({ control, register, watch }: any) {
           <div>
             <p>starting adress</p>
             <p>finsishing ppoint </p>
+            <p>through</p>
 
-          
+            <div>
+              <iframe
+                width="200"
+                height="100"
+                loading="lazy"
+                allowFullScreen
+                src="https://www.google.com/maps/embed/v1/streetview?location=-0.7243%2C36.6811&key=AIzaSyAKM9w18iUfX_Eesf7AfAKhFFbraZSDDKk"
+              ></iframe>
+            </div>
           </div>
-        </>
+        </div>
       ))}
 
       <Button
         type="button"
         onClick={() => {
-          // setForm(index)
+          //trigger validation before addding a new acess point
+          trigger();
           append({
             accessPoint: {
               address: "",

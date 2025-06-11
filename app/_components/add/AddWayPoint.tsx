@@ -36,18 +36,6 @@ export default function AddWayPoint({
               label="PlaceId"
             />
           </div>
-          <div>
-            <p>
-              through way
-              {field.wayPoints
-                .map(
-                  (waypoint: { link: string; adress: string }, i: number) => (
-                    <Link key={i} href={waypoint.link}></Link>
-                  )
-                )
-                .join(", ")}
-            </p>
-          </div>
         </div>
       ))}
       <Button type="button" onClick={() => append("hi")} classes="mt-2">

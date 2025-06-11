@@ -1,5 +1,5 @@
 "use client";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useFieldArray, useForm, useFormState } from "react-hook-form";
 import Input from "@/app/_components/generic/Input";
 import FormRow from "@/app/_components/generic/FormRow";
 import FileInput from "@/app/_components/generic/FileInput";
@@ -8,15 +8,21 @@ import SelectCurrency from "@/app/_components/generic/SelectCurrency";
 import AddWayPoint from "@/app/_components/add/AddWayPoint";
 import AddAccessPoints from "@/app/_components/add/AddAccessPoints";
 import { useState } from "react";
+import { get } from "http";
 
 const defaultValues = {
   accessPoints: [
     {
       accessPoint: {
         address: "",
-        placeId: "",
+        url: "",
       },
-      wayPoints: ["hi"],
+      wayPoints: [
+        {
+          address: "",
+          url: "",
+        },
+      ],
     },
   ],
   basic: {
@@ -55,16 +61,34 @@ export type DefaultValuesType = typeof defaultValues;
 // const outdoorActivities "Picnic", "Hiking", "Running", "Cycling"
 
 export default function AddLocationForm() {
-  const { register, control, handleSubmit, watch } = useForm({
+  const {
+    register,
+    control,
+    handleSubmit,
+    watch,
+    getValues,
+    trigger,
+
+    formState: { errors, isValid },
+  } = useForm({
     defaultValues,
+    reValidateMode: "onBlur",
   });
 
-  const onSubmit = async (data: any) => {
-    console.log(data);
-  };
+  // const { isValid } = useFormState({ control });
 
-  const basic = watch("hi");
-  console.log(basic);
+  console.log(isValid, errors);
+
+  /*************  ✨ Windsurf Command ⭐  *************/
+  /**
+   * Function to be called when the form is submitted.
+   * @param {Object} data - The form data.
+   * @returns {Promise<void>}
+   */
+  /*******  21f59e80-3ce2-4a7a-910f-0be45b7a82f0  *******/ const onSubmit =
+    async (data: any) => {
+      console.log(data);
+    };
 
   // const access = watch("accessPoints");
   // console.log(access);
@@ -90,9 +114,12 @@ export default function AddLocationForm() {
         />
       </FormRow>
 
-      <Input register={{ ...register("hi") }} placeholder="hi" label="hi" />
-
-      <AddAccessPoints control={control} register={register} watch={watch} />
+      <AddAccessPoints
+        control={control}
+        register={register}
+        watch={watch}
+        trigger={trigger}
+      />
 
       <Button type="submit">Submit</Button>
     </form>
@@ -119,3 +146,11 @@ export default function AddLocationForm() {
 
 //INSIGHT
 //summarsise the google directiosn api- this tyo the AI gives toom much of a summary
+
+//REACT HOOK FORM
+//usew wtach will trigger a rerender after each input change and update the watched value
+//getValues will omly get the inputs as they are
+/on blur is necessary on revalidate and the revalidateMode option allows for the option to not revalidate before submitting.
+
+//TODO
+//useFormnState vs Formstate
