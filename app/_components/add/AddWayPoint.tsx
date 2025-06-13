@@ -17,25 +17,30 @@ export default function AddWayPoint({
     name: `accessPoints.${nestIndex}.wayPoints`,
   });
   return (
-    <FormRow label="Way Points" classes="flex flex-col">
+    <FormRow label="Way Points" classes="flex flex-col " nested>
       {fields.map((field, index) => (
         <div key={field.id}>
-          <div>
-            <Input
-              register={{
-                ...register(`accessPoints.${nestIndex}.wayPoints.${index}`),
-              }}
-              placeholder="Address"
-              label="Address"
-            />
-            <Input
-              register={{
-                ...register(`accessPoints.${nestIndex}.wayPoints.${index}`),
-              }}
-              placeholder="PlaceId"
-              label="PlaceId"
-            />
-          </div>
+          <Input
+            register={{
+              ...register(
+                `accessPoints.${nestIndex}.wayPoints.${index}.address`,
+                {
+                  required: "This field is required",
+                }
+              ),
+            }}
+            placeholder="address"
+            label="address"
+          />
+          <Input
+            register={{
+              ...register(`accessPoints.${nestIndex}.wayPoints.${index}.url`, {
+                required: "This field is required",
+              }),
+            }}
+            placeholder="url"
+            label="url"
+          />
         </div>
       ))}
       <Button type="button" onClick={() => append("hi")} classes="mt-2">

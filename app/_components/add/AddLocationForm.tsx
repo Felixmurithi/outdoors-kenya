@@ -94,7 +94,7 @@ export default function AddLocationForm() {
   // console.log(access);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-16">
       {/* name, details, levenat links */}
       <FormRow label="Basic Details" classes="flex ">
         <Input
@@ -150,7 +150,7 @@ export default function AddLocationForm() {
 //REACT HOOK FORM
 //usew wtach will trigger a rerender after each input change and update the watched value
 //getValues will omly get the inputs as they are
-/on blur is necessary on revalidate and the revalidateMode option allows for the option to not revalidate before submitting.
+//on blur is necessary on revalidate and the revalidateMode option allows for the option to not revalidate before submitting.
 
 //TODO
 //useFormnState vs Formstate

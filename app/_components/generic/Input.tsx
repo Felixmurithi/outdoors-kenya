@@ -39,7 +39,7 @@ function Input({
         id={id}
         type={`${type}`}
         placeholder={placeholder}
-        className={`${classes} rounded-sm  border border-deepSeaweed-tints-300 text-deepSeaweed-tints-300 w-full px-2 bg-stone-50  ${
+        className={`${classes} rounded-sm  border border-deepSeaweed-tints-500 placeholder:text-deepSeaweed-tints-300 w-full px-2 bg-stone-50  ${
           size === "normal" ? "h-8" : "h-6"
         }`}
         {...register}
