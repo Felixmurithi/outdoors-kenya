@@ -96,22 +96,24 @@ export default function AddLocationForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-16">
       {/* name, details, levenat links */}
-      <FormRow label="Basic Details" classes="flex ">
-        <Input
-          register={{ ...register("basic.name") }}
-          placeholder="Name"
-          label="Name"
-        />
-        <Input
-          register={{ ...register("basic.county") }}
-          placeholder="County"
-          label="County"
-        />
-        <Input
-          register={{ ...register("basic.locality") }}
-          placeholder="Locality"
-          label="Locality"
-        />
+      <FormRow label="Basic Details" classes=" ">
+        <div className="flex gap-4">
+          <Input
+            register={{ ...register("basic.name") }}
+            placeholder="Name"
+            label="Name"
+          />
+          <Input
+            register={{ ...register("basic.county") }}
+            placeholder="County"
+            label="County"
+          />
+          <Input
+            register={{ ...register("basic.locality") }}
+            placeholder="Locality"
+            label="Locality"
+          />
+        </div>
       </FormRow>
 
       <AddAccessPoints

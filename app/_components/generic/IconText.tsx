@@ -8,7 +8,7 @@ function IconText({
   classes?: string;
 }) {
   return (
-    <div className={`flex gap-4 ${classes}`}>
+    <div className={`flex gap-4 ${classes} p-1`}>
       <img src={iconLink}></img>
       <div>{children}</div>
     </div>

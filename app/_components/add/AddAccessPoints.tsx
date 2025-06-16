@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 
 import { DefaultValuesType } from "@/_components/add/AddLocationForm";
+import IconText from "../generic/IconText";
 
 export default function AddAcessPoint({
   control,
@@ -23,38 +24,44 @@ export default function AddAcessPoint({
   const { errors, isValid } = useFormState({ control });
 
   return (
-    <FormRow label="Access Points" classes=" ">
-      {fields.map((field, index) => (
-        <div key={field.id} className="border  shadow-md py-4 rounded-md px-8">
-          <div>
-            <div className="flex gap-8">
-              <Input
-                register={{
-                  ...register(`accessPoints.${index}.accessPoint.address`, {
-                    required: "This field is required",
-                  }),
-                }}
-                placeholder="Address"
-                label="Address"
-              />
-              <Input
-                register={{
-                  ...register(`accessPoints.${index}.accessPoint.url`, {
-                    required: "This field is required",
-                  }),
-                }}
-                placeholder="place url"
-                label="place url"
+    <FormRow label="Access Points">
+      <div className="grid gap-4">
+        {fields.map((field, index) => (
+          <div
+            key={field.id}
+            className="border  shadow-md py-4 rounded-md px-8"
+          >
+            <div className="grid gap-8">
+              <FormRow label="Access Point" nested>
+                <div className="flex gap-4">
+                  <Input
+                    register={{
+                      ...register(`accessPoints.${index}.accessPoint.address`, {
+                        required: "This field is required",
+                      }),
+                    }}
+                    placeholder="Address"
+                    label="Address"
+                  />
+                  <Input
+                    register={{
+                      ...register(`accessPoints.${index}.accessPoint.url`, {
+                        required: "This field is required",
+                      }),
+                    }}
+                    placeholder="place url"
+                    label="place url"
+                  />
+                </div>
+              </FormRow>
+              <AddWayPoint
+                nestIndex={index}
+                register={register}
+                control={control}
               />
             </div>
-            <AddWayPoint
-              nestIndex={index}
-              register={register}
-              control={control}
-            />
-          </div>
 
-          {/* <div>
+            {/* <div>
             <p>starting adress</p>
             <p>finsishing ppoint </p>
             <p>through</p>
@@ -69,28 +76,34 @@ export default function AddAcessPoint({
               ></iframe>
             </div>
           </div> */}
-        </div>
-      ))}
+          </div>
+        ))}
 
-      <Button
-        type="button"
-        onClick={() => {
-          //trigger validation before addding a new acess point
+        <Button
+          type="button"
+          onClick={() => {
+            //trigger validation before addding a new acess point
 
-          console.log(isValid);
-          // trigger();
+            console.log(isValid);
+            // trigger();
 
-          console.log(isValid);
-          append({
-            accessPoint: {
-              address: "",
-              placeId: "",
-            },
-          });
-        }}
-      >
-        Add Access Point
-      </Button>
+            console.log(isValid);
+            append({
+              accessPoint: {
+                address: "",
+                placeId: "",
+              },
+            });
+          }}
+        >
+          <IconText
+            iconLink="/icons/add.svg"
+            classes="text-accent-color-100 hover:bg-accent-orange-50 font-bold "
+          >
+            add access point
+          </IconText>
+        </Button>
+      </div>
     </FormRow>
   );
 }
