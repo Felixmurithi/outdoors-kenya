@@ -34,5 +34,5 @@
     "app/(explore)/hiking-trails/page.js",
     "app/_components/AddEventForm.jsx"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "**/code/**/*"]
 }

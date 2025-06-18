@@ -96,7 +96,7 @@ export default function AddLocationForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-16">
       {/* name, details, levenat links */}
-      <FormRow label="Basic Details" classes=" ">
+      <FormRow label="Basic Details">
         <div className="flex gap-4">
           <Input
             register={{ ...register("basic.name") }}

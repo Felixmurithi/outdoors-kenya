@@ -8,22 +8,10 @@ function Signup() {
     <div className="grid place-content-center min-h-screen">
       <div className="grid gap-4">
         <div className="grid gap-4 p-4">
-          <Input
-            placeholder="First Name"
-            type="text"
-          />
-          <Input
-            placeholder="Last Name"
-            type="text"
-          />
-          <Input
-            placeholder="Email"
-            type="email"
-          />
-          <Input
-            placeholder="Password"
-            type="password"
-          />
+          <Input placeholder="First Name" label="First Name" type="text" />
+          <Input placeholder="Last Name" label="Last Name" type="text" />
+          <Input placeholder="Email" label="Email" type="email" />
+          <Input placeholder="Password" label="Password" type="password" />
           <Button>Sign Up</Button>
           <div className="text-center">
             <ListItem>Already have an account? Login</ListItem>

@@ -29,7 +29,7 @@ export default function AddEventForm() {
     <form onSubmit={handleSubmit(onSubmit)}>
       {fields.map((field, index) => (
         <div key={field.id} className="flex">
-          <Input
+          {/* <Input
             {...register(`items.${index}.item`)}
             placeholder="Item"
             
@@ -37,7 +37,7 @@ export default function AddEventForm() {
           <Input
             {...register(`items.${index}.cost`)}
             placeholder="Cost (optional)"
-          />
+          /> */}
           {fields.length > 1 && (
             <Button type="button" onClick={() => remove(index)}>
               Remove

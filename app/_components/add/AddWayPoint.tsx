@@ -1,4 +1,4 @@
-import { useFieldArray } from "react-hook-form";
+import { useFieldArray, useFormState } from "react-hook-form";
 import FormRow from "@/app/_components/generic/FormRow";
 import Input from "@/app/_components/generic/Input";
 import Button from "../generic/Button";
@@ -8,15 +8,17 @@ export default function AddWayPoint({
   nestIndex,
   register,
   control,
-}: {
-  nestIndex: number;
-  register: any;
-  control: any;
-}) {
+  trigger,
+}: any) {
   const { fields, append, prepend, remove, update } = useFieldArray({
     control,
     name: `accessPoints.${nestIndex}.wayPoints`,
   });
+
+  const { errors, isValid } = useFormState({ control });
+
+  console.log(isValid, errors);
+
   return (
     <div className="grid gap-2 ">
       <FormRow label="Way Point" nested>
@@ -49,7 +51,14 @@ export default function AddWayPoint({
           </div>
         ))}
       </FormRow>
-      <Button type="button" onClick={() => append("hi")} classes="mt-2  ">
+      <Button
+        type="button"
+        onClick={() => {
+          trigger();
+          append("hi");
+        }}
+        classes="mt-2  "
+      >
         <IconText
           iconLink="/icons/add.svg"
           classes="text-lunar-green-700 font-semibold hover:bg-lunar-green-50"

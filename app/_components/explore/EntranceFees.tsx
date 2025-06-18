@@ -37,7 +37,7 @@ export default function EntranceFees({
         </tr>
       </thead>
       <tbody>
-        {tableData.map((row: number[], i) => {
+        {tableData.map((row, i) => {
           if (i === 0) return;
           return (
             <tr key={i} className="text-stone-500">

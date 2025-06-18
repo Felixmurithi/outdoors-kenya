@@ -5,8 +5,6 @@ import Input from "@/app/_components/generic/Input";
 import AddWayPoint from "@/app/_components/add/AddWayPoint";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-
-import { DefaultValuesType } from "@/_components/add/AddLocationForm";
 import IconText from "../generic/IconText";
 
 export default function AddAcessPoint({
@@ -22,6 +20,8 @@ export default function AddAcessPoint({
   });
 
   const { errors, isValid } = useFormState({ control });
+
+  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
   return (
     <FormRow label="Access Points">
@@ -58,6 +58,7 @@ export default function AddAcessPoint({
                 nestIndex={index}
                 register={register}
                 control={control}
+                trigger={trigger}
               />
             </div>
 
@@ -72,7 +73,15 @@ export default function AddAcessPoint({
                 height="100"
                 loading="lazy"
                 allowFullScreen
-                src="https://www.google.com/maps/embed/v1/streetview?location=-0.7243%2C36.6811&key=AIzaSyAKM9w18iUfX_Eesf7AfAKhFFbraZSDDKk"
+                src="https://www.google.com/maps/embed/v1/streetview?location=-0.7243%2C36.6811&key=AIzaSyAKM9w18iUfX_Eesf7AfAKhFFbraZSDDKk
+                
+                
+                https://www.google.com/maps/embed/v1/directions
+  ?key={apiKey}
+  &origin=Oslo+Norway
+  &destination=Telemark+Norway
+  &avoid=tolls|highways
+                "
               ></iframe>
             </div>
           </div> */}
@@ -83,10 +92,6 @@ export default function AddAcessPoint({
           type="button"
           onClick={() => {
             //trigger validation before addding a new acess point
-
-            console.log(isValid);
-            // trigger();
-
             console.log(isValid);
             append({
               accessPoint: {
@@ -108,4 +113,6 @@ export default function AddAcessPoint({
   );
 }
 
-// adding an acess point in
+// TODO
+//acorewect access color to use
+//delete and change key
