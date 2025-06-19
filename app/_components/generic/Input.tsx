@@ -11,6 +11,8 @@ type InputProps = {
   label: string;
   size?: "normal" | "small";
   register?: any;
+  setValue?: any;
+  input?: string;
 };
 
 //
@@ -25,7 +27,9 @@ function Input({
   value,
   size = "normal",
   register,
-}: InputProps) {
+}: // setValue,
+// input,
+InputProps) {
   //set the htmlfor id at lobel wuisng teh label of that input
   const id = `${label.toLowerCase().replace(" ", "-")}-input`;
 
@@ -43,6 +47,7 @@ function Input({
           size === "normal" ? "h-8" : "h-6"
         }`}
         {...register}
+        // onBlur={(e) => setValue?.(input, "hi")}
       />
     </div>
   );

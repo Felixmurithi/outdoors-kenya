@@ -1,4 +1,4 @@
-import { useFieldArray, useFormState } from "react-hook-form";
+import { useFieldArray, useFormState, useWatch } from "react-hook-form";
 import Button from "@/app/_components/generic/Button";
 import FormRow from "@/app/_components/generic/FormRow";
 import Input from "@/app/_components/generic/Input";
@@ -12,7 +12,9 @@ export default function AddAcessPoint({
   register,
   watch,
   trigger,
-}: any) {
+}: // getValues,
+// setValue,
+any) {
   const [form, setForm] = useState(null);
   const { fields, append, prepend, remove, update } = useFieldArray({
     name: "accessPoints",
@@ -23,6 +25,20 @@ export default function AddAcessPoint({
 
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
+  // function setFormValue(value: string) {
+  //   setValue;
+  // }
+
+  // const values = getValues("accessPoints");
+  // console.log(values);
+
+  const values = useWatch({
+    control,
+    name: "accessPoints",
+  });
+
+  console.log(values);
+
   return (
     <FormRow label="Access Points">
       <div className="grid gap-4">
@@ -32,9 +48,35 @@ export default function AddAcessPoint({
             className="border  shadow-md py-4 rounded-md px-8"
           >
             <div className="grid gap-8">
+              <FormRow label="Starting Point" nested>
+                <div className="flex gap-4">
+                  <Input
+                    // setValue={setValue}
+                    // input={`accessPoints.${index}.accessPoint.address`}
+                    register={{
+                      ...register(`accessPoints.${index}.accessPoint.address`, {
+                        required: "This field is required",
+                      }),
+                    }}
+                    placeholder="Address"
+                    label="Address"
+                  />
+                  <Input
+                    register={{
+                      ...register(`accessPoints.${index}.accessPoint.url`, {
+                        required: "This field is required",
+                      }),
+                    }}
+                    placeholder="place url"
+                    label="place url"
+                  />
+                </div>
+              </FormRow>
               <FormRow label="Access Point" nested>
                 <div className="flex gap-4">
                   <Input
+                    // setValue={setValue}
+                    // input={`accessPoints.${index}.accessPoint.address`}
                     register={{
                       ...register(`accessPoints.${index}.accessPoint.address`, {
                         required: "This field is required",
@@ -62,13 +104,12 @@ export default function AddAcessPoint({
               />
             </div>
 
-            {/* <div>
-            <p>starting adress</p>
-            <p>finsishing ppoint </p>
-            <p>through</p>
-
             <div>
-              <iframe
+              {values[index].wayPoints.map(
+                (wayPoint: { address: string }) => wayPoint.address
+              )}
+
+              {/* <iframe
                 width="200"
                 height="100"
                 loading="lazy"
@@ -78,13 +119,12 @@ export default function AddAcessPoint({
                 
                 https://www.google.com/maps/embed/v1/directions
   ?key={apiKey}
-  &origin=Oslo+Norway
+  &origin={values[index].wayPoints[0].address.replace(" ", "+")}
   &destination=Telemark+Norway
   &avoid=tolls|highways
                 "
-              ></iframe>
+              ></iframe> */}
             </div>
-          </div> */}
           </div>
         ))}
 
@@ -113,6 +153,10 @@ export default function AddAcessPoint({
   );
 }
 
+//INSIGHT
+// the form is only meant to accept known routes, if this was user facing it would have included a google places search API. Therefore should not be worried abouyt layout shifts in the embed iframe
+
 // TODO
+
 //acorewect access color to use
 //delete and change key

@@ -7,8 +7,6 @@ function AddEvent({
   params: { slug: string };
   searchParams?: { [key: string]: string | string[] | undefined };
 }) {
-  console.log(searchParams);
-
   return (
     <main className="grid h-full content-start w-fit mx-auto gap-8">
       <h2>Add Event</h2>

@@ -13,6 +13,10 @@ import { get } from "http";
 const defaultValues = {
   accessPoints: [
     {
+      startingPoint: {
+        address: "",
+        url: "",
+      },
       accessPoint: {
         address: "",
         url: "",
@@ -66,8 +70,10 @@ export default function AddLocationForm() {
     control,
     handleSubmit,
     watch,
-    getValues,
     trigger,
+
+    // getValues,
+    // setValue,
 
     formState: { errors, isValid },
   } = useForm({
@@ -75,23 +81,9 @@ export default function AddLocationForm() {
     reValidateMode: "onBlur",
   });
 
-  // const { isValid } = useFormState({ control });
-
-  console.log(isValid, errors);
-
-  /*************  ✨ Windsurf Command ⭐  *************/
-  /**
-   * Function to be called when the form is submitted.
-   * @param {Object} data - The form data.
-   * @returns {Promise<void>}
-   */
-  /*******  21f59e80-3ce2-4a7a-910f-0be45b7a82f0  *******/ const onSubmit =
-    async (data: any) => {
-      console.log(data);
-    };
-
-  // const access = watch("accessPoints");
-  // console.log(access);
+  const onSubmit = async (data: any) => {
+    console.log(data);
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-16">
@@ -121,6 +113,8 @@ export default function AddLocationForm() {
         register={register}
         watch={watch}
         trigger={trigger}
+        // getValues={getValues}
+        // setValue={setValue}
       />
 
       <Button type="submit">Submit</Button>
@@ -150,9 +144,13 @@ export default function AddLocationForm() {
 //summarsise the google directiosn api- this tyo the AI gives toom much of a summary
 
 //REACT HOOK FORM
-//usew wtach will trigger a rerender after each input change and update the watched value
-//getValues will omly get the inputs as they are
+//useWatch will trigger a rerender after each input change and update the watched value
+//usewatch will only rerender in the components its subcribed under
+//useWatch does not have an onBlur option
+
+//getValues will obly get the inputs as they are
 //on blur is necessary on revalidate and the revalidateMode option allows for the option to not revalidate before submitting.
+//get Values and set values do not trigger rerenders
 
 //TODO
 //useFormnState vs Formstate

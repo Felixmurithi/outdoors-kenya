@@ -35,8 +35,7 @@ export async function createUserSession(
   const sessionId = crypto.randomBytes(512).toString("hex").normalize();
 
   setCookie(sessionId, cookies);
-
-  console.log(sessionId);
+  // console.log(sessionId);
 }
 
 function setCookie(sessionId: string, cookies: Pick<Cookies, "set">) {
