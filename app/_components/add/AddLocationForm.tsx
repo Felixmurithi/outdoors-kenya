@@ -11,21 +11,23 @@ import { useState } from "react";
 import { get } from "http";
 
 const defaultValues = {
-  accessPoints: [
+  accessRoutes: [
     {
-      startingPoint: {
-        address: "",
-        url: "",
-      },
-      accessPoint: {
-        address: "",
-        url: "",
-      },
-      wayPoints: [
-        {
+      accessRoute: {
+        startingPoint: {
           address: "",
           url: "",
         },
+        entryPoint: {
+          address: "",
+          url: "",
+        },
+      },
+      wayPoints: [
+        // {
+        //   address: "",
+        //   url: "",
+        // },
       ],
     },
   ],

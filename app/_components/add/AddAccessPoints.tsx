@@ -17,7 +17,7 @@ export default function AddAcessPoint({
 any) {
   const [form, setForm] = useState(null);
   const { fields, append, prepend, remove, update } = useFieldArray({
-    name: "accessPoints",
+    name: "accessRoutes",
     control,
   });
 
@@ -34,68 +34,81 @@ any) {
 
   const values = useWatch({
     control,
-    name: "accessPoints",
+    name: "accessRoutes",
   });
 
   console.log(values);
 
+  console.log(fields);
+
   return (
-    <FormRow label="Access Points">
-      <div className="grid gap-4">
+    <FormRow label="Access Route">
+      <div className="grid gap-6">
         {fields.map((field, index) => (
           <div
             key={field.id}
             className="border  shadow-md py-4 rounded-md px-8"
           >
             <div className="grid gap-8">
-              <FormRow label="Starting Point" nested>
+              <FormRow label="Access Route" nested>
                 <div className="flex gap-4">
                   <Input
                     // setValue={setValue}
                     // input={`accessPoints.${index}.accessPoint.address`}
                     register={{
-                      ...register(`accessPoints.${index}.accessPoint.address`, {
-                        required: "This field is required",
-                      }),
+                      ...register(
+                        `accessRoutes.${index}.acessRoute.startingPoint.address`,
+                        {
+                          required: "This field is required",
+                        }
+                      ),
                     }}
-                    placeholder="Address"
-                    label="Address"
+                    placeholder="adress"
+                    label="starting point"
                   />
                   <Input
                     register={{
-                      ...register(`accessPoints.${index}.accessPoint.url`, {
-                        required: "This field is required",
-                      }),
+                      ...register(
+                        `accessRoute.${index}.acessRoute.startingPoint.url`,
+                        {
+                          required: "This field is required",
+                        }
+                      ),
+                    }}
+                    placeholder="place url"
+                    label="place url"
+                  />
+                </div>
+                <div className="flex gap-4">
+                  <Input
+                    // setValue={setValue}
+                    // input={`accessPoints.${index}.accessPoint.address`}
+                    register={{
+                      ...register(
+                        `accessRoute.${index}.acessRoute.entryPoint.address`,
+                        {
+                          required: "This field is required",
+                        }
+                      ),
+                    }}
+                    placeholder="address"
+                    label="entry point"
+                  />
+                  <Input
+                    register={{
+                      ...register(
+                        `accessRoute.${index}.acesssRoute.entryPoint.url`,
+                        {
+                          required: "This field is required",
+                        }
+                      ),
                     }}
                     placeholder="place url"
                     label="place url"
                   />
                 </div>
               </FormRow>
-              <FormRow label="Access Point" nested>
-                <div className="flex gap-4">
-                  <Input
-                    // setValue={setValue}
-                    // input={`accessPoints.${index}.accessPoint.address`}
-                    register={{
-                      ...register(`accessPoints.${index}.accessPoint.address`, {
-                        required: "This field is required",
-                      }),
-                    }}
-                    placeholder="Address"
-                    label="Address"
-                  />
-                  <Input
-                    register={{
-                      ...register(`accessPoints.${index}.accessPoint.url`, {
-                        required: "This field is required",
-                      }),
-                    }}
-                    placeholder="place url"
-                    label="place url"
-                  />
-                </div>
-              </FormRow>
+
               <AddWayPoint
                 nestIndex={index}
                 register={register}
@@ -105,9 +118,9 @@ any) {
             </div>
 
             <div>
-              {values[index].wayPoints.map(
+              {/* {values[index].wayPoints.map(
                 (wayPoint: { address: string }) => wayPoint.address
-              )}
+              )} */}
 
               {/* <iframe
                 width="200"
@@ -129,7 +142,9 @@ any) {
         ))}
 
         <Button
-          type="button"
+          // className="text-deepSeaweed-tints-600 bg-accent-orange-50 font-semibold text-lg "
+          className="mx-auto bg-amber-300 hover:bg-amber-400"
+          style="icon"
           onClick={() => {
             //trigger validation before addding a new acess point
             console.log(isValid);
@@ -141,12 +156,18 @@ any) {
             });
           }}
         >
-          <IconText
-            iconLink="/icons/add.svg"
-            classes="text-accent-color-100 hover:bg-accent-orange-50 font-bold "
-          >
-            add access point
-          </IconText>
+          <div className="flex gap-2 ">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              className="rounded"
+            >
+              <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
+            </svg>
+            <span>Add Access Point</span>
+          </div>
         </Button>
       </div>
     </FormRow>

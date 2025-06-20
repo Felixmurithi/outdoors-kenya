@@ -1,6 +1,13 @@
+import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/app/_components/layout/Header";
 import Footer from "@/app/_components/layout/Footer";
+
+const myFont = localFont({
+  // src: "./fonts/Inter-Regular.woff2",
+  src: "./fonts/GeistVF.woff",
+  display: "swap",
+});
 
 export const metadata = {
   title: {
@@ -17,7 +24,7 @@ export default function MainLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="">
+    <html lang="en" className={`${myFont.className}`}>
       <body
         className={`grid grid-rows-[auto_1fr_auto] text-deepSeaweed-shades-500`}
       >

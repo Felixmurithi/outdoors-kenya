@@ -1,14 +1,16 @@
 function IconText({
   iconLink,
   children,
-  classes,
+
+  className,
 }: {
   iconLink: string;
   children: React.ReactNode;
-  classes?: string;
+
+  className?: string;
 }) {
   return (
-    <div className={`flex gap-4 ${classes} p-1`}>
+    <div className={`flex gap-2 ${className} p-1`}>
       <img src={iconLink}></img>
       <div>{children}</div>
     </div>

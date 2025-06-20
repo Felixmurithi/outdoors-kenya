@@ -8,16 +8,18 @@ type ButtonProps = {
   onClick?: () => void;
   link?: string;
   type?: string;
+  style?: "primary" | "secondary" | "transparent" | "icon" | "text";
   classes?: string;
+  className?: string;
 };
 
-type ButtonStylesProps = {
-  primary: string;
-  secondary: string;
-  transparent: string;
-  icon: string;
-  text: string;
-};
+// type ButtonStylesProps = {
+//   primary: string;
+//   secondary: string;
+//   transparent: string;
+//   icon: string;
+//   text: string;
+// };
 // u dont have to define the type object but can be done direct on params. this makes code clean
 
 //button props types to avoid the "missing peropertis" error
@@ -25,8 +27,10 @@ export default function Button({
   children,
   onClick,
   link = "",
-  type = "primary",
+  type = "button",
   classes,
+  className,
+  style = "primary",
 }: ButtonProps) {
   const buttonStyles = {
     primary: "bg-accent-color-100  text-stone-900 px-2 py-1 ",
@@ -39,9 +43,7 @@ export default function Button({
   return (
     <button
       type={`${link || onClick ? "button" : "submit"}`}
-      className={` ${
-        buttonStyles[type as keyof ButtonStylesProps]
-      }  rounded-md ${classes} w-max h-8 `}
+      className={` ${buttonStyles[style]}  rounded-md ${classes} ${className} w-max h-8 `}
       onClick={onClick}
     >
       {/* <button type="submit"> */}

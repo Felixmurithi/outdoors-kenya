@@ -12,7 +12,7 @@ export default function AddWayPoint({
 }: any) {
   const { fields, append, prepend, remove, update } = useFieldArray({
     control,
-    name: `accessPoints.${nestIndex}.wayPoints`,
+    name: `accessRoutes.${nestIndex}.wayPoints`,
   });
 
   const { errors, isValid } = useFormState({ control });
@@ -20,7 +20,7 @@ export default function AddWayPoint({
   console.log(isValid, errors);
 
   return (
-    <div className="grid gap-2 ">
+    <div className="grid gap-6">
       <FormRow label="Way Point" nested>
         {fields.map((field, index) => (
           <div key={field.id} className="flex gap-4">
@@ -52,19 +52,27 @@ export default function AddWayPoint({
         ))}
       </FormRow>
       <Button
-        type="button"
+        style="icon"
         onClick={() => {
           trigger();
           append("hi");
         }}
-        classes="mt-2  "
+        className="hover:bg-deepSeaweed-tints-700"
       >
-        <IconText
-          iconLink="/icons/add.svg"
-          classes="text-lunar-green-700 font-semibold hover:bg-lunar-green-50"
-        >
-          add way point
-        </IconText>
+        <div className="flex gap-2 ">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24px"
+            viewBox="0 -960 960 960"
+            width="24px"
+            className="fill-deepSeaweed-shades-200"
+          >
+            <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
+          </svg>
+          <span className="text-deepSeaweed-shades-200 font-semibold">
+            Add Access Point
+          </span>
+        </div>
       </Button>
     </div>
 
