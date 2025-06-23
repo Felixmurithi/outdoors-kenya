@@ -29,7 +29,7 @@ any) {
   //   setValue;
   // }
 
-  // const values = getValues("accessPoints");
+  // const values = getValues("accessRoutes");
   // console.log(values);
 
   const values = useWatch({
@@ -37,9 +37,7 @@ any) {
     name: "accessRoutes",
   });
 
-  console.log(values);
-
-  console.log(fields);
+  console.log(errors);
 
   return (
     <FormRow label="Access Route">
@@ -57,7 +55,7 @@ any) {
                     // input={`accessPoints.${index}.accessPoint.address`}
                     register={{
                       ...register(
-                        `accessRoutes.${index}.acessRoute.startingPoint.address`,
+                        `accessRoutes.${index}.accessRoute.startingPoint.address`,
                         {
                           required: "This field is required",
                         }
@@ -69,7 +67,7 @@ any) {
                   <Input
                     register={{
                       ...register(
-                        `accessRoute.${index}.acessRoute.startingPoint.url`,
+                        `accessRoutes.${index}.accessRoute.startingPoint.url`,
                         {
                           required: "This field is required",
                         }
@@ -85,7 +83,7 @@ any) {
                     // input={`accessPoints.${index}.accessPoint.address`}
                     register={{
                       ...register(
-                        `accessRoute.${index}.acessRoute.entryPoint.address`,
+                        `accessRoutes.${index}.accessRoute.entryPoint.address`,
                         {
                           required: "This field is required",
                         }
@@ -97,7 +95,7 @@ any) {
                   <Input
                     register={{
                       ...register(
-                        `accessRoute.${index}.acesssRoute.entryPoint.url`,
+                        `accessRoutes.${index}.acesssRoute.entryPoint.url`,
                         {
                           required: "This field is required",
                         }
@@ -146,8 +144,7 @@ any) {
           className="mx-auto bg-amber-300 hover:bg-amber-400"
           style="icon"
           onClick={() => {
-            //trigger validation before addding a new acess point
-            console.log(isValid);
+            if (!isValid) return trigger(); //needed for error messages
             append({
               accessPoint: {
                 address: "",

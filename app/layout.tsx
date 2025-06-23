@@ -4,8 +4,8 @@ import Header from "@/app/_components/layout/Header";
 import Footer from "@/app/_components/layout/Footer";
 
 const myFont = localFont({
-  // src: "./fonts/Inter-Regular.woff2",
-  src: "./fonts/GeistVF.woff",
+  src: "./fonts/Inter-Regular.woff2",
+  // src: "./fonts/GeistVF.woff",
   display: "swap",
 });
 

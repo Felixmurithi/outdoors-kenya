@@ -1,4 +1,4 @@
-import { useFieldArray, useFormState } from "react-hook-form";
+import { useFieldArray, useFormState, useWatch } from "react-hook-form";
 import FormRow from "@/app/_components/generic/FormRow";
 import Input from "@/app/_components/generic/Input";
 import Button from "../generic/Button";
@@ -15,9 +15,16 @@ export default function AddWayPoint({
     name: `accessRoutes.${nestIndex}.wayPoints`,
   });
 
-  const { errors, isValid } = useFormState({ control });
+  const { errors, isValid } = useFormState({
+    control,
+    name: `accessRoutes.${nestIndex}.wayPoints`,
+  });
+  const values = useWatch({
+    control,
+    name: `accessRoutes`,
+  });
 
-  console.log(isValid, errors);
+  console.log(isValid);
 
   return (
     <div className="grid gap-6">
@@ -27,7 +34,7 @@ export default function AddWayPoint({
             <Input
               register={{
                 ...register(
-                  `accessPoints.${nestIndex}.wayPoints.${index}.address`,
+                  `accessRoutes.${nestIndex}.wayPoints.${index}.address`,
                   {
                     required: "This field is required",
                   }
@@ -39,7 +46,7 @@ export default function AddWayPoint({
             <Input
               register={{
                 ...register(
-                  `accessPoints.${nestIndex}.wayPoints.${index}.url`,
+                  `accessRoutes.${nestIndex}.wayPoints.${index}.url`,
                   {
                     required: "This field is required",
                   }
@@ -54,8 +61,12 @@ export default function AddWayPoint({
       <Button
         style="icon"
         onClick={() => {
-          trigger();
-          append("hi");
+          console.log(fetch("https://maps.app.goo.gl/4Lqd8RMDkeSu4smg6"));
+          if (!isValid) return trigger(); //needed for error messages
+          append({
+            address: "",
+            url: "",
+          });
         }}
         className="hover:bg-deepSeaweed-tints-700"
       >
@@ -70,7 +81,7 @@ export default function AddWayPoint({
             <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
           </svg>
           <span className="text-deepSeaweed-shades-200 font-semibold">
-            Add Access Point
+            add way point
           </span>
         </div>
       </Button>
@@ -91,3 +102,6 @@ export default function AddWayPoint({
 
 // DONE
 //spacing,add icon  add butonn color, , hover bg color
+
+// TODO
+// figure out hjow to correctly handle add way point opearaion, hide or use empty array

@@ -74,7 +74,7 @@ export default function AddLocationForm() {
     watch,
     trigger,
 
-    // getValues,
+    getValues,
     // setValue,
 
     formState: { errors, isValid },
