@@ -102,6 +102,3 @@ export default function AddWayPoint({
 
 // DONE
 //spacing,add icon  add butonn color, , hover bg color
-
-// TODO
-// figure out hjow to correctly handle add way point opearaion, hide or use empty array

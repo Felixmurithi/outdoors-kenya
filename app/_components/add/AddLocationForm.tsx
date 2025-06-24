@@ -109,7 +109,6 @@ export default function AddLocationForm() {
           />
         </div>
       </FormRow>
-
       <AddAccessPoints
         control={control}
         register={register}
@@ -118,7 +117,6 @@ export default function AddLocationForm() {
         // getValues={getValues}
         // setValue={setValue}
       />
-
       <Button type="submit">Submit</Button>
     </form>
   );
