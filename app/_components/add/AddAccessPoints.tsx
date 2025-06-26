@@ -178,3 +178,4 @@ any) {
 
 //acorewect access color to use
 //delete and change key
+//make input aligend at tyhe bottom

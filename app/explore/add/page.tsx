@@ -8,7 +8,7 @@ function AddEvent({
   searchParams?: { [key: string]: string | string[] | undefined };
 }) {
   return (
-    <main className="grid h-full content-start w-fit mx-auto gap-8">
+    <main className="grid h-full content-start w-fit md:mx-auto gap-8 ">
       <h2>Add Event</h2>
       <AddLocationForm />
     </main>
