@@ -9,7 +9,7 @@ import AddWayPoint from "@/app/_components/add/AddWayPoint";
 import AddAccessPoints from "@/app/_components/add/AddAccessPoints";
 import { useState } from "react";
 import { get } from "http";
-import MultiFormSteps from "../generic/MultiFormSteps";
+import Stepper from "../generic/Stepper";
 
 const defaultValues = {
   accessRoutes: [
@@ -91,7 +91,10 @@ export default function AddLocationForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-16">
       {/* name, details, levenat links */}
-      <MultiFormSteps steps={3} activeStep={1} />
+      <Stepper
+        steps={["Basic Details", "Acess Routes", "Popular Routes"]}
+        activeStep={1}
+      />
       <FormRow label="Basic Details">
         <div className="flex gap-4">
           <Input

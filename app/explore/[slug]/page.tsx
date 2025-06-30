@@ -36,7 +36,7 @@ const sampleLocations = [
 
 export default async function Location({}) {
   return (
-    <main className="px-2 mobile:px-8 sm:px-16 lg:px-32 border-t  grid gap-16 ">
+    <main className="px-6 mobile:px-8 sm:px-16 lg:px-32 border-t  grid gap-16 ">
       <div className="grid gap-6">
         <div className="">
           <h2>Karura Forest</h2>
