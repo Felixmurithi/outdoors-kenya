@@ -1,18 +1,16 @@
 type InputProps = {
   classes?: string;
-
   type?: string;
   name?: string;
   checked?: boolean;
   // onChange?: (e: { target: HTMLInputElement }) => void;
-  placeholder: string;
-  reactHooKFormValidate?: {};
+  placeholder?: string;
+
   value?: string;
-  label: string;
+  label?: string;
   size?: "normal" | "small";
   register?: any;
   setValue?: any;
-  input?: string;
 };
 
 //
@@ -23,7 +21,6 @@ function Input({
   name,
   checked, // for checkbox to create checkbox input
   placeholder,
-  reactHooKFormValidate,
   value,
   size = "normal",
   register,
@@ -31,11 +28,11 @@ function Input({
 // input,
 InputProps) {
   //set the htmlfor id at lobel wuisng teh label of that input
-  const id = `${label.toLowerCase().replace(" ", "-")}-input`;
+  const id = `${label?.toLowerCase().replace(" ", "-")}-input`;
 
   return (
-    <div className="grid gap-1">
-      <label htmlFor={id}>{label}</label>
+    <div className="flex flex-col justify-between gap-1">
+      {label ? <label htmlFor={id}>{label}</label> : ""}
       <input
         value={value}
         defaultChecked={checked}

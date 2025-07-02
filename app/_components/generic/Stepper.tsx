@@ -34,19 +34,15 @@ function Step({
   return (
     <div className="grid">
       <div className="flex">
-        {index === 0 ? null : (
-          <div className="self-center">
-            <hr
-              className="bg-stone-300  min-w-8 sm:min-w-12"
-              style={{ width: "100%", height: "3px" }}
-            />
-            <span className="min-w-8 sm:min-w-12"> {"  "}</span>
-          </div>
-        )}
+        {index === 0 ? null : <StepHR />}
 
         <span
-          className={`bg-lunar-green-400 rounded-full min-w-8 min-h-8 flex items-center justify-center ${
-            activeStep >= index ? "bg-lunar-green-600" : ""
+          className={` rounded-full min-w-8 min-h-8 flex items-center justify-center ${
+            activeStep == index
+              ? "bg-lunar-green-600"
+              : index < activeStep
+              ? "bg-lunar-green-300"
+              : "bg-lunar-green-100"
           } self-start`}
         >
           {activeStep > index ? (
@@ -63,24 +59,29 @@ function Step({
             index + 1
           )}
         </span>
-        {lastStep ? null : (
-          <div className="self-center">
-            <span className="min-w-8 sm:min-w-12"> {"  "}</span>
-            <hr
-              className="bg-stone-300 self-center min-w-8 sm:min-w-12"
-              style={{ width: "100%", height: "3px" }}
-            />
-          </div>
-        )}
+        {lastStep ? null : <StepHR />}
       </div>
 
       <span
+        // to remove the margin at the start and the end
         className={`${
           index !== 0 && !lastStep ? "mx-auto" : lastStep ? "ml-auto" : ""
         } ${lastStep ? "ml-auto" : "mx-"} w-min text-sm text-stone-500`}
       >
         {step}
       </span>
+    </div>
+  );
+}
+
+function StepHR() {
+  return (
+    <div className="self-center">
+      <hr
+        className="bg-stone-300 min-w-2   mobile:min-w-16 sm:min-w-20"
+        style={{ width: "100%", height: "3px" }}
+      />
+      <span className="min-w-8 sm:min-w-12"> {"  "}</span>
     </div>
   );
 }

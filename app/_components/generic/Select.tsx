@@ -5,14 +5,24 @@ type SelectProps = {
   onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   children?: React.ReactNode;
   value?: string;
+  register?: any;
 };
 
-function Select({ text, options, classes, onChange, children, value }: SelectProps) {
+function Select({
+  text,
+  options,
+  classes,
+  onChange,
+  children,
+  value,
+  register,
+}: SelectProps) {
   return (
     <select
       value={value}
-      className={`${classes || ''} px-2 rounded-md bg-deepSeaweed-tints-700`}
+      className={`${classes || ""}  rounded-md bg-deepSeaweed-tints-700`}
       onChange={onChange}
+      {...register}
     >
       {text && (
         <option hidden value="">

@@ -3,8 +3,7 @@ import SocialIcons from "@/app/_components/generic/SocialIcons";
 import Access from "@/app/_components/explore/Access";
 import PopularRoutes from "@/app/_components/explore/PopularRoutes";
 
-type EntranceFeesTable = [string[], number[], number[]];
-const tableData: EntranceFeesTable = [
+const entraceFeesData = [
   ["kshs", "kshs", "USD"],
   [100, 100, 400],
   [50, 50, 300],
@@ -51,7 +50,7 @@ export default async function Location({}) {
         <div className="flex justify-between flex-wrap gap-8">
           <Access locations={sampleLocations} />
 
-          <EntranceFees tableData={tableData} />
+          <EntranceFees entraceFeesData={entraceFeesData} />
         </div>
       </div>
 

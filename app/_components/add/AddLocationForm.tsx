@@ -8,8 +8,8 @@ import SelectCurrency from "@/app/_components/generic/SelectCurrency";
 import AddWayPoint from "@/app/_components/add/AddWayPoint";
 import AddAccessPoints from "@/app/_components/add/AddAccessPoints";
 import { useState } from "react";
-import { get } from "http";
 import Stepper from "../generic/Stepper";
+import AddBasicDetails from "./AddBasicDetails";
 
 const defaultValues = {
   accessRoutes: [
@@ -32,28 +32,6 @@ const defaultValues = {
       ],
     },
   ],
-  basic: {
-    name: "",
-    county: "",
-    locality: "",
-  },
-  charges: {
-    kenyan: {
-      currency: "",
-      adult: "",
-      child: "",
-    },
-    resident: {
-      currency: "",
-      adult: "",
-      child: "",
-    },
-    nonResident: {
-      currency: "",
-      adult: "",
-      child: "",
-    },
-  },
 };
 
 export type DefaultValuesType = typeof defaultValues;
@@ -68,6 +46,8 @@ export type DefaultValuesType = typeof defaultValues;
 // const outdoorActivities "Picnic", "Hiking", "Running", "Cycling"
 
 export default function AddLocationForm() {
+  const [activeStep, setActiveStep] = useState(0);
+
   const {
     register,
     control,
@@ -75,55 +55,34 @@ export default function AddLocationForm() {
     watch,
     trigger,
 
-    getValues,
-    // setValue,
-
     formState: { errors, isValid },
   } = useForm({
     defaultValues,
     reValidateMode: "onBlur",
   });
 
-  const onSubmit = async (data: any) => {
-    console.log(data);
-  };
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-16">
+    <div className="flex flex-col gap-16">
       {/* name, details, levenat links */}
       <Stepper
         steps={["Basic Details", "Acess Routes", "Popular Routes"]}
-        activeStep={1}
+        activeStep={activeStep}
       />
-      <FormRow label="Basic Details">
-        <div className="flex gap-4">
-          <Input
-            register={{ ...register("basic.name") }}
-            placeholder="Name"
-            label="Name"
-          />
-          <Input
-            register={{ ...register("basic.county") }}
-            placeholder="County"
-            label="County"
-          />
-          <Input
-            register={{ ...register("basic.locality") }}
-            placeholder="Locality"
-            label="Locality"
-          />
-        </div>
-      </FormRow>
-      <AddAccessPoints
-        control={control}
-        register={register}
-        watch={watch}
-        trigger={trigger}
-        // getValues={getValues}
-        // setValue={setValue}
-      />
-      <Button type="submit">Submit</Button>
-    </form>
+      {
+        [
+          <AddBasicDetails key={0} />,
+          <AddAccessPoints
+            key={1}
+            control={control}
+            register={register}
+            watch={watch}
+            trigger={trigger}
+            // getValues={getValues}
+            // setValue={setValue}
+          />,
+        ][activeStep]
+      }
+    </div>
   );
 }
 
@@ -159,3 +118,4 @@ export default function AddLocationForm() {
 
 //TODO
 //useFormnState vs Formstate
+// shoould I design for 240 pisxel screens

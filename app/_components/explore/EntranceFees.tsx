@@ -1,13 +1,14 @@
-import Link from "next/link";
+import Input from "@/app/_components/generic/Input";
+import { useFormState } from "react-hook-form";
 
 // cuureny array is mao
 
-type EntranceFeesTable = [string[], number[], number[]];
+type EntranceFeesData = (string[] | number[])[];
 
 export default function EntranceFees({
-  tableData,
+  entraceFeesData,
 }: {
-  tableData: EntranceFeesTable;
+  entraceFeesData: EntranceFeesData;
 }) {
   // the fees should be passed as an array with 3 nested arrays with fees, the two arrays map two rows with the nested arrays as data
   return (
@@ -18,6 +19,7 @@ export default function EntranceFees({
           <span>Fees</span>
         </div>
       </caption>
+
       <thead>
         <tr>
           <th></th>
@@ -29,7 +31,7 @@ export default function EntranceFees({
               <div className="flex flex-col">
                 <span className="">{type}</span>
                 <span className="text-stone-500 text-sm font-medium">
-                  {tableData[0][index]}
+                  {entraceFeesData[0][index]}
                 </span>
               </div>
             </th>
@@ -37,11 +39,14 @@ export default function EntranceFees({
         </tr>
       </thead>
       <tbody>
-        {tableData.map((row, i) => {
+        {entraceFeesData.map((row, i) => {
           if (i === 0) return;
           return (
             <tr key={i} className="text-stone-500">
-              <td className="border border-stone-600  p-4">
+              <td
+                className="border border-stone-600  p-4"
+                //label
+              >
                 {["adult", "child"][i - 1]}
               </td>
               {row.map((fee, i) => (
@@ -59,3 +64,6 @@ export default function EntranceFees({
 
 //NOTE
 // some nuances in programming like css grid tracks and how the work
+
+//INSIGHT
+// undefined is displayed as zero
