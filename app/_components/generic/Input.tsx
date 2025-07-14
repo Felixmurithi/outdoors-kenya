@@ -1,5 +1,5 @@
 type InputProps = {
-  classes?: string;
+  className?: string;
   type?: string;
   name?: string;
   checked?: boolean;
@@ -11,11 +11,13 @@ type InputProps = {
   size?: "normal" | "small";
   register?: any;
   setValue?: any;
+  disabled?: boolean;
+  handleFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
 };
 
 //
 function Input({
-  classes,
+  className,
   label,
   type = "text", //to specify input type text or number
   name,
@@ -24,6 +26,8 @@ function Input({
   value,
   size = "normal",
   register,
+  disabled = false,
+  handleFocus,
 }: // setValue,
 // input,
 InputProps) {
@@ -34,17 +38,19 @@ InputProps) {
     <div className="flex flex-col justify-between gap-1">
       {label ? <label htmlFor={id}>{label}</label> : ""}
       <input
+        disabled={disabled}
         value={value}
         defaultChecked={checked}
         name={name}
         id={id}
         type={`${type}`}
         placeholder={placeholder}
-        className={`${classes} rounded-lg  border border-deepSeaweed-tints-500 placeholder:text-deepSeaweed-tints-300 w-full px-2 bg-stone-50  ${
+        className={`${className} rounded-lg  border border-deepSeaweed-tints-500 placeholder:text-deepSeaweed-tints-300 w-full px-2 bg-stone-50  ${
           size === "normal" ? "h-8" : "h-6"
         }`}
         {...register}
         // onBlur={(e) => setValue?.(input, "hi")}
+        onFocus={handleFocus}
       />
     </div>
   );

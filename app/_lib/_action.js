@@ -1,9 +1,9 @@
 "use server";
 
-import { cookies } from "next/headers";
+// import { cookies } from "next/headers";
 
-import { hashPassword, generateSalt } from "@/app/_lib/auth";
-import { createUserSession } from "./session";
+// import { hashPassword, generateSalt } from "@/app/_lib/auth";
+// import { createUserSession } from "./session";
 
 // export async function signup() {
 //   const password = "password";

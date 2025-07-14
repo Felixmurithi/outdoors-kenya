@@ -63,11 +63,12 @@ export default function AddLocationForm() {
 
   return (
     <div className="flex flex-col gap-16">
-      {/* name, details, levenat links */}
-      <Stepper
-        steps={["Basic Details", "Acess Routes", "Popular Routes"]}
-        activeStep={activeStep}
-      />
+      <div className="w-[60%] mx-auto">
+        <Stepper
+          steps={["Basic Details", "Acess Routes", "Popular Routes"]}
+          activeStep={activeStep}
+        />
+      </div>
       {
         [
           <AddBasicDetails key={0} />,
@@ -106,6 +107,7 @@ export default function AddLocationForm() {
 
 //INSIGHT
 //summarsise the google directiosn api- this tyo the AI gives toom much of a summary
+// div is a block level and span is inline
 
 //REACT HOOK FORM
 //useWatch will trigger a rerender after each input change and update the watched value

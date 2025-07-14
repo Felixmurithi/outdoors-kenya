@@ -6,7 +6,7 @@ export default function Stepper({
   activeStep: number;
 }) {
   return (
-    <div className="flex w-fit mx-auto">
+    <div className="flex w-full mx-auto ">
       {steps.map((step, index) => (
         <Step
           key={index}
@@ -32,7 +32,7 @@ function Step({
   lastStep?: boolean;
 }) {
   return (
-    <div className="grid">
+    <div className="grid flex-1">
       <div className="flex">
         {index === 0 ? null : <StepHR />}
 
@@ -76,12 +76,11 @@ function Step({
 
 function StepHR() {
   return (
-    <div className="self-center">
+    <div className="self-center w-full">
       <hr
         className="bg-stone-300 min-w-2   mobile:min-w-16 sm:min-w-20"
         style={{ width: "100%", height: "3px" }}
       />
-      <span className="min-w-8 sm:min-w-12"> {"  "}</span>
     </div>
   );
 }

@@ -1,32 +1,35 @@
 type SelectProps = {
-  text?: string;
+  label?: string;
   options?: string[];
   classes?: string;
   onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   children?: React.ReactNode;
   value?: string;
   register?: any;
+  disabled?: boolean;
 };
 
 function Select({
-  text,
+  label,
   options,
   classes,
   onChange,
   children,
   value,
   register,
+  disabled = false,
 }: SelectProps) {
   return (
     <select
+      disabled={disabled}
       value={value}
       className={`${classes || ""}  rounded-md bg-deepSeaweed-tints-700`}
       onChange={onChange}
       {...register}
     >
-      {text && (
+      {label && (
         <option hidden value="">
-          {text}
+          {label}
         </option>
       )}
       {options?.map((option: string, i: number) => (
