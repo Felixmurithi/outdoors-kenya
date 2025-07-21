@@ -3,16 +3,14 @@ type InputProps = {
   type?: string;
   name?: string;
   checked?: boolean;
-  // onChange?: (e: { target: HTMLInputElement }) => void;
   placeholder?: string;
-
   value?: string;
   label?: string;
   size?: "normal" | "small";
   register?: any;
   setValue?: any;
   disabled?: boolean;
-  handleFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  error?: boolean;
 };
 
 //
@@ -27,7 +25,7 @@ function Input({
   size = "normal",
   register,
   disabled = false,
-  handleFocus,
+  error = false, // better to expliity deine the presence of an error instead of sending claseses to chjange the border color
 }: // setValue,
 // input,
 InputProps) {
@@ -45,12 +43,11 @@ InputProps) {
         id={id}
         type={`${type}`}
         placeholder={placeholder}
-        className={`${className} rounded-lg  border border-deepSeaweed-tints-500 placeholder:text-deepSeaweed-tints-300 w-full px-2 bg-stone-50  ${
+        className={`rounded-lg  border border-deepSeaweed-tints-500 placeholder:text-deepSeaweed-tints-300 w-full px-2 bg-stone-50 ${className}  ${
           size === "normal" ? "h-8" : "h-6"
-        }`}
+        }  ${error ? "border-orange-600 border-1" : ""} `}
+        // on focusing on input the border is automatically changed oveeriding the eror border colour
         {...register}
-        // onBlur={(e) => setValue?.(input, "hi")}
-        onFocus={handleFocus}
       />
     </div>
   );

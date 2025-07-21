@@ -7,6 +7,7 @@ type SelectProps = {
   value?: string;
   register?: any;
   disabled?: boolean;
+  error?: boolean;
 };
 
 function Select({
@@ -18,12 +19,15 @@ function Select({
   value,
   register,
   disabled = false,
+  error = false,
 }: SelectProps) {
   return (
     <select
       disabled={disabled}
       value={value}
-      className={`${classes || ""}  rounded-md bg-deepSeaweed-tints-700`}
+      className={`${classes || ""}  rounded-md bg-deepSeaweed-tints-700 ${
+        error ? "border-orange-500  border" : ""
+      } `}
       onChange={onChange}
       {...register}
     >

@@ -34,7 +34,8 @@ export default function Button({
 }: ButtonProps) {
   const buttonStyles = {
     primary: "bg-accent-color-100  text-stone-900 px-2 py-1 ",
-    secondary: " px-2 bg-main-color text-white border py-1 ",
+    secondary:
+      " px-2 bg-lunar-green-700 text-white border py-1 hover:bg-lunar-green-600 focus:bg-lunar-green-600",
     transparent: "px-2 bg-transparent text-stone-700 border py-1 ",
     icon: "px-0 py-0",
     text: "",

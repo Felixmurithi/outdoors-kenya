@@ -4,6 +4,20 @@ import { useForm } from "react-hook-form";
 import AddEntranceFees from "@/app/_components/add/AddEntranceFees";
 import AddNameCountyLocality from "./AddNameCountyLocality";
 import Button from "../generic/Button";
+import AddSocialMedia from "./AddSocialMedia";
+
+// const defaultValues = {
+//   basic: {
+//     name: "",
+//     county: "",
+//     locality: "",
+//   },
+//   fees: {
+//     currencies: ["", "", ""],
+//     adult: ["", "", ""],
+//     child: ["", "", ""],
+//   },
+// };
 
 export default function AddBasicDetails() {
   const {
@@ -13,6 +27,7 @@ export default function AddBasicDetails() {
     handleSubmit,
     formState: { errors },
   } = useForm({
+    // defaultValues,
     reValidateMode: "onBlur",
   });
 
@@ -20,21 +35,27 @@ export default function AddBasicDetails() {
 
   return (
     <form
-      className="grid gap-16 lg:gap-24"
+      className="grid  gap-8 mb-4"
       onSubmit={handleSubmit((data) => console.log(data))}
     >
-      <AddNameCountyLocality
-        register={register}
-        control={control}
-        clearErrors={clearErrors}
-      />
-      <AddEntranceFees
-        control={control}
-        register={register}
-        clearErrors={clearErrors}
-      />
+      <div className="grid gap-16 lg:gap-24">
+        <AddNameCountyLocality
+          register={register}
+          control={control}
+          clearErrors={clearErrors}
+        />
 
-      <Button type="submit">Submit</Button>
+        <AddSocialMedia />
+        <AddEntranceFees
+          control={control}
+          register={register}
+          clearErrors={clearErrors}
+        />
+      </div>
+
+      <Button type="submit" style="secondary" className="ml-auto mr-2">
+        Continue
+      </Button>
     </form>
   );
 }

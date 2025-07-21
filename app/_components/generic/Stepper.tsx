@@ -6,7 +6,7 @@ export default function Stepper({
   activeStep: number;
 }) {
   return (
-    <div className="flex w-full mx-auto ">
+    <div className="flex w-full mx-auto text-sm ">
       {steps.map((step, index) => (
         <Step
           key={index}

@@ -3,24 +3,27 @@ import { useFormState } from "react-hook-form";
 import FormRow from "@/app/_components/generic/FormRow";
 import Input from "@/app/_components/generic/Input";
 
+type FormData = {
+  basic: {
+    name: string;
+    county: string;
+    locality: string;
+  };
+};
+
 export default function AddNameCountyLocality({
   register,
   control,
   clearErrors,
 }: any) {
-  const { isValid, errors } = useFormState({ control, name: "basic" });
-
-  const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-    const { name } = event.target;
-    const error = errors.basic?.[name];
-    if (error) {
-      // Reset the error
-      //   errors.basic[name] = null;
-      clearErrors(`basic.${name}`);
-    }
-  };
-
-  // console.log(errors);
+  // ts error without the FormData type when destructuring
+  const {
+    isValid,
+    errors: { basic: basicErrors },
+  } = useFormState<FormData>({
+    control,
+    name: "basic",
+  });
 
   return (
     <FormRow label="Basic Details" error="all inputs are required">
@@ -29,22 +32,21 @@ export default function AddNameCountyLocality({
           register={{ ...register("basic.name", { required: true }) }}
           placeholder="Name"
           label="Name"
-          className={errors.basic?.name ? "border-red-500" : ""}
-          handleFocus={handleFocus}
+          error={basicErrors?.name ? true : false}
         />
         <Input
-          register={{ ...register("basic.county") }}
+          register={{
+            ...register("basic.county", { required: "This field is required" }),
+          }}
           placeholder="County"
           label="County"
-          className={errors.basic?.county ? "border-red-500" : ""}
-          handleFocus={handleFocus}
+          error={basicErrors?.county ? true : false}
         />
         <Input
-          register={{ ...register("basic.locality") }}
+          register={{ ...register("basic.locality", { required: true }) }}
           placeholder="Locality"
           label="Locality"
-          className={errors.basic?.locality ? "border-red-500" : ""}
-          handleFocus={handleFocus}
+          error={basicErrors?.locality ? true : false}
         />
       </div>
     </FormRow>
@@ -52,3 +54,4 @@ export default function AddNameCountyLocality({
 }
 
 //Valdiataion happens on submit
+// if u have styles that crsh in twialiwnd add the one u want priprtised after the less one

@@ -4,8 +4,16 @@ import { useFieldArray, useFormState, useWatch } from "react-hook-form";
 import Select from "../generic/Select";
 import FormRow from "../generic/FormRow";
 
+type FormData = {
+  fees: {
+    currency: string[];
+    adult: string[];
+    child: string[];
+  };
+};
+
 const fees = {
-  currencies: ["", "", ""],
+  currency: ["", "", ""],
   adult: ["", "", ""],
   child: ["", "", ""],
 };
@@ -20,31 +28,36 @@ export default function AddEntranceFees({
   const values = useWatch({ control, name: "fees" });
 
   // the fees should be passed as an array with 3 nested arrays with fees, the two arrays map two rows with the nested arrays as data
-  const { isValid, errors } = useFormState({ control, name: "fees" });
+  const {
+    isValid,
+    errors: { fees: feesErrors },
+  } = useFormState<FormData>({ control, name: "fees" });
 
-  console.log(isValid);
+  console.log(feesErrors);
   return (
-    <FormRow label="Access Fees" error="all inputs are required">
-      <div className="grid gap-1 grid-cols-[min-content_repeat(3, minmax(min-content, 1fr))]  grid-rows-4 text-sm mobile:text-base  ">
+    <FormRow
+      label="Access Fees"
+      error={`${
+        feesErrors && feesErrors?.adult && feesErrors?.child
+          ? "all inputs are required"
+          : ""
+      }`}
+    >
+      <div className="grid md:gap-4 gap-1   grid-rows-4 text-sm mobile:text-base  gap-y-4  ">
         <div
           //charge type
-          className="grid-cols-subgrid grid  col-span-3 col-start-2"
+          className="grid grid-cols-subgrid col-span-4 bg-deepSeaweed-tints-700 items-center"
         >
-          <span>Kenyan</span>
-          <span>Resident</span>
-          <span>Non-Resident</span>
+          <span className="w-fit">Visitor</span>
+          <span className="w-fit mx-auto">Kenyan</span>
+          <span className="w-fit mx-auto">Resident</span>
+          <span className="w-fit mx-auto">Non-Resident</span>
         </div>
 
-        <div className="grid gap-2 row-start-1 row-span-4 text-stone-500 ">
-          <span>Visitor</span>
+        <div className="grid grid-cols-subgrid col-span-4 border-b-2">
           <span>Currency</span>
-          <span>Adult</span>
-          <span>Child</span>
-        </div>
-
-        <div className="grid grid-cols-subgrid col-span-3">
-          {fees.currencies.map((_, index) => (
-            <div key={index}>
+          {fees.currency.map((_, index) => (
+            <div key={index} className="w-fit mx-auto">
               <Select
                 label="currency"
                 disabled={disabled}
@@ -52,37 +65,48 @@ export default function AddEntranceFees({
                 options={["Kshs", "USD"]}
                 register={{
                   ...register(`fees.currency.${index}`, {
-                    required: "This field is required",
+                    required: true,
                   }),
                 }}
+                error={feesErrors?.currency?.[index] ? true : false}
               />
             </div>
           ))}
         </div>
-        <div className="grid grid-cols-subgrid col-span-3">
+        <div className="grid grid-cols-subgrid col-span-4 border-b-2">
+          <span>Adult</span>
           {fees.adult.map((_, index) => (
-            <div key={index} className="max-w-48">
+            <div key={index} className="max-w-32 mx-auto">
               <Input
                 disabled={disabled}
                 type="number"
                 register={{
                   ...register(`fees.adult.${index}`, {
-                    required: "This field is required",
+                    required: true,
+                    valueAsNumber: true,
+                    validate: (value: number) => {
+                      if (isNaN(value)) {
+                        return "Please enter a valid number";
+                      }
+                      return true;
+                    },
                   }),
                 }}
+                error={feesErrors?.adult?.[index] ? true : false}
               />
             </div>
           ))}
         </div>
-        <div className="grid grid-cols-subgrid col-span-3">
+        <div className="grid grid-cols-subgrid col-span-4 border-b-2 items-center">
+          <span>Child</span>
           {fees.child.map((_, index) => (
-            <div key={index} className="max-w-48">
+            <div key={index} className="max-w-32 mx-auto">
               <Input
                 disabled={disabled}
                 type="number"
                 register={{
                   ...register(`fees.child.${index}`, {
-                    required: "This field is required",
+                    required: true,
                     valueAsNumber: true,
                     validate: (value: number) => {
                       if (isNaN(value)) {
@@ -108,3 +132,8 @@ export default function AddEntranceFees({
 
 //INSIGHT
 // NaN is a number in js ts
+// isvalid and errors rteturn values for the form  for the whole form
+// fields only work with useFieldArray
+
+//AI Failure
+// cantb get grid ro gap
