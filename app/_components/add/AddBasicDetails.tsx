@@ -19,15 +19,21 @@ import AddSocialMedia from "./AddSocialMedia";
 //   },
 // };
 
+const defaultValues = {
+  socialLinks: [{ platform: " ", url: " " }],
+};
+
 export default function AddBasicDetails() {
   const {
     register,
     control,
     clearErrors,
     handleSubmit,
+    trigger,
+    setValue,
     formState: { errors },
   } = useForm({
-    // defaultValues,
+    defaultValues,
     reValidateMode: "onBlur",
   });
 
@@ -45,7 +51,13 @@ export default function AddBasicDetails() {
           clearErrors={clearErrors}
         />
 
-        <AddSocialMedia />
+        <AddSocialMedia
+          control={control}
+          handleSubmit={handleSubmit}
+          register={register}
+          trigger={trigger}
+          setValue={setValue}
+        />
         <AddEntranceFees
           control={control}
           register={register}

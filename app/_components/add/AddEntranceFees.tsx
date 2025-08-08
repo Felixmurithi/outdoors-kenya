@@ -25,7 +25,7 @@ export default function AddEntranceFees({
   clearErrors,
 }: any) {
   const [disabled, setDisabled] = useState(false);
-  const values = useWatch({ control, name: "fees" });
+  // const values = useWatch({ control, name: "fees" });
 
   // the fees should be passed as an array with 3 nested arrays with fees, the two arrays map two rows with the nested arrays as data
   const {
