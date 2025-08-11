@@ -1,7 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { useForm, useFieldArray, useFormState } from "react-hook-form";
+import { Fragment, useState } from "react";
+import {
+  useForm,
+  useFieldArray,
+  useFormState,
+  useFormContext,
+} from "react-hook-form";
 import SocialMediaPlatformView from "./SocialMediaPlatformView";
 import SocialMediaPlatformEdit from "./SocialMediaPlatformEdit";
 
@@ -25,7 +30,7 @@ export type FormValues = {
 export const SOCIAL_MEDIA_OPTIONS = [
   { platform: "facebook", label: "Facebook" },
   { platform: "instagram", label: "Instagram" },
-  { platform: "x,twitter", label: "X (Twitter)" },
+  { platform: "x", label: "X (previously Twitter)" },
   { platform: "linkedin", label: "LinkedIn" },
   { platform: "youtube", label: "YouTube" },
   { platform: "tiktok", label: "TikTok" },
@@ -33,15 +38,13 @@ export const SOCIAL_MEDIA_OPTIONS = [
 ];
 
 //component
-export default function AddSocialMedia({
-  register,
-  control,
-  trigger,
-  getValues,
-}: any) {
+export default function AddSocialMedia() {
   const [selectedPlatform, setSelectedPlatform] = useState("");
   const [editingIndex, setEditingIndex] = useState<number | null>(0);
   const [urlInput, setUrlInput] = useState("");
+
+  const { register, control, clearErrors, trigger } =
+    useFormContext<FormValues>();
 
   const { fields, append, remove } = useFieldArray<FormValues>({
     control,
@@ -51,7 +54,7 @@ export default function AddSocialMedia({
   const {
     isValid,
     errors: { socialLinks: socialLinksErrors } = { socialLinks: {} },
-  } = useFormState<FormValues>({
+  } = useFormState({
     control,
   });
 
@@ -60,62 +63,50 @@ export default function AddSocialMedia({
     (option) => !fields.some((field) => field.platform === option.platform)
   );
 
-  console.log(fields);
-
   return (
     <FormRow label="Social Media Links">
       {fields.map((field, index) => (
-        <>
-          <div key={field.id}>
-            <Select
-              name=""
-              id=""
-              {...register(`socialLinks.${index}.platform`)}
-              options={SOCIAL_MEDIA_OPTIONS.map((option) => option.platform)}
-            />
-            {/* <option value="">Select Platform</option>
-              {SOCIAL_MEDIA_OPTIONS.map((option, i) => (
-                <option key={i} value={option.platform}>
-                  {option.label}
-                </option>
-              ))} */}
-
-            <Input
-              type="url"
-              register={register(`socialLinks.${index}.url`, {
-                required: "URL is required",
-                validate: (value: string) => {
-                  const platform = getValues(`socialLinks.${index}.platform`);
-                  if (!platform) return "Please select a platform first.";
-
-                  return validateUrl(value, platform);
-                },
-              })}
-            />
-          </div>
-          <div key={field.id} className="flex items-center">
-            <div className="flex items-center">
-              <img
-                src="/social-icons/facebook.svg"
-                height={50}
-                width={50}
-                alt=""
+        <Fragment key={field.id}>
+          {editingIndex === index ? (
+            <div className="flex flex-col gap-4">
+              <SocialMediaPlatformEdit
+                index={index}
+                SOCIAL_MEDIA_OPTIONS={SOCIAL_MEDIA_OPTIONS.map(
+                  (option) => option.platform
+                )}
               />
-              <span>platform</span>{" "}
+              <Button
+                style="secondary"
+                onClick={() => {
+                  if (!isValid) return trigger(); //needed for error messages
+                  append({ platform: "", url: "" });
+                }}
+              >
+                Add
+              </Button>
             </div>
-            <span>url</span>
-          </div>
-        </>
-      ))}
+          ) : (
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <img
+                  src="/social-icons/facebook.svg"
+                  height={50}
+                  width={50}
+                  alt=""
+                />
+                <span>http://localhost:3000/explore/add</span>
+              </div>
 
-      <Button
-        onClick={() => {
-          if (!isValid) return trigger(); //needed for error messages
-          append({ platform: "", url: "" });
-        }}
-      >
-        Add
-      </Button>
+              <div className="flex items-center gap-4">
+                <Button style="text" className="text-red-700">
+                  Edit
+                </Button>
+                <Button style="text">Remove</Button>
+              </div>
+            </div>
+          )}
+        </Fragment>
+      ))}
     </FormRow>
   );
 }

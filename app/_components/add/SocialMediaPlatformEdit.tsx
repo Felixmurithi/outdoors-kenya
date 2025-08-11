@@ -1,81 +1,44 @@
 "use client";
 
-import { UseFormRegister } from "react-hook-form";
+import { useFormContext, useFormState } from "react-hook-form";
 import Input from "../generic/Input";
-import { validateUrl } from "@/app/_utils/validateUrl";
-import { SocialMediaLink } from "@/app/_components/add/types";
-
-// Re-export the validation function to avoid import issues
-const validateUrlWrapper = (url: string, domain: string): boolean | string => {
-  try {
-    return validateUrl(url, domain);
-  } catch (error) {
-    return "Invalid URL";
-  }
-};
-interface Props {
-  index: number;
-  field: SocialMediaLink;
-  urlInput: string;
-  onUrlChange: (value: string) => void;
-  onSave?: () => void;
-  onCancel: () => void;
-  errors?: any;
-  platformKey: string | string[];
-  platformLabel: string;
-  register: UseFormRegister<any>;
-}
+import validateUrl from "@/app/_utils/validateUrl";
+import Select from "../generic/Select";
+import Button from "../generic/Button";
 
 export default function SocialMediaPlatformEdit({
   index,
-  field,
-  urlInput,
-  onUrlChange,
-  onSave,
-  onCancel,
-  errors,
-  platformKey,
-  platformLabel,
-  register,
-}: Props) {
+  SOCIAL_MEDIA_OPTIONS,
+}: {
+  index: number;
+  SOCIAL_MEDIA_OPTIONS: string[];
+}) {
+  const { register, control, clearErrors, getValues, trigger } =
+    useFormContext();
+
   return (
-    <div className="border rounded p-3 mb-2">
-      <div className="flex justify-between items-center mb-2">
-        <span className="font-medium">{platformLabel}</span>
-        <button
-          type="button"
-          onClick={onCancel}
-          className="text-gray-600 text-sm hover:underline"
-        >
-          Cancel
-        </button>
-      </div>
-      <div className="space-y-2">
-        <Input
-          type="text"
-          label="URL"
-          placeholder={`https://${
-            Array.isArray(platformKey) ? platformKey[0] : platformKey
-          }/username`}
-          value={urlInput}
-          error={errors?.[field.platform]?.message}
-          {...register(`socialLinks.${index}.url`, {
-            validate: (value: string) => {
-              if (!value) return "URL is required";
-              const validationResult = validateUrlWrapper(
-                value,
-                Array.isArray(platformKey) ? platformKey[0] : platformKey
-              );
-              return validationResult === true ? true : validationResult;
-            },
-          })}
-        />
-        {errors?.[index]?.url && (
-          <p className="text-red-500 text-xs mt-1">
-            {errors[index]?.url?.message as string}
-          </p>
-        )}
-      </div>
+    <div>
+      <Select
+        label="Platform"
+        {...register(`socialLinks.${index}.platform`)}
+        options={SOCIAL_MEDIA_OPTIONS}
+      />
+
+      <Input
+        type="url"
+        register={register(`socialLinks.${index}.url`, {
+          required: "URL is required",
+          validate: (value: string) => {
+            const platform = getValues(`socialLinks.${index}.platform`);
+            if (!platform) return "Please select a platform first.";
+
+            return validateUrl(value, platform);
+          },
+        })}
+      />
     </div>
   );
 }
+
+//INSIGHTSs
+// need to use context to avoid prop drilling, however that may cause unneccessary re-renders when the value being suncribed to changes, that value in this case maybe

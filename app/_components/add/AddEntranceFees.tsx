@@ -1,14 +1,19 @@
 import Input from "@/app/_components/generic/Input";
 import { useState } from "react";
-import { useFieldArray, useFormState, useWatch } from "react-hook-form";
+import {
+  useFieldArray,
+  useFormContext,
+  useFormState,
+  useWatch,
+} from "react-hook-form";
 import Select from "../generic/Select";
 import FormRow from "../generic/FormRow";
 
 type FormData = {
   fees: {
     currency: string[];
-    adult: string[];
-    child: string[];
+    adult: (number | string)[];
+    child: (number | string)[];
   };
 };
 
@@ -19,11 +24,8 @@ const fees = {
 };
 // the strcuture of the registered object needs to lookm like this fees[curencies, adults, children ] will only work with a field array which is not necessary in thi case
 
-export default function AddEntranceFees({
-  control,
-  register,
-  clearErrors,
-}: any) {
+export default function AddEntranceFees() {
+  const { register, control, clearErrors } = useFormContext<FormData>();
   const [disabled, setDisabled] = useState(false);
   // const values = useWatch({ control, name: "fees" });
 
@@ -33,7 +35,12 @@ export default function AddEntranceFees({
     errors: { fees: feesErrors },
   } = useFormState<FormData>({ control, name: "fees" });
 
-  console.log(feesErrors);
+  //validate if input is number bnecause firefox allows non numbers for input type nummber
+  const validateNumberInput = (value: number | string): true | string => {
+    const numValue = typeof value === "string" ? parseFloat(value) : value;
+    return isNaN(numValue) ? "Please enter a valid number" : true;
+  };
+
   return (
     <FormRow
       label="Access Fees"
@@ -84,12 +91,7 @@ export default function AddEntranceFees({
                   ...register(`fees.adult.${index}`, {
                     required: true,
                     valueAsNumber: true,
-                    validate: (value: number) => {
-                      if (isNaN(value)) {
-                        return "Please enter a valid number";
-                      }
-                      return true;
-                    },
+                    validate: validateNumberInput,
                   }),
                 }}
                 error={feesErrors?.adult?.[index] ? true : false}
@@ -108,14 +110,10 @@ export default function AddEntranceFees({
                   ...register(`fees.child.${index}`, {
                     required: true,
                     valueAsNumber: true,
-                    validate: (value: number) => {
-                      if (isNaN(value)) {
-                        return "Please enter a valid number";
-                      }
-                      return true;
-                    },
+                    validate: validateNumberInput,
                   }),
                 }}
+                error={feesErrors?.child?.[index] ? true : false}
               />
             </div>
           ))}
@@ -131,7 +129,6 @@ export default function AddEntranceFees({
 //TODO- object to arrays, check values ar line 15 undefined for a moment when rendering
 
 //INSIGHT
-// NaN is a number in js ts
 // isvalid and errors rteturn values for the form  for the whole form
 // fields only work with useFieldArray
 

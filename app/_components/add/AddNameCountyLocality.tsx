@@ -1,4 +1,4 @@
-import { useFormState } from "react-hook-form";
+import { useFormContext, useFormState } from "react-hook-form";
 
 import FormRow from "@/app/_components/generic/FormRow";
 import Input from "@/app/_components/generic/Input";
@@ -11,16 +11,14 @@ type FormData = {
   };
 };
 
-export default function AddNameCountyLocality({
-  register,
-  control,
-  clearErrors,
-}: any) {
+export default function AddNameCountyLocality() {
+  const { register, control, clearErrors } = useFormContext<FormData>();
+
   // ts error without the FormData type when destructuring
   const {
     isValid,
     errors: { basic: basicErrors },
-  } = useFormState<FormData>({
+  } = useFormState({
     control,
     name: "basic",
   });
@@ -55,3 +53,6 @@ export default function AddNameCountyLocality({
 
 //Valdiataion happens on submit
 // if u have styles that crsh in twialiwnd add the one u want priprtised after the less one
+
+//INSIGHT
+// its more effeciient to copy code than to ask AI toi write it
