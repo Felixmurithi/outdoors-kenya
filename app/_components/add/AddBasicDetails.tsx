@@ -20,7 +20,7 @@ import AddSocialMedia from "./AddSocialMedia";
 // };
 
 const defaultValues = {
-  socialLinks: [{ platform: " ", url: " " }],
+  socialLinks: [{ platform: "", url: "" }],
 };
 
 export default function AddBasicDetails() {
