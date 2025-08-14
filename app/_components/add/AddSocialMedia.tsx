@@ -10,6 +10,7 @@ import validateUrl from "@/app/_utils/validateUrl";
 import FormRow from "@/app/_components/generic/FormRow";
 import Button from "../generic/Button";
 import Select from "../generic/Select";
+import Error from "../generic/Error";
 
 //types
 export type SocialMediaLink = {
@@ -23,13 +24,13 @@ export type FormValues = {
 
 //options
 export const platforms = [
-  { platform: "facebook", label: "Facebook" },
-  { platform: "instagram", label: "Instagram" },
-  { platform: "x", label: "X (previously Twitter)" },
-  { platform: "linkedin", label: "LinkedIn" },
-  { platform: "youtube", label: "YouTube" },
-  { platform: "tiktok", label: "TikTok" },
-  { platform: "website", label: "Website" },
+  { platform: "facebook", label: "Facebook", value: "facebook" },
+  { platform: "instagram", label: "Instagram", value: "instagram" },
+  { platform: "x", label: "X (previously Twitter)", value: ["x", "twitter"] },
+  { platform: "linkedin", label: "LinkedIn", value: "linkedin" },
+  { platform: "youtube", label: "YouTube", value: "youtube" },
+  { platform: "tiktok", label: "TikTok", value: "tiktok" },
+  { platform: "website", label: "Website", value: "website" },
 ];
 
 // COMPONENT
@@ -83,8 +84,11 @@ export default function AddSocialMedia() {
                 )}
               />
 
-              <span>{socialLinksErrors?.[index]?.url?.message}</span>
+              {socialLinksErrors?.[index]?.url?.message ? (
+                <Error error={socialLinksErrors?.[index]?.url?.message} />
+              ) : null}
               <Button
+                disabled={!!socialLinksErrors?.[index]?.url?.message}
                 style="secondary"
                 onClick={() => {
                   if (!isValid) return trigger(); //needed for error messages to check if last url is valid, this will trigger validateUrl in the SocialMediaPlatformEdit component

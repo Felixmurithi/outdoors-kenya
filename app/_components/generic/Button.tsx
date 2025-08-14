@@ -11,6 +11,7 @@ type ButtonProps = {
   style?: "primary" | "secondary" | "transparent" | "icon" | "text";
   classes?: string;
   className?: string;
+  disabled?: boolean;
 };
 
 // type ButtonStylesProps = {
@@ -24,6 +25,7 @@ type ButtonProps = {
 
 //button props types to avoid the "missing peropertis" error
 export default function Button({
+  disabled,
   children,
   onClick,
   link = "",
@@ -44,7 +46,11 @@ export default function Button({
   return (
     <button
       type={`${link || onClick ? "button" : "submit"}`}
-      className={` ${buttonStyles[style]}  rounded-md ${classes} ${className} w-max h-8 `}
+      className={` ${
+        buttonStyles[style]
+      }  rounded-md ${classes} ${className} w-max h-8 ${
+        disabled ? "opacity-50 cursor-not-allowed" : ""
+      }`}
       onClick={onClick}
     >
       {/* <button type="submit"> */}
@@ -53,4 +59,4 @@ export default function Button({
   );
 }
 
-//typescript noty smart enough to know when u pas in teh wrong values
+//typescript noty smart enough now when u pas in teh wrong values
