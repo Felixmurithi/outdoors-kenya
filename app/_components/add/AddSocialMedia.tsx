@@ -22,16 +22,16 @@ export type FormValues = {
   socialLinks: SocialMediaLink[];
 };
 
-//options
-export const platforms = [
-  { platform: "facebook", label: "Facebook", value: "facebook" },
-  { platform: "instagram", label: "Instagram", value: "instagram" },
-  { platform: "x", label: "X (previously Twitter)", value: ["x", "twitter"] },
-  { platform: "linkedin", label: "LinkedIn", value: "linkedin" },
-  { platform: "youtube", label: "YouTube", value: "youtube" },
-  { platform: "tiktok", label: "TikTok", value: "tiktok" },
-  { platform: "website", label: "Website", value: "website" },
-];
+//options-
+export const platforms = {
+  facebook: "Facebook",
+  instagram: "Instagram",
+  x: "X (Twitter)",
+  linkedin: "LinkedIn",
+  youtube: "YouTube",
+  tiktok: "TikTok",
+  website: "Website",
+} as const;
 
 // COMPONENT
 export default function AddSocialMedia() {
@@ -39,6 +39,9 @@ export default function AddSocialMedia() {
   const [selectedPlatform, setSelectedPlatform] = useState("");
   const [editingIndex, setEditingIndex] = useState<number | null>(0);
   const [urlInput, setUrlInput] = useState("");
+  const [availablePlatforms, setAvailablePlatforms] = useState<string[]>(
+    Object.keys(platforms)
+  );
 
   // useFormContext
   const { register, control, clearErrors, trigger, getValues } =
@@ -59,17 +62,16 @@ export default function AddSocialMedia() {
   });
 
   // get available platforms by filtering the platforms added to the fields array
-  const availablePlatforms = platforms.filter(
-    (p) => !fields.some((field) => field.platform === p.platform)
-  );
+  const handleAddPlatform = (platform: string) => {
+    setAvailablePlatforms((prev) => prev.filter((p) => p !== platform));
+    // Your existing append logic here
+    // append({ platform, url: "" });
+  };
 
   console.log(getValues("socialLinks"), fields);
 
   return (
-    <FormRow
-      label="Social Media Links"
-      error={isValid ? "" : `${socialLinksErrors}`}
-    >
+    <FormRow label="Social Media Links">
       {fields.map((field, index) => (
         <Fragment key={field.id}>
           {editingIndex === index ? (
@@ -79,9 +81,8 @@ export default function AddSocialMedia() {
             >
               <PlatformEdit
                 index={index}
-                availablePlatforms={availablePlatforms.map(
-                  (option) => option.platform
-                )}
+                availablePlatforms={availablePlatforms}
+                platformValue={field.platform}
               />
 
               {socialLinksErrors?.[index]?.url?.message ? (
@@ -92,7 +93,19 @@ export default function AddSocialMedia() {
                 style="secondary"
                 onClick={() => {
                   if (!isValid) return trigger(); //needed for error messages to check if last url is valid, this will trigger validateUrl in the SocialMediaPlatformEdit component
-                  // append({ platform: "", url: "" });
+
+                  const currentPlatform = getValues(
+                    `socialLinks.${index}.platform`
+                  );
+                  if (currentPlatform) {
+                    handleAddPlatform(currentPlatform);
+                    append({
+                      platform: currentPlatform,
+                      url: getValues(`socialLinks.${index}.url`),
+                    });
+                  }
+
+                  append({ platform: "", url: "" });
                 }}
               >
                 Add

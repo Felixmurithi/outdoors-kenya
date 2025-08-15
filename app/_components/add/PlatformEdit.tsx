@@ -9,9 +9,11 @@ import Button from "../generic/Button";
 export default function PlatformEdit({
   index,
   availablePlatforms,
+  platformValue,
 }: {
   index: number;
   availablePlatforms: string[];
+  platformValue: string | string[];
 }) {
   const { register, control, clearErrors, getValues, trigger } =
     useFormContext();
