@@ -1,7 +1,12 @@
 "use client";
 
 import { Fragment, useState } from "react";
-import { useFieldArray, useFormState, useFormContext } from "react-hook-form";
+import {
+  useFieldArray,
+  useFormState,
+  useFormContext,
+  useWatch,
+} from "react-hook-form";
 import PlatformView from "./PlatformView";
 import PlatformEdit from "./PlatformEdit";
 
@@ -53,22 +58,49 @@ export default function AddSocialMedia() {
     name: "socialLinks",
   });
 
+  async function handleAddPlatform(index: number) {
+    {
+      //need to trigger valdiation manually to get the error object with errors
+      const allLinksValid = await trigger(`socialLinks.${index}`);
+
+      if (!allLinksValid) return; //needed for error messages to check if last url is valid, this will trigger validateUrl in the SocialMediaPlatformEdit component
+
+      console.log(allLinksValid);
+
+      const currentPlatform = getValues(`socialLinks.${index}.platform`);
+      setAvailablePlatforms((prev) =>
+        prev.filter((p) => p !== currentPlatform)
+      );
+
+      // if (currentPlatform) {
+      //   handleAddPlatform(currentPlatform);
+      // }
+      setEditingIndex(index + 1);
+      append({ platform: "", url: "" });
+    }
+  }
+
   // get form state
-  const {
-    isValid,
-    errors: { socialLinks: socialLinksErrors } = { socialLinks: {} },
-  } = useFormState({
+  const { isValid, errors: { socialLinks: socialLinksErrors = {} } = {} } =
+    useFormState({
+      control,
+      name: "socialLinks",
+    });
+
+  // // Without defaultValue (always an array), The watched value will be undefined initially
+  const socialLinks = useWatch({
     control,
+    name: "socialLinks",
+    defaultValue: [],
   });
-
   // get available platforms by filtering the platforms added to the fields array
-  const handleAddPlatform = (platform: string) => {
-    setAvailablePlatforms((prev) => prev.filter((p) => p !== platform));
-    // Your existing append logic here
-    // append({ platform, url: "" });
-  };
+  // const handleAddPlatform = (platform: string) => {
 
-  console.log(getValues("socialLinks"), fields);
+  //   // Your existing append logic here
+  //   append({ platform, url: "" });
+  // };
+  // console.log(isValid, getValues("socialLinks"), fields);
+  console.log(socialLinksErrors);
 
   return (
     <FormRow label="Social Media Links">
@@ -82,31 +114,29 @@ export default function AddSocialMedia() {
               <PlatformEdit
                 index={index}
                 availablePlatforms={availablePlatforms}
-                platformValue={field.platform}
+                platformValue={socialLinks[index]?.platform}
               />
 
-              {socialLinksErrors?.[index]?.url?.message ? (
-                <Error error={socialLinksErrors?.[index]?.url?.message} />
+              {socialLinksErrors?.[index]?.url?.message ||
+              socialLinksErrors?.[index]?.platform?.message ? (
+                <Error
+                  //below is an example of how to use an empty string  to avoid uinsng the  if exists operator
+                  error={
+                    (socialLinksErrors?.[index]?.url?.message ||
+                      socialLinksErrors?.[index]?.platform?.message) ??
+                    ""
+                  }
+                />
               ) : null}
               <Button
-                disabled={!!socialLinksErrors?.[index]?.url?.message}
+                disabled={
+                  !!(
+                    socialLinksErrors?.[index]?.url?.message ||
+                    socialLinksErrors?.[index]?.platform?.message
+                  )
+                }
                 style="secondary"
-                onClick={() => {
-                  if (!isValid) return trigger(); //needed for error messages to check if last url is valid, this will trigger validateUrl in the SocialMediaPlatformEdit component
-
-                  const currentPlatform = getValues(
-                    `socialLinks.${index}.platform`
-                  );
-                  if (currentPlatform) {
-                    handleAddPlatform(currentPlatform);
-                    append({
-                      platform: currentPlatform,
-                      url: getValues(`socialLinks.${index}.url`),
-                    });
-                  }
-
-                  append({ platform: "", url: "" });
-                }}
+                onClick={() => handleAddPlatform(index)}
               >
                 Add
               </Button>
@@ -118,19 +148,47 @@ export default function AddSocialMedia() {
             >
               <div className="flex items-center">
                 <img
-                  src="/social-icons/facebook.svg"
+                  src={`/social-icons/${socialLinks[index].platform}.svg`}
                   height={50}
                   width={50}
                   alt=""
                 />
-                <span>http://localhost:3000/explore/add</span>
+                <span>{socialLinks[index].url}</span>
               </div>
 
               <div className="flex items-center gap-4">
-                <Button style="text" className="text-red-700">
-                  Edit
-                </Button>
-                <Button style="text">Remove</Button>
+                <div className="flex items-center gap-4">
+                  <Button
+                    style="text"
+                    className="text-red-700"
+                    onClick={() => {
+                      setEditingIndex(index);
+                      setUrlInput(socialLinks[index]?.url || "");
+                    }}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    style="text"
+                    onClick={(e) => {
+                      remove(index);
+                      // Add the platform back to available platforms
+                      const removedPlatform = socialLinks[index]?.platform;
+                      if (removedPlatform) {
+                        setAvailablePlatforms((prev) => [
+                          ...prev,
+                          removedPlatform,
+                        ]);
+                      }
+                      // If we're removing the last item, add a new empty one
+                      if (fields.length === 1) {
+                        append({ platform: "", url: "" });
+                      }
+                    }}
+                  >
+                    Remove
+                  </Button>
+                </div>
               </div>
             </div>
           )}

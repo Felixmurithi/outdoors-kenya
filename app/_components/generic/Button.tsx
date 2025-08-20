@@ -5,7 +5,7 @@ import Link from "next/link";
 //some optionl
 type ButtonProps = {
   children: React.ReactNode;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   link?: string;
   type?: "button" | "submit";
   style?: "primary" | "secondary" | "transparent" | "icon" | "text";
@@ -45,6 +45,7 @@ export default function Button({
 
   return (
     <button
+      disabled={disabled}
       type={`${link || onClick ? "button" : "submit"}`}
       className={` ${
         buttonStyles[style]

@@ -22,6 +22,7 @@ export default function validateUrl(
   url: string,
   domains?: string | string[]
 ): true | string {
+
   // Input validation
   if (!url || typeof url !== "string") {
     return "URL is required and must be a string";

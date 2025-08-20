@@ -19,6 +19,7 @@ function Select({
   register,
   disabled = false,
   error = false,
+  value,
 }: SelectProps) {
   return (
     <select
@@ -28,6 +29,7 @@ function Select({
       }`}
       onChange={onChange}
       {...register}
+      value={value}
     >
       {label && <option value="">{label}</option>}
       {options?.map((option: string, i: number) => (

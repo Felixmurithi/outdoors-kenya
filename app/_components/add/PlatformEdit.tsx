@@ -13,10 +13,11 @@ export default function PlatformEdit({
 }: {
   index: number;
   availablePlatforms: string[];
-  platformValue: string | string[];
+  platformValue: string;
 }) {
-  const { register, control, clearErrors, getValues, trigger } =
-    useFormContext();
+  const { register, getValues, trigger } = useFormContext();
+
+  console.log(platformValue);
 
   return (
     <div className="flex flex-col gap-4">
@@ -29,6 +30,10 @@ export default function PlatformEdit({
           }),
         }}
         options={availablePlatforms}
+        // value={platformValue}
+        onChange={() => {
+          trigger(`socialLinks.${index}.url`);
+        }}
       />
 
       <Input
@@ -38,10 +43,19 @@ export default function PlatformEdit({
             required: "URL is required",
             //validate URL
             validate: (value: string) => {
-              const platform = getValues(`socialLinks.${index}.platform`);
-              if (!platform) return "Please select a platform first.";
+              let platform =
+                platformValue || getValues(`socialLinks.${index}.platform`);
 
-              return validateUrl(value, platform);
+              if (!platform) return "Platform is required";
+
+              return validateUrl(
+                value,
+                platform === "website"
+                  ? ""
+                  : platform === "x"
+                  ? ["twitter", "x"]
+                  : platform
+              );
             },
           }),
         }}
@@ -49,6 +63,20 @@ export default function PlatformEdit({
     </div>
   );
 }
+
+//INSIGHTSs
+// PROP DERILLING VSD CONTEXT
+// need to use context to avoid prop drilling, however that may cause unneccessary re-renders when the value being suncribed to changes, that value in this case maybe
+
+//REACT HOOK FORM REGISTER
+//The register function from React Hook Form returns an object with properties that need to be spread onto the input/select element. Here's why:What register() returns:It returns an object with properties like name, onChange, onBlur, and refThese properties are needed to connect the input to React Hook Form, The spreading ensures all the necessary props are properly attached to the underlying input/select element, allowing React Hook Form to track and manage its state.
+// register("fieldName") returns something like:
+// {
+//   name: "fieldName",
+//   ref: refFunction,
+//   onChange: handleChange,
+//   onBlur: handleBlur
+// }
 
 //INSIGHTSs
 // PROP DERILLING VSD CONTEXT

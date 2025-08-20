@@ -26,7 +26,6 @@ const defaultValues = {
 export default function AddBasicDetails() {
   const methods = useForm({
     defaultValues,
-    reValidateMode: "onBlur",
   });
 
   // console.log(errors);
