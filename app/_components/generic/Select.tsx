@@ -27,7 +27,7 @@ function Select({
       className={`${className} rounded-md bg-deepSeaweed-tints-700 ${
         error ? "border-orange-500 border" : ""
       }`}
-      onChange={onChange}
+      onChange={() => onChange()}
       {...register}
       value={value}
     >

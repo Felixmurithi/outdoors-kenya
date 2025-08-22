@@ -11,7 +11,7 @@ import PlatformView from "./PlatformView";
 import PlatformEdit from "./PlatformEdit";
 
 import Input from "../generic/Input";
-import validateUrl from "@/app/_utils/validateUrl";
+import validateUrl from "@/app/_utils/validatePlatform";
 import FormRow from "@/app/_components/generic/FormRow";
 import Button from "../generic/Button";
 import Select from "../generic/Select";
