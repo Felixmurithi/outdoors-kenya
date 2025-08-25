@@ -2,7 +2,7 @@
 
 import { useFormContext, useFormState } from "react-hook-form";
 import Input from "../generic/Input";
-import validateUrl, { validatePlatform } from "@/app/_utils/validatePlatform";
+import validateUrl, { validatePlatform } from "@/app/_utils/validateUrl";
 import Select from "../generic/Select";
 import Button from "../generic/Button";
 
@@ -27,19 +27,12 @@ export default function PlatformEdit({
         register={{
           ...register(`socialLinks.${index}.platform`, {
             required: "Platform is required",
-            validate: (value: string) => {
-              let url = platformValue || getValues(`socialLinks.${index}.url`);
+            // validate: (value: string) => {
+            //   let url = platformValue || getValues(`socialLinks.${index}.url`);
 
-              if (!url) return "URL is required";
-              return validatePlatform(
-                url,
-                value === "website"
-                  ? ""
-                  : value === "x"
-                  ? ["twitter", "x"]
-                  : value
-              );
-            },
+            //   if (!url) return "URL is required";
+            //
+            // },
           }),
         }}
         options={availablePlatforms}
@@ -53,26 +46,16 @@ export default function PlatformEdit({
             required: "URL is required",
             //validate URL
             validate: (value: string) => {
-              if (!value || typeof value !== "string") {
-                return "URL is required and must be a string";
-              }
-
-              const trimmedUrl = value.trim();
-
-              if (!trimmedUrl.startsWith("https://")) {
-                return "URL must start with https://";
-              }
-
-              try {
-                const url = new URL(trimmedUrl);
-                // Ensure URL has a path (not just domain)
-                if (url.pathname === "/" || !url.pathname) {
-                  return "URL must include a path (e.g., https://example.com/username)";
-                }
-                return true;
-              } catch (error) {
-                return "Invalid URL format";
-              }
+              const urlValid = validateUrl(value);
+              if (urlValid !== true) return urlValid;
+              return validatePlatform(
+                value,
+                value === "website"
+                  ? ""
+                  : platformValue === "x"
+                  ? ["twitter", "x"]
+                  : platformValue
+              );
             },
           }),
         }}

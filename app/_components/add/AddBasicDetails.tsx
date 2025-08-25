@@ -37,10 +37,10 @@ export default function AddBasicDetails() {
         onSubmit={methods.handleSubmit((data) => console.log(data))}
       >
         <div className="grid gap-16 lg:gap-24">
-          <AddNameCountyLocality />
+          {/* <AddNameCountyLocality /> */}
 
           <AddSocialMedia />
-          <AddEntranceFees />
+          {/* <AddEntranceFees /> */}
         </div>
 
         <Button type="submit" style="secondary" className="ml-auto mr-2">

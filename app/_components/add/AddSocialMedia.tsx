@@ -62,6 +62,8 @@ export default function AddSocialMedia() {
     {
       //need to trigger valdiation manually to get the error object with errors
       const allLinksValid = await trigger(`socialLinks.${index}`);
+      console.log(allLinksValid);
+      return;
 
       if (!allLinksValid) return; //needed for error messages to check if last url is valid, this will trigger validateUrl in the SocialMediaPlatformEdit component
 
@@ -100,7 +102,7 @@ export default function AddSocialMedia() {
   //   append({ platform, url: "" });
   // };
   // console.log(isValid, getValues("socialLinks"), fields);
-  console.log(socialLinksErrors);
+  console.log(isValid, socialLinksErrors);
 
   return (
     <FormRow label="Social Media Links">
@@ -214,3 +216,6 @@ export default function AddSocialMedia() {
 // Returns the current form values as a plain JavaScript object
 // Contains only the form values without any metadata
 // Structure: { fieldArrayName: Array<{...}> }
+
+//Isvalid vs errors
+//https://github.com/react-hook-form/react-hook-form/issues/10250#issuecomment-1506622216 -  isvalid is updatedo on validate and not
