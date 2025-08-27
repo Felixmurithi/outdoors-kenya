@@ -17,7 +17,7 @@ export default function PlatformEdit({
 }) {
   const { register, getValues, trigger } = useFormContext();
 
-  console.log(platformValue);
+  
 
   return (
     <div className="flex flex-col gap-4">
@@ -27,23 +27,25 @@ export default function PlatformEdit({
         register={{
           ...register(`socialLinks.${index}.platform`, {
             required: "Platform is required",
-            // validate: (value: string) => {
-            //   let url = platformValue || getValues(`socialLinks.${index}.url`);
 
+            // shouldUnregister: true,
+
+            // validate: (value: string) => {
+            //   let url = platformValue || getValues(`social
             //   if (!url) return "URL is required";
             //
             // },
           }),
         }}
         options={availablePlatforms}
-        // value={platformValue}
       />
 
-      <Input
+      {/* <Input
         type="url"
         register={{
           ...register(`socialLinks.${index}.url`, {
             required: "URL is required",
+
             //validate URL
             validate: (value: string) => {
               const urlValid = validateUrl(value);
@@ -59,7 +61,7 @@ export default function PlatformEdit({
             },
           }),
         }}
-      />
+      /> */}
     </div>
   );
 }

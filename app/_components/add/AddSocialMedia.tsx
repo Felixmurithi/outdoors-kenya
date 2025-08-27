@@ -11,7 +11,6 @@ import PlatformView from "./PlatformView";
 import PlatformEdit from "./PlatformEdit";
 
 import Input from "../generic/Input";
-import validateUrl from "@/app/_utils/validatePlatform";
 import FormRow from "@/app/_components/generic/FormRow";
 import Button from "../generic/Button";
 import Select from "../generic/Select";
@@ -52,22 +51,19 @@ export default function AddSocialMedia() {
   const { register, control, clearErrors, trigger, getValues } =
     useFormContext<FormValues>();
 
-  // get fields from form
+  // FIELD ARRAY
   const { fields, append, remove } = useFieldArray<FormValues>({
     control,
     name: "socialLinks",
   });
 
+  // HANDLE ADD PLATFORM
   async function handleAddPlatform(index: number) {
     {
       //need to trigger valdiation manually to get the error object with errors
       const allLinksValid = await trigger(`socialLinks.${index}`);
-      console.log(allLinksValid);
-      return;
 
       if (!allLinksValid) return; //needed for error messages to check if last url is valid, this will trigger validateUrl in the SocialMediaPlatformEdit component
-
-      console.log(allLinksValid);
 
       const currentPlatform = getValues(`socialLinks.${index}.platform`);
       setAvailablePlatforms((prev) =>
@@ -81,28 +77,20 @@ export default function AddSocialMedia() {
       append({ platform: "", url: "" });
     }
   }
-
-  // get form state
+  // FORM STATE
   const { isValid, errors: { socialLinks: socialLinksErrors = {} } = {} } =
     useFormState({
       control,
       name: "socialLinks",
     });
 
+  // GET VALUES
   // // Without defaultValue (always an array), The watched value will be undefined initially
   const socialLinks = useWatch({
     control,
     name: "socialLinks",
     defaultValue: [],
   });
-  // get available platforms by filtering the platforms added to the fields array
-  // const handleAddPlatform = (platform: string) => {
-
-  //   // Your existing append logic here
-  //   append({ platform, url: "" });
-  // };
-  // console.log(isValid, getValues("socialLinks"), fields);
-  console.log(isValid, socialLinksErrors);
 
   return (
     <FormRow label="Social Media Links">
@@ -130,18 +118,20 @@ export default function AddSocialMedia() {
                   }
                 />
               ) : null}
-              <Button
-                disabled={
-                  !!(
-                    socialLinksErrors?.[index]?.url?.message ||
-                    socialLinksErrors?.[index]?.platform?.message
-                  )
-                }
-                style="secondary"
-                onClick={() => handleAddPlatform(index)}
-              >
-                Add
-              </Button>
+              <div className="flex gap-4">
+                {fields.length > 1 && (
+                  <Button style="transparent" onClick={() => remove(index)}>
+                    Remove
+                  </Button>
+                )}
+
+                <Button
+                  style="secondary"
+                  onClick={() => handleAddPlatform(index)}
+                >
+                  Add
+                </Button>
+              </div>
             </div>
           ) : (
             <div
@@ -163,7 +153,10 @@ export default function AddSocialMedia() {
                   <Button
                     style="text"
                     className="text-red-700"
-                    onClick={() => {
+                    onClick={async () => {
+                      const isValid = await trigger(`socialLinks.${index}`);
+                      if (!isValid) return;
+
                       setEditingIndex(index);
                       setUrlInput(socialLinks[index]?.url || "");
                     }}
@@ -219,3 +212,5 @@ export default function AddSocialMedia() {
 
 //Isvalid vs errors
 //https://github.com/react-hook-form/react-hook-form/issues/10250#issuecomment-1506622216 -  isvalid is updatedo on validate and not
+
+// awiawait trigger vs trigger, when u need to get the result of the validation after triggering u need to await otherwise the value u store will be a promise

@@ -71,7 +71,7 @@ export default function AddLocationForm() {
       </div>
       {
         [
-          <AddBasicDetails key={0} />,
+          <AddBasicDetails key={0} setActiveStep={setActiveStep} />,
           <AddAccessPoints
             key={1}
             control={control}

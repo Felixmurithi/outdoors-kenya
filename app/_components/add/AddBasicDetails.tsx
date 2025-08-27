@@ -13,19 +13,28 @@ import AddSocialMedia from "./AddSocialMedia";
 //     locality: "",
 //   },
 //   fees: {
-//     currencies: ["", "", ""],
+//     currencies: ["kk", "", ""],
 //     adult: ["", "", ""],
 //     child: ["", "", ""],
 //   },
+//   socialLinks: [{ platform: "ddd", url: "" }],
 // };
 
+// const defaultValues = {
+//   socialLinks: [{ platform: "ddd", url: "" }],
+// };
 const defaultValues = {
   socialLinks: [{ platform: "", url: "" }],
 };
 
-export default function AddBasicDetails() {
+export default function AddBasicDetails({
+  setActiveStep,
+}: {
+  setActiveStep: (step: number) => void;
+}) {
   const methods = useForm({
     defaultValues,
+    shouldUnregister: true,
   });
 
   // console.log(errors);
@@ -40,10 +49,15 @@ export default function AddBasicDetails() {
           {/* <AddNameCountyLocality /> */}
 
           <AddSocialMedia />
-          {/* <AddEntranceFees /> */}
+          <AddEntranceFees />
         </div>
 
-        <Button type="submit" style="secondary" className="ml-auto mr-2">
+        <Button
+          type="submit"
+          style="secondary"
+          className="ml-auto mr-2"
+          onClick={() => setActiveStep(1)}
+        >
           Continue
         </Button>
       </form>

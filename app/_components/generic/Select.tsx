@@ -19,19 +19,22 @@ function Select({
   register,
   disabled = false,
   error = false,
-  value,
 }: SelectProps) {
+  console.log(options);
   return (
     <select
-      disabled={disabled}
       className={`${className} rounded-md bg-deepSeaweed-tints-700 ${
         error ? "border-orange-500 border" : ""
       }`}
-      onChange={() => onChange()}
+      onChange={onChange}
       {...register}
-      value={value}
     >
-      {label && <option value="">{label}</option>}
+      {/* {label && (
+        <option value="" hidden>
+          {label}
+        </option>
+      )} */}
+
       {options?.map((option: string, i: number) => (
         <option value={option} key={i}>
           {option}
