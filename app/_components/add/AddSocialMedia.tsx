@@ -39,10 +39,8 @@ export const platforms = {
 
 // COMPONENT
 export default function AddSocialMedia() {
-  // states
-  const [selectedPlatform, setSelectedPlatform] = useState("");
+  // STATE
   const [editingIndex, setEditingIndex] = useState<number | null>(0);
-  const [urlInput, setUrlInput] = useState("");
   const [availablePlatforms, setAvailablePlatforms] = useState<string[]>(
     Object.keys(platforms)
   );
@@ -155,10 +153,20 @@ export default function AddSocialMedia() {
                     className="text-red-700"
                     onClick={async () => {
                       const isValid = await trigger(`socialLinks.${index}`);
+                      console.log(isValid);
                       if (!isValid) return;
 
+                      const currentPlatform = getValues(
+                        `socialLinks.${index}.platform`
+                      );
+
+                      // adding the current platform to the vaailable list to ensure the select is not blank
+                      setAvailablePlatforms((prev) => [
+                        ...prev,
+                        currentPlatform,
+                      ]);
+
                       setEditingIndex(index);
-                      setUrlInput(socialLinks[index]?.url || "");
                     }}
                   >
                     Edit

@@ -17,8 +17,6 @@ export default function PlatformEdit({
 }) {
   const { register, getValues, trigger } = useFormContext();
 
-  
-
   return (
     <div className="flex flex-col gap-4">
       <Select
@@ -27,20 +25,12 @@ export default function PlatformEdit({
         register={{
           ...register(`socialLinks.${index}.platform`, {
             required: "Platform is required",
-
-            // shouldUnregister: true,
-
-            // validate: (value: string) => {
-            //   let url = platformValue || getValues(`social
-            //   if (!url) return "URL is required";
-            //
-            // },
           }),
         }}
         options={availablePlatforms}
       />
 
-      {/* <Input
+      <Input
         type="url"
         register={{
           ...register(`socialLinks.${index}.url`, {
@@ -61,7 +51,7 @@ export default function PlatformEdit({
             },
           }),
         }}
-      /> */}
+      />
     </div>
   );
 }

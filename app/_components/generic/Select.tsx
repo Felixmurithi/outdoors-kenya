@@ -29,18 +29,17 @@ function Select({
       onChange={onChange}
       {...register}
     >
-      {/* {label && (
+      {label && (
         <option value="" hidden>
           {label}
         </option>
-      )} */}
+      )}
 
       {options?.map((option: string, i: number) => (
         <option value={option} key={i}>
           {option}
         </option>
       ))}
-      {children}
     </select>
   );
 }

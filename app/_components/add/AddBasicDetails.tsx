@@ -20,9 +20,6 @@ import AddSocialMedia from "./AddSocialMedia";
 //   socialLinks: [{ platform: "ddd", url: "" }],
 // };
 
-// const defaultValues = {
-//   socialLinks: [{ platform: "ddd", url: "" }],
-// };
 const defaultValues = {
   socialLinks: [{ platform: "", url: "" }],
 };
@@ -34,10 +31,7 @@ export default function AddBasicDetails({
 }) {
   const methods = useForm({
     defaultValues,
-    shouldUnregister: true,
   });
-
-  // console.log(errors);
 
   return (
     <FormProvider {...methods}>
