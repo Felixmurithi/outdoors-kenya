@@ -14,7 +14,6 @@ function DropdownMenu({ options, openMenu, setOpenMenu, id }: Props) {
     else setOpenMenu(id);
   }
 
-  console.log(openMenu == id);
   //TO-NOTE- React does not update state when passed in the same value which ensures that there no unnecessary renders.
 
   return (

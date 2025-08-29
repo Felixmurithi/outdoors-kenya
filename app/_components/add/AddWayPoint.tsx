@@ -24,8 +24,6 @@ export default function AddWayPoint({
     name: `accessRoutes`,
   });
 
-  console.log(isValid);
-
   return (
     <div className="grid gap-6">
       <FormRow label="Way Point" nested>
@@ -61,7 +59,6 @@ export default function AddWayPoint({
       <Button
         style="icon"
         onClick={() => {
-          console.log(fetch("https://maps.app.goo.gl/4Lqd8RMDkeSu4smg6"));
           if (!isValid) return trigger(); //needed for error messages
           append({
             address: "",

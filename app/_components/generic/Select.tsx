@@ -20,7 +20,6 @@ function Select({
   disabled = false,
   error = false,
 }: SelectProps) {
-  console.log(options);
   return (
     <select
       className={`${className} rounded-md bg-deepSeaweed-tints-700 ${

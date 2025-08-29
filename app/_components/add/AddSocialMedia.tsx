@@ -40,6 +40,7 @@ export const platforms = {
 // COMPONENT
 export default function AddSocialMedia() {
   // STATE
+  // intially platform at 0 because the first platform is always added in editing mode, save set to null, add new platform set index + 1,
   const [editingIndex, setEditingIndex] = useState<number | null>(0);
   const [availablePlatforms, setAvailablePlatforms] = useState<string[]>(
     Object.keys(platforms)
@@ -55,26 +56,6 @@ export default function AddSocialMedia() {
     name: "socialLinks",
   });
 
-  // HANDLE ADD PLATFORM
-  async function handleAddPlatform(index: number) {
-    {
-      //need to trigger valdiation manually to get the error object with errors
-      const allLinksValid = await trigger(`socialLinks.${index}`);
-
-      if (!allLinksValid) return; //needed for error messages to check if last url is valid, this will trigger validateUrl in the SocialMediaPlatformEdit component
-
-      const currentPlatform = getValues(`socialLinks.${index}.platform`);
-      setAvailablePlatforms((prev) =>
-        prev.filter((p) => p !== currentPlatform)
-      );
-
-      // if (currentPlatform) {
-      //   handleAddPlatform(currentPlatform);
-      // }
-      setEditingIndex(index + 1);
-      append({ platform: "", url: "" });
-    }
-  }
   // FORM STATE
   const { isValid, errors: { socialLinks: socialLinksErrors = {} } = {} } =
     useFormState({
@@ -83,12 +64,26 @@ export default function AddSocialMedia() {
     });
 
   // GET VALUES
-  // // Without defaultValue (always an array), The watched value will be undefined initially
   const socialLinks = useWatch({
     control,
     name: "socialLinks",
     defaultValue: [],
   });
+  //Without defaultValue (always an array), The watched value will be undefined initially
+
+  //SAVE PLATFORM
+  async function savePlatform(index: number) {
+    //1. trigger validation manually
+    const inputsValid = await trigger(`socialLinks.${index}`);
+
+    if (!inputsValid) return;
+
+    setEditingIndex(null);
+
+    const currentPlatform = getValues(`socialLinks.${index}.platform`);
+    setAvailablePlatforms((prev) => prev.filter((p) => p !== currentPlatform));
+    return true;
+  }
 
   return (
     <FormRow label="Social Media Links">
@@ -123,11 +118,8 @@ export default function AddSocialMedia() {
                   </Button>
                 )}
 
-                <Button
-                  style="secondary"
-                  onClick={() => handleAddPlatform(index)}
-                >
-                  Add
+                <Button style="secondary" onClick={() => savePlatform(index)}>
+                  Save
                 </Button>
               </div>
             </div>
@@ -153,14 +145,14 @@ export default function AddSocialMedia() {
                     className="text-red-700"
                     onClick={async () => {
                       const isValid = await trigger(`socialLinks.${index}`);
-                      console.log(isValid);
+
                       if (!isValid) return;
 
                       const currentPlatform = getValues(
                         `socialLinks.${index}.platform`
                       );
 
-                      // adding the current platform to the vaailable list to ensure the select is not blank
+                      // adding the current platform to theailable list to ensure the select is not blank
                       setAvailablePlatforms((prev) => [
                         ...prev,
                         currentPlatform,
@@ -174,7 +166,6 @@ export default function AddSocialMedia() {
                   <Button
                     style="text"
                     onClick={(e) => {
-                      remove(index);
                       // Add the platform back to available platforms
                       const removedPlatform = socialLinks[index]?.platform;
                       if (removedPlatform) {
@@ -187,6 +178,7 @@ export default function AddSocialMedia() {
                       if (fields.length === 1) {
                         append({ platform: "", url: "" });
                       }
+                      remove(index);
                     }}
                   >
                     Remove
@@ -197,6 +189,40 @@ export default function AddSocialMedia() {
           )}
         </Fragment>
       ))}
+
+      {availablePlatforms.length > 0 && (
+        <Button
+          // className="text-deepSeaweed-tints-600 bg-accent-orange-50 font-semibold text-lg "
+          className="mx-auto bg-amber-300 hover:bg-amber-400"
+          style="icon"
+          onClick={async () => {
+            if (editingIndex !== null) {
+              await savePlatform(editingIndex);
+            }
+            if (availablePlatforms.length >= 1) {
+              //fields.length works because editing index starts at 0
+              setEditingIndex(fields.length);
+              append({
+                platform: "",
+                url: "",
+              });
+            }
+          }}
+        >
+          <div className="flex gap-2 ">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              className="rounded"
+            >
+              <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
+            </svg>
+            <span>Add New Platform</span>
+          </div>
+        </Button>
+      )}
     </FormRow>
   );
 }
@@ -205,18 +231,16 @@ export default function AddSocialMedia() {
 
 // fields from useFieldArray and getValues() serve different purposes and contain different data:
 
-// REACT HOOK FORM-fields and getValues have the same values
-// fields from useFieldArray:
+// REACT HOOK FORM
+
+//// fields from useFieldArray:
 // Contains metadata and helper methods for each field
-// Includes properties like
-// id
-// , key, and helper methods
+// Includes properties like id , key, and helper methods
 // Used for rendering and managing the list of fields
 // Structure: Array<{ id: string, [key: string]: any }>
-// getValues():
-// Returns the current form values as a plain JavaScript object
-// Contains only the form values without any metadata
-// Structure: { fieldArrayName: Array<{...}> }
+
+//trigger vs errors
+//trigger is used to trigger validation manually, onChange revalidation occurs only after clicking submit, before that i has to be done manually.
 
 //Isvalid vs errors
 //https://github.com/react-hook-form/react-hook-form/issues/10250#issuecomment-1506622216 -  isvalid is updatedo on validate and not

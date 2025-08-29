@@ -37,7 +37,7 @@ export default function AddBasicDetails({
     <FormProvider {...methods}>
       <form
         className="grid  gap-8 mb-4"
-        onSubmit={methods.handleSubmit((data) => console.log(data))}
+        onSubmit={methods.handleSubmit((data) => {})}
       >
         <div className="grid gap-16 lg:gap-24">
           {/* <AddNameCountyLocality /> */}

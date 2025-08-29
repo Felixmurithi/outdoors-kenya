@@ -46,7 +46,7 @@ export default function FileInput({
       const imgURL = URL.createObjectURL(e.dataTransfer.files[0]);
       // handleChange(num, e.dataTransfer.files[0]);
 
-      console.log(imgURL);
+      // console.log(imgURL);
 
       // setBlobs((imgUrls) => {
       //   imgUrls[i] = imgURL;
@@ -57,7 +57,7 @@ export default function FileInput({
   function handleImageChange(e: { target: HTMLInputElement }) {
     if (e.target.files && e.target.files[0]) {
       const imgURL = URL.createObjectURL(e.target.files[0]);
-      console.log(imgURL);
+      // console.log(imgURL);
       // setBlobs((imgUrls) => {
       //   imgUrls[i] = imgURL;
       //   return imgUrls;

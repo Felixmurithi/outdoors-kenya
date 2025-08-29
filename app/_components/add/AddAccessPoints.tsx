@@ -37,8 +37,6 @@ any) {
     name: "accessRoutes",
   });
 
-  console.log(errors);
-
   return (
     <FormRow label="Access Route">
       <div className="grid gap-6">

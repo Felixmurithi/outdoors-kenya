@@ -21,9 +21,7 @@ export default function AddEventForm() {
     }
   );
 
-  const onSubmit = async (data: any) => {
-    console.log(data);
-  };
+  const onSubmit = async (data: any) => {};
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
