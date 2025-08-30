@@ -16,60 +16,24 @@ import Button from "../generic/Button";
 import Select from "../generic/Select";
 import Error from "../generic/Error";
 
-//types
-export type SocialMediaLink = {
-  platform: string;
-  url: string;
-};
-
-export type FormValues = {
-  socialLinks: SocialMediaLink[];
-};
-
-//options-
-export const platforms = {
-  facebook: "Facebook",
-  instagram: "Instagram",
-  x: "X (Twitter)",
-  linkedin: "LinkedIn",
-  youtube: "YouTube",
-  tiktok: "TikTok",
-  website: "Website",
-} as const;
+import { useSocialMediaForm } from "./useSocialMediaForm";
 
 // COMPONENT
 export default function AddSocialMedia() {
-  // STATE
-  // intially platform at 0 because the first platform is always added in editing mode, save set to null, add new platform set index + 1,
-  const [editingIndex, setEditingIndex] = useState<number | null>(0);
-  const [availablePlatforms, setAvailablePlatforms] = useState<string[]>(
-    Object.keys(platforms)
-  );
-
-  // useFormContext
-  const { register, control, clearErrors, trigger, getValues } =
-    useFormContext<FormValues>();
-
-  // FIELD ARRAY
-  const { fields, append, remove } = useFieldArray<FormValues>({
-    control,
-    name: "socialLinks",
-  });
-
-  // FORM STATE
-  const { isValid, errors: { socialLinks: socialLinksErrors = {} } = {} } =
-    useFormState({
-      control,
-      name: "socialLinks",
-    });
-
-  // GET VALUES
-  const socialLinks = useWatch({
-    control,
-    name: "socialLinks",
-    defaultValue: [],
-  });
-  //Without defaultValue (always an array), The watched value will be undefined initially
+  const {
+    trigger,
+    getValues,
+    fields,
+    append,
+    remove,
+    isValid,
+    socialLinksErrors,
+    socialLinks,
+    editingIndex,
+    setEditingIndex,
+    availablePlatforms,
+    setAvailablePlatforms,
+  } = useSocialMediaForm();
 
   //SAVE PLATFORM
   async function savePlatform(index: number) {
@@ -197,7 +161,8 @@ export default function AddSocialMedia() {
           style="icon"
           onClick={async () => {
             if (editingIndex !== null) {
-              await savePlatform(editingIndex);
+              const validEntry = await savePlatform(editingIndex);
+              if (!validEntry) return;
             }
             if (availablePlatforms.length >= 1) {
               //fields.length works because editing index starts at 0
@@ -209,7 +174,7 @@ export default function AddSocialMedia() {
             }
           }}
         >
-          <div className="flex gap-2 ">
+          <div className="flex gap-2 px-1">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="24px"
@@ -246,3 +211,5 @@ export default function AddSocialMedia() {
 //https://github.com/react-hook-form/react-hook-form/issues/10250#issuecomment-1506622216 -  isvalid is updatedo on validate and not
 
 // awiawait trigger vs trigger, when u need to get the result of the validation after triggering u need to await otherwise the value u store will be a promise
+
+// test features while coding to make your thinking easier
