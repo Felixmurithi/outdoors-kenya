@@ -40,8 +40,7 @@ export default function AddBasicDetails({
         onSubmit={methods.handleSubmit((data) => {})}
       >
         <div className="grid gap-16 lg:gap-24">
-          {/* <AddNameCountyLocality /> */}
-
+          <AddNameCountyLocality />
           <AddSocialMedia />
           <AddEntranceFees />
         </div>

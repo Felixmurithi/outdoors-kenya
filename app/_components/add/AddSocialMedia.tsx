@@ -1,22 +1,12 @@
 "use client";
 
-import { Fragment, useState } from "react";
-import {
-  useFieldArray,
-  useFormState,
-  useFormContext,
-  useWatch,
-} from "react-hook-form";
-import PlatformView from "./PlatformView";
+import { Fragment } from "react";
 import PlatformEdit from "./PlatformEdit";
-
-import Input from "../generic/Input";
+import Button from "@/app/_components/generic/Button";
+import Error from "@/app/_components/generic/Error";
 import FormRow from "@/app/_components/generic/FormRow";
-import Button from "../generic/Button";
-import Select from "../generic/Select";
-import Error from "../generic/Error";
-
-import { useSocialMediaForm } from "./useSocialMediaForm";
+import ButtonGroup from "./ButtonGroup";
+import { useSocialMediaForm } from "../../hooks/useSocialMediaForm";
 
 // COMPONENT
 export default function AddSocialMedia() {
@@ -104,19 +94,21 @@ export default function AddSocialMedia() {
 
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-4">
-                  <Button
-                    style="text"
-                    className="text-red-700"
-                    onClick={async () => {
-                      const isValid = await trigger(`socialLinks.${index}`);
+                  <ButtonGroup
+                    onSave={() => savePlatform(index)}
+                    onEdit={async () => {
+                      if (editingIndex !== null) {
+                        const isValid = await trigger(
+                          `socialLinks.${editingIndex}`
+                        );
 
-                      if (!isValid) return;
+                        if (!isValid) return;
+                      }
 
                       const currentPlatform = getValues(
                         `socialLinks.${index}.platform`
                       );
 
-                      // adding the current platform to theailable list to ensure the select is not blank
                       setAvailablePlatforms((prev) => [
                         ...prev,
                         currentPlatform,
@@ -124,13 +116,7 @@ export default function AddSocialMedia() {
 
                       setEditingIndex(index);
                     }}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    style="text"
-                    onClick={(e) => {
-                      // Add the platform back to available platforms
+                    onRemove={() => {
                       const removedPlatform = socialLinks[index]?.platform;
                       if (removedPlatform) {
                         setAvailablePlatforms((prev) => [
@@ -138,15 +124,14 @@ export default function AddSocialMedia() {
                           removedPlatform,
                         ]);
                       }
-                      // If we're removing the last item, add a new empty one
                       if (fields.length === 1) {
                         append({ platform: "", url: "" });
                       }
                       remove(index);
                     }}
-                  >
-                    Remove
-                  </Button>
+                    isEditing={editingIndex === index}
+                    hasMultipleFields={fields.length > 1}
+                  />
                 </div>
               </div>
             </div>
