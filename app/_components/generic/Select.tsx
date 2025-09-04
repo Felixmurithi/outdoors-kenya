@@ -8,6 +8,8 @@ type SelectProps = {
   register?: any;
   disabled?: boolean;
   error?: boolean;
+  defaultValue?: string;
+  id?: string;
 };
 
 function Select({
@@ -19,14 +21,18 @@ function Select({
   register,
   disabled = false,
   error = false,
+  defaultValue,
+  id,
 }: SelectProps) {
   return (
     <select
+      id={id}
       className={`${className} rounded-md bg-deepSeaweed-tints-700 ${
         error ? "border-orange-500 border" : ""
       }`}
       onChange={onChange}
       {...register}
+      defaultValue={defaultValue}
     >
       {label && (
         <option value="" hidden>

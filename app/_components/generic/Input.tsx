@@ -11,6 +11,7 @@ type InputProps = {
   setValue?: any;
   disabled?: boolean;
   error?: boolean;
+  defaultValue?: string | number;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -27,7 +28,8 @@ function Input({
   register,
   disabled = false,
   error = false, // better to expliity deine the presence of an error instead of sending claseses to chjange the border color
-  onChange
+  onChange,
+  defaultValue,
 }: // setValue,
 // input,
 InputProps) {
@@ -38,10 +40,11 @@ InputProps) {
     <div className="flex flex-col justify-between gap-1">
       {label ? <label htmlFor={id}>{label}</label> : ""}
       <input
-      onChange={onChange}
+        onChange={onChange}
         disabled={disabled}
         value={value}
         defaultChecked={checked}
+        defaultValue={defaultValue}
         name={name}
         id={id}
         type={`${type}`}

@@ -51,6 +51,7 @@ export default function AddNameCountyLocality() {
             }),
           }}
           placeholder="Name"
+          defaultValue={"Karura Forest"}
           label="Name"
           error={basicErrors?.name ? true : false}
         />
@@ -69,15 +70,21 @@ export default function AddNameCountyLocality() {
             }),
           }}
           placeholder="County"
+          defaultValue={"Nairobi"}
           label="County"
           error={basicErrors?.county ? true : false}
         />
-        <Select
-          label="Select Type"
-          register={{ ...register("basic.type", { required: true }) }}
-          options={PARK_TYPES}
-          error={basicErrors?.type ? true : false}
-        />
+        <div className="grid">
+          <label htmlFor="type">Type</label>
+          <Select
+            id="type"
+            defaultValue="Forest Reserve"
+            label="Select Type"
+            register={{ ...register("basic.type", { required: true }) }}
+            options={PARK_TYPES}
+            error={basicErrors?.type ? true : false}
+          />
+        </div>
       </div>
     </FormRow>
   );

@@ -1,13 +1,6 @@
 "use server";
 
-type BasicDetails = {
-  name: string;
-  county: string;
-  locality: string;
-  fees: number[][];
-};
-
-export async function createBasicDetailsAction(basicDetails: BasicDetails) {
+export async function createUpdateBasicDetailsAction(basicDetails: any) {
   console.log(basicDetails);
 }
 

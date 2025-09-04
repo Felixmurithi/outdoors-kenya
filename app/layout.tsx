@@ -2,6 +2,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/app/_components/layout/Header";
 import Footer from "@/app/_components/layout/Footer";
+import { Toaster } from "react-hot-toast";
 
 const myFont = localFont({
   src: "./fonts/Inter-Regular.woff2",
@@ -30,6 +31,7 @@ export default function MainLayout({
       >
         <Header />
         {children}
+        <Toaster position="top-right" />
         <Footer />
       </body>
     </html>

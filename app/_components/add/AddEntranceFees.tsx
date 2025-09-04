@@ -17,10 +17,15 @@ type FormData = {
   };
 };
 
+// const fees = {
+//   currency: ["", "", ""],
+//   adult: ["", "", ""],
+//   child: ["", "", ""],
+// };
 const fees = {
-  currency: ["", "", ""],
-  adult: ["", "", ""],
-  child: ["", "", ""],
+  currency: ["KES", "KES", "USD"],
+  adult: [600, 20, 30],
+  child: [250, 10, 15],
 };
 // the strcuture of the registered object needs to lookm like this fees[curencies, adults, children ] will only work with a field array which is not necessary in thi case
 
@@ -68,8 +73,9 @@ export default function AddEntranceFees() {
               <Select
                 label="currency"
                 disabled={disabled}
+                defaultValue={fees.currency[index]}
                 // classes="max-w-full" //select button will be contained in grid cell
-                options={["Kshs", "USD"]}
+                options={["KES", "USD"]}
                 register={{
                   ...register(`fees.currency.${index}`, {
                     required: true,
@@ -85,6 +91,7 @@ export default function AddEntranceFees() {
           {fees.adult.map((_, index) => (
             <div key={index} className="max-w-32 mx-auto">
               <Input
+                defaultValue={fees.adult[index]}
                 disabled={disabled}
                 type="number"
                 register={{
@@ -105,6 +112,7 @@ export default function AddEntranceFees() {
             <div key={index} className="max-w-32 mx-auto">
               <Input
                 disabled={disabled}
+                defaultValue={fees.child[index]}
                 type="number"
                 register={{
                   ...register(`fees.child.${index}`, {
