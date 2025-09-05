@@ -45,7 +45,7 @@ export default function AddBasicDetails({
       // Transform data to match the new schema
 
       // Use the new server action
-      console.log(data);
+
       await createUpdateBasicDetailsAction(data);
 
       // Show success message
