@@ -2,12 +2,16 @@
 
 import { FormProvider, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+
 import AddEntranceFees from "@/app/_components/add/AddEntranceFees";
 import toast from "react-hot-toast";
 import AddNameCountyType from "./AddNameCountyType";
 import Button from "../generic/Button";
 import AddSocialMedia from "./AddSocialMedia";
 import { createUpdateBasicDetailsAction } from "@/app/_lib/action";
+import { basicDetailsSchema } from "@/app/_lib/basicDetailsSchema";
+
+import type { BasicDetailsFormData } from "@/app/_lib/basicDetailsSchema";
 
 // const defaultValues = {
 //   name: "",
@@ -29,6 +33,17 @@ const defaultValues = {
     },
   ],
 };
+// const defaultValues = {
+//   name: "",
+//   county: "Nairobi", // Default county
+//   type: "National Park", // Default park type
+//   socialLinks: [
+//     {
+//       platform: "instagram",
+//       url: "https://instagram.com/karuraforest",
+//     },
+//   ],
+// };
 
 export default function AddBasicDetails({
   setActiveStep,
@@ -36,11 +51,11 @@ export default function AddBasicDetails({
   setActiveStep: (step: number) => void;
 }) {
   const router = useRouter();
-  const methods = useForm({
-    defaultValues,
+  const methods = useForm<BasicDetailsFormData>({
+    // defaultValues, // enums will present type mismatches
   });
 
-  const onSubmit = async (data: typeof defaultValues) => {
+  const onSubmit = async (data: BasicDetailsFormData) => {
     try {
       // Transform data to match the new schema
 

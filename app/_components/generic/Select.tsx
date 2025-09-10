@@ -1,6 +1,6 @@
 type SelectProps = {
   label?: string;
-  options?: string[];
+  options?: readonly string[];
   className?: string;
   onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   children?: React.ReactNode;

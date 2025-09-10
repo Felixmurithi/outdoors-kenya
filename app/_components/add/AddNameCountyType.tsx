@@ -3,6 +3,7 @@ import { useFormContext, useFormState } from "react-hook-form";
 import FormRow from "@/app/_components/generic/FormRow";
 import Input from "@/app/_components/generic/Input";
 import Select from "../generic/Select";
+import { KENYA_COUNTIES, PARK_TYPES } from "@/app/_lib/constants";
 
 type FormData = {
   basic: {
@@ -11,13 +12,7 @@ type FormData = {
     type: string;
   };
 };
-const PARK_TYPES = [
-  "Forest Reserve",
-  "Community Park",
-  "Private Park",
-  "National Park",
-  "Game Reserve",
-];
+
 export default function AddNameCountyLocality() {
   const { register, control, clearErrors } = useFormContext<FormData>();
 
@@ -55,31 +50,24 @@ export default function AddNameCountyLocality() {
           label="Name"
           error={basicErrors?.name ? true : false}
         />
-        <Input
-          register={{
-            ...register("basic.county", {
-              required: true,
-              minLength: {
-                value: 3,
-                message: "Name must be at least 3 characters",
-              },
-              maxLength: {
-                value: 20,
-                message: "Name must not exceed 20 characters",
-              },
-            }),
-          }}
-          placeholder="County"
-          defaultValue={"Nairobi"}
-          label="County"
-          error={basicErrors?.county ? true : false}
-        />
+
+        <div className="grid">
+          <label htmlFor="type">County</label>
+          <Select
+            id="type"
+            defaultValue="Forest Reserve"
+            label="select"
+            register={{ ...register("basic.county", { required: true }) }}
+            options={KENYA_COUNTIES}
+            error={basicErrors?.type ? true : false}
+          />
+        </div>
         <div className="grid">
           <label htmlFor="type">Type</label>
           <Select
             id="type"
             defaultValue="Forest Reserve"
-            label="Select Type"
+            label="select"
             register={{ ...register("basic.type", { required: true }) }}
             options={PARK_TYPES}
             error={basicErrors?.type ? true : false}
