@@ -1,73 +1,44 @@
 "use client";
 
 import { FormProvider, useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { basicDetailsSchema } from "@/app/_lib/basicDetailsSchema";
 
 import AddEntranceFees from "@/app/_components/add/AddEntranceFees";
 import toast from "react-hot-toast";
 import AddNameCountyType from "./AddNameCountyType";
 import Button from "../generic/Button";
 import AddSocialMedia from "./AddSocialMedia";
+
 import { createUpdateBasicDetailsAction } from "@/app/_lib/action";
-import { basicDetailsSchema } from "@/app/_lib/basicDetailsSchema";
-
-import type { BasicDetailsFormData } from "@/app/_lib/basicDetailsSchema";
-
-// const defaultValues = {
-//   name: "",
-//   county: "",
-//   locality: "",
-//   fees: {
-//     currencies: ["KES", "USD", "EUR"],
-//     adult: ["", "", ""],
-//     child: ["", "", ""],
-//   },
-//   socialLinks: [{ platform: "", url: "" }],
-// };
+import { type BasicDetailsFormValues } from "@/app/_lib/basicDetailsSchema";
 // Default values with placeholders
-const defaultValues = {
-  socialLinks: [
-    {
-      platform: "instagram",
-      url: "https://instagram.com/karuraforest",
-    },
-  ],
+const defaultValues: BasicDetailsFormValues = {
+  basic: { name: "", county: "nairobi", type: "forest reserve" },
+  socialLinks: [{ platform: "instagram", url: "https://www.instagram.com" }],
+  fees: {
+    currency: ["kes", "kes", "usd"],
+    adult: [600, 20, 30],
+    child: [250, 10, 15],
+  },
 };
-// const defaultValues = {
-//   name: "",
-//   county: "Nairobi", // Default county
-//   type: "National Park", // Default park type
-//   socialLinks: [
-//     {
-//       platform: "instagram",
-//       url: "https://instagram.com/karuraforest",
-//     },
-//   ],
-// };
 
 export default function AddBasicDetails({
   setActiveStep,
 }: {
   setActiveStep: (step: number) => void;
 }) {
-  const router = useRouter();
-  const methods = useForm<BasicDetailsFormData>({
-    // defaultValues, // enums will present type mismatches
+  const methods = useForm<BasicDetailsFormValues>({
+    defaultValues,
+    resolver: zodResolver(basicDetailsSchema),
   });
 
-  const onSubmit = async (data: BasicDetailsFormData) => {
+  const onSubmit = async (data: BasicDetailsFormValues) => {
     try {
-      // Transform data to match the new schema
-
-      // Use the new server action
-
-      await createUpdateBasicDetailsAction(data);
-
-      // Show success message
+      const result = await createUpdateBasicDetailsAction(data);
+      console.log(result);
       toast.success("Location added successfully!");
-
-      // Go to next step
-      // setActiveStep(1);
     } catch (error) {
       console.error("Error creating location:", error);
       toast.error(
@@ -96,5 +67,6 @@ export default function AddBasicDetails({
   );
 }
 
-//INSIGHT
-// errors should only be logged on submit
+//I found this out while trying to configure a resolver with React Hook Form, a Zod schema with enums doesn't work when I need to set a default as an empty string. There is a conflict because the empty string which is not part of the enum.
+//The schema will work on the backend because u only need validation
+//FYI: When u need to check for uniqueness of values, using a regular function might be more efficient than a validation library.  Do

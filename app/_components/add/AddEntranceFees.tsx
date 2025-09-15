@@ -8,6 +8,7 @@ import {
 } from "react-hook-form";
 import Select from "../generic/Select";
 import FormRow from "../generic/FormRow";
+import { CURRENCIES } from "@/app/_lib/constants";
 
 type FormData = {
   fees: {
@@ -17,30 +18,22 @@ type FormData = {
   };
 };
 
-// const fees = {
-//   currency: ["", "", ""],
-//   adult: ["", "", ""],
-//   child: ["", "", ""],
-// };
 const fees = {
-  currency: ["KES", "KES", "USD"],
+  currency: ["kes", "kes", "usd"],
   adult: [600, 20, 30],
   child: [250, 10, 15],
 };
-// the strcuture of the registered object needs to lookm like this fees[curencies, adults, children ] will only work with a field array which is not necessary in thi case
 
 export default function AddEntranceFees() {
   const { register, control, clearErrors } = useFormContext<FormData>();
   const [disabled, setDisabled] = useState(false);
-  // const values = useWatch({ control, name: "fees" });
 
-  // the fees should be passed as an array with 3 nested arrays with fees, the two arrays map two rows with the nested arrays as data
   const {
     isValid,
     errors: { fees: feesErrors },
   } = useFormState<FormData>({ control, name: "fees" });
 
-  //validate if input is number bnecause firefox allows non numbers for input type nummber
+  //validate input is number-  Firefox/browsers allows non numbers for input type nummber
   const validateNumberInput = (value: number | string): true | string => {
     const numValue = typeof value === "string" ? parseFloat(value) : value;
     return isNaN(numValue) ? "Please enter a valid number" : true;
@@ -75,7 +68,7 @@ export default function AddEntranceFees() {
                 disabled={disabled}
                 defaultValue={fees.currency[index]}
                 // classes="max-w-full" //select button will be contained in grid cell
-                options={["KES", "USD"]}
+                options={CURRENCIES}
                 register={{
                   ...register(`fees.currency.${index}`, {
                     required: true,

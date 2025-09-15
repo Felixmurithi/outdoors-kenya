@@ -25,6 +25,8 @@ export default function AddNameCountyLocality() {
     name: "basic",
   });
 
+  console.log(basicErrors);
+
   return (
     <FormRow
       label="Basic Details"
@@ -33,17 +35,7 @@ export default function AddNameCountyLocality() {
       <div className="flex gap-4 flex-wrap space-y-4">
         <Input
           register={{
-            ...register("basic.name", {
-              required: true,
-              minLength: {
-                value: 3,
-                message: "Name must be at least 3 characters",
-              },
-              maxLength: {
-                value: 50,
-                message: "Name must not exceed 50 characters",
-              },
-            }),
+            ...register("basic.name"),
           }}
           placeholder="Name"
           defaultValue={"Karura Forest"}
@@ -52,21 +44,21 @@ export default function AddNameCountyLocality() {
         />
 
         <div className="grid">
-          <label htmlFor="type">County</label>
+          <label htmlFor="county">County</label>
           <Select
-            id="type"
-            defaultValue="Forest Reserve"
+            id="county"
+            defaultValue="nairobi"
             label="select"
             register={{ ...register("basic.county", { required: true }) }}
             options={KENYA_COUNTIES}
-            error={basicErrors?.type ? true : false}
+            error={basicErrors?.county ? true : false}
           />
         </div>
         <div className="grid">
           <label htmlFor="type">Type</label>
           <Select
             id="type"
-            defaultValue="Forest Reserve"
+            defaultValue="forest reserve"
             label="select"
             register={{ ...register("basic.type", { required: true }) }}
             options={PARK_TYPES}
