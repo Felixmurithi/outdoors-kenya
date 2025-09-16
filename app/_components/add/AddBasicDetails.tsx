@@ -15,12 +15,14 @@ import { createUpdateBasicDetailsAction } from "@/app/_lib/action";
 import { type BasicDetailsFormValues } from "@/app/_lib/basicDetailsSchema";
 // Default values with placeholders
 const defaultValues: BasicDetailsFormValues = {
-  basic: { name: "", county: "nairobi", type: "forest reserve" },
+  name: "",
+  county: "nairobi",
+  type: "forest reserve",
   socialLinks: [{ platform: "instagram", url: "https://www.instagram.com" }],
   fees: {
     currency: ["kes", "kes", "usd"],
-    adult: [600, 20, 30],
-    child: [250, 10, 15],
+    adult: [0, 0, 0],
+    child: [0, 0, 0],
   },
 };
 
@@ -70,3 +72,5 @@ export default function AddBasicDetails({
 //I found this out while trying to configure a resolver with React Hook Form, a Zod schema with enums doesn't work when I need to set a default as an empty string. There is a conflict because the empty string which is not part of the enum.
 //The schema will work on the backend because u only need validation
 //FYI: When u need to check for uniqueness of values, using a regular function might be more efficient than a validation library.  Do
+
+// when using arrays, the pooint of unique values does not make sense, at that point it is better to use indicidual fields

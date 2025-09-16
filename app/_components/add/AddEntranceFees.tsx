@@ -9,13 +9,10 @@ import {
 import Select from "../generic/Select";
 import FormRow from "../generic/FormRow";
 import { CURRENCIES } from "@/app/_lib/constants";
+import { EntranceFeesFormValues } from "@/app/_lib/basicDetailsSchema";
 
-type FormData = {
-  fees: {
-    currency: string[];
-    adult: (number | string)[];
-    child: (number | string)[];
-  };
+type FieldsArray = {
+  fees: EntranceFeesFormValues;
 };
 
 const fees = {
@@ -25,19 +22,21 @@ const fees = {
 };
 
 export default function AddEntranceFees() {
-  const { register, control, clearErrors } = useFormContext<FormData>();
+  const { register, control, clearErrors } = useFormContext<FieldsArray>();
   const [disabled, setDisabled] = useState(false);
 
   const {
     isValid,
     errors: { fees: feesErrors },
-  } = useFormState<FormData>({ control, name: "fees" });
+  } = useFormState<FieldsArray>({ control, name: "fees" });
 
   //validate input is number-  Firefox/browsers allows non numbers for input type nummber
   const validateNumberInput = (value: number | string): true | string => {
     const numValue = typeof value === "string" ? parseFloat(value) : value;
     return isNaN(numValue) ? "Please enter a valid number" : true;
   };
+
+  console.log(feesErrors);
 
   return (
     <FormRow
@@ -48,7 +47,7 @@ export default function AddEntranceFees() {
           : ""
       }`}
     >
-      <div className="grid md:gap-4 gap-1   grid-rows-4 text-sm mobile:text-base  gap-y-4  ">
+      <div className="grid md:gap-4 gap-1 grid-rows-4 text-sm mobile:text-base gap-y-6">
         <div
           //charge type
           className="grid grid-cols-subgrid col-span-4 bg-deepSeaweed-tints-700 items-center"
@@ -59,7 +58,7 @@ export default function AddEntranceFees() {
           <span className="w-fit mx-auto">Non-Resident</span>
         </div>
 
-        <div className="grid grid-cols-subgrid col-span-4 border-b-2">
+        <div className="grid grid-cols-subgrid col-span-4 border-b-2 pb-2">
           <span>Currency</span>
           {fees.currency.map((_, index) => (
             <div key={index} className="w-fit mx-auto">
@@ -70,16 +69,14 @@ export default function AddEntranceFees() {
                 // classes="max-w-full" //select button will be contained in grid cell
                 options={CURRENCIES}
                 register={{
-                  ...register(`fees.currency.${index}`, {
-                    required: true,
-                  }),
+                  ...register(`fees.currency.${index}`),
                 }}
                 error={feesErrors?.currency?.[index] ? true : false}
               />
             </div>
           ))}
         </div>
-        <div className="grid grid-cols-subgrid col-span-4 border-b-2">
+        <div className="grid grid-cols-subgrid col-span-4 border-b-2 pb-2">
           <span>Adult</span>
           {fees.adult.map((_, index) => (
             <div key={index} className="max-w-32 mx-auto">
@@ -88,11 +85,7 @@ export default function AddEntranceFees() {
                 disabled={disabled}
                 type="number"
                 register={{
-                  ...register(`fees.adult.${index}`, {
-                    required: true,
-                    valueAsNumber: true,
-                    validate: validateNumberInput,
-                  }),
+                  ...register(`fees.adult.${index}`, { valueAsNumber: true }),
                 }}
                 error={feesErrors?.adult?.[index] ? true : false}
               />
@@ -108,11 +101,7 @@ export default function AddEntranceFees() {
                 defaultValue={fees.child[index]}
                 type="number"
                 register={{
-                  ...register(`fees.child.${index}`, {
-                    required: true,
-                    valueAsNumber: true,
-                    validate: validateNumberInput,
-                  }),
+                  ...register(`fees.child.${index}`),
                 }}
                 error={feesErrors?.child?.[index] ? true : false}
               />

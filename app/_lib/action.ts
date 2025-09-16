@@ -4,7 +4,7 @@ import z from "zod";
 import { basicDetailsSchema } from "./basicDetailsSchema";
 
 export async function createUpdateBasicDetailsAction(basicDetails: any) {
-  // console.log(basicDetails);
+  console.log(basicDetails);
   const result = basicDetailsSchema.safeParse(basicDetails);
 
   return result;

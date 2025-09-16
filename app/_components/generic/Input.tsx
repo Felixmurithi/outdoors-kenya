@@ -37,7 +37,7 @@ InputProps) {
   const id = `${label?.toLowerCase().replace(" ", "-")}-input`;
 
   return (
-    <div className="flex flex-col justify-between gap-1">
+    <div className={`${className} flex flex-col justify-between gap-1`}>
       {label ? <label htmlFor={id}>{label}</label> : ""}
       <input
         onChange={onChange}
@@ -49,7 +49,7 @@ InputProps) {
         id={id}
         type={`${type}`}
         placeholder={placeholder}
-        className={`rounded-lg  border border-deepSeaweed-tints-500 placeholder:text-deepSeaweed-tints-300 w-full px-2 bg-stone-50 ${className}  ${
+        className={`rounded-lg  border border-deepSeaweed-tints-500 placeholder:text-deepSeaweed-tints-300 w-full px-2 bg-stone-50 $  ${
           size === "normal" ? "h-8" : "h-6"
         }  ${error ? "border-orange-600 border-1" : ""} `}
         // on focusing on input the border is automatically changed oveeriding the eror border colour

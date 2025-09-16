@@ -6,11 +6,9 @@ import Select from "../generic/Select";
 import { KENYA_COUNTIES, PARK_TYPES } from "@/app/_lib/constants";
 
 type FormData = {
-  basic: {
-    name: string;
-    county: string;
-    type: string;
-  };
+  name: string;
+  county: string;
+  type: string;
 };
 
 export default function AddNameCountyLocality() {
@@ -19,50 +17,49 @@ export default function AddNameCountyLocality() {
   // ts error without the FormData type when destructuring
   const {
     isValid,
-    errors: { basic: basicErrors },
+    errors: { name, county, type },
   } = useFormState({
     control,
-    name: "basic",
+    name: ["name", "county", "type"],
   });
 
-  console.log(basicErrors);
+  console.log(name, county, type);
 
   return (
     <FormRow
       label="Basic Details"
-      error={basicErrors ? "all inputs are required" : ""}
+      error={name || county || type ? "all inputs are required" : ""}
     >
-      <div className="flex gap-4 flex-wrap space-y-4">
+      <div className="flex gap-6 flex-wrap">
         <Input
           register={{
-            ...register("basic.name"),
+            ...register("name"),
           }}
           placeholder="Name"
-          defaultValue={"Karura Forest"}
           label="Name"
-          error={basicErrors?.name ? true : false}
+          error={name ? true : false}
+          className="flex-1 min-w-20"
         />
 
-        <div className="grid">
+        <div className="flex-1  flex-col justify-between flex self-stretch">
           <label htmlFor="county">County</label>
           <Select
             id="county"
-            defaultValue="nairobi"
             label="select"
-            register={{ ...register("basic.county", { required: true }) }}
+            register={{ ...register("county") }}
             options={KENYA_COUNTIES}
-            error={basicErrors?.county ? true : false}
+            error={county ? true : false}
           />
         </div>
-        <div className="grid">
+        <div className="flex-1 flex-col justify-between flex self-stretch">
           <label htmlFor="type">Type</label>
           <Select
             id="type"
             defaultValue="forest reserve"
             label="select"
-            register={{ ...register("basic.type", { required: true }) }}
+            register={{ ...register("type") }}
             options={PARK_TYPES}
-            error={basicErrors?.type ? true : false}
+            error={type ? true : false}
           />
         </div>
       </div>

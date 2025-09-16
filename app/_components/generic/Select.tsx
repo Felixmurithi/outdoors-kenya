@@ -10,6 +10,7 @@ type SelectProps = {
   error?: boolean;
   defaultValue?: string;
   id?: string;
+  size?: "normal" | "small";
 };
 
 function Select({
@@ -23,11 +24,14 @@ function Select({
   error = false,
   defaultValue,
   id,
+  size = "normal",
 }: SelectProps) {
   return (
     <select
       id={id}
-      className={`${className} rounded-md bg-deepSeaweed-tints-700 ${
+      className={` ${className} ${
+        size === "normal" ? "h-8" : "h-6"
+      } rounded-md bg-deepSeaweed-tints-700 ${
         error ? "border-orange-500 border" : ""
       }`}
       onChange={onChange}

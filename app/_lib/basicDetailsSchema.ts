@@ -39,45 +39,27 @@ const socialLinkSchema = z
     }
   );
 
-export const entranceFeesSchema = z
-  .object({
-    currency: z
-      .array(z.enum(CURRENCIES))
-      .length(3, "Exactly 3 currencies are required"),
-    adult: z
-      .array(z.number().min(0, "Amount cannot be negative"))
-      .length(3, "Exactly 3 adult fees are required"),
-    child: z
-      .array(z.number().min(0, "Amount cannot be negative"))
-      .length(3, "Exactly 3 child fees are required"),
-  })
-  .refine(
-    (data) =>
-      data.currency[0] &&
-      data.adult[0] &&
-      data.child[0] &&
-      data.currency[1] &&
-      data.adult[1] &&
-      data.child[1] &&
-      data.currency[2] &&
-      data.adult[2] &&
-      data.child[2],
-    {
-      message: "All fee types must have exactly 3 corresponding values",
-      path: ["currency"],
-    }
-  );
+export const entranceFeesSchema = z.object({
+  currency: z
+    .array(z.enum(CURRENCIES))
+    .length(3, "Exactly 3 currencies are required"),
+  adult: z
+    .array(z.number().min(1, "Amount cannot be less than 1"))
+    .length(3, "Exactly 3 adult fees are required"),
+  child: z
+    .array(z.number().min(1, "Amount cannot be less than 1"))
+    .length(3, "Exactly 3 child fees are required"),
+});
 
 // MAIN SCHEMA
 export const basicDetailsSchema = z.object({
-  basic: z.object({
-    name: z
-      .string()
-      .min(3, "Name must be at least 3 characters")
-      .max(100, "Name cannot exceed 100 characters"),
-    county: z.enum(KENYA_COUNTIES),
-    type: z.enum(PARK_TYPES),
-  }),
+  name: z
+    .string()
+    .min(3, "Name must be at least 3 characters")
+    .max(100, "Name cannot exceed 100 characters"),
+  county: z.enum(KENYA_COUNTIES, { message: "Please select a valid county" }),
+  type: z.enum(PARK_TYPES, { message: "Please select a valid type" }),
+
   fees: entranceFeesSchema,
   socialLinks: z
     .array(socialLinkSchema)
@@ -87,5 +69,9 @@ export const basicDetailsSchema = z.object({
     ),
 });
 export type BasicDetailsFormValues = z.infer<typeof basicDetailsSchema>;
+export type EntranceFeesFormValues = z.infer<typeof entranceFeesSchema>;  
 
 // Re-export types for convenience
+
+//INSIGHT-
+// after struggling to find ways to customize the enum error message

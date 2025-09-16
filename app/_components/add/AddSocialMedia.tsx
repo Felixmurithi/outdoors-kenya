@@ -89,7 +89,7 @@ export default function AddSocialMedia() {
                   width={50}
                   alt=""
                 />
-                <span>{socialLinks[index].url}</span>
+                <span className="truncate">{socialLinks[index].url}</span>
               </div>
 
               <div className="flex items-center gap-4">
@@ -198,3 +198,5 @@ export default function AddSocialMedia() {
 // awiawait trigger vs trigger, when u need to get the result of the validation after triggering u need to await otherwise the value u store will be a promise
 
 // test features while coding to make your thinking easier
+
+//thinking of wether to include svgs in my file or add them directlyh to teh code
