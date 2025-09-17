@@ -33,7 +33,7 @@ export default async function LocationPage({}) {
                 className="object-fit w-12 rounded-full object-left"
               />
               <p className="text-sm">Big Man</p>
-              <Button type="secondary">Follow</Button>
+              <Button style="secondary">Follow</Button>
             </div>
             <div className="grid gap-2">
               <li className="font-bold text-sm">1st December 2024</li>

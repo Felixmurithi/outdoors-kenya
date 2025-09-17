@@ -9,7 +9,8 @@ export default function EventsPage() {
       headline="Events"
       params={{ slug: "events" }}
     >
-      <Events events={events} />
+      hi
+      {/* <Events events={events} /> */}
     </PageLayout>
   );
 }

@@ -25,7 +25,7 @@ function Filter({ setFilter }: FilterProps) {
       </div>
       <div>
         <Select
-          text="Select Type"
+          label="Select Type"
           options={eventTypes}
           onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
             setFilter((prev) => ({ ...prev, type: e.target.value }))

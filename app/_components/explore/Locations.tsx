@@ -3,7 +3,6 @@
 import LocationCard from "@/app/_components/explore/LocationCard";
 import { type LocationCardProps } from "@/app/_components/explore/LocationCard";
 import Select from "../generic/Select";
-import { locations } from "@/app/_lib/locations";
 
 type LocationsProps = {
   locations: LocationCardProps[];

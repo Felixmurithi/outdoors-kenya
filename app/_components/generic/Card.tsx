@@ -2,10 +2,9 @@
 import Button from "@/app/_components/generic/Button";
 import Tag from "@/app/_components/generic/Tag";
 import Image from "next/image";
-import { Event } from "@/app/_lib/types";
 
 type EventProp = {
-  event: Event;
+  event: any;
 };
 
 function Card({ event }: EventProp) {

@@ -11,7 +11,7 @@ export async function createUpdateBasicDetailsAction(basicDetails: any) {
 
   if (!result.success) {
     // Handle validation errors
-    const errorMessages = result.error.issues
+    const errorMessages = result?.error?.issues
       .map((issue) => `${issue.path.join(".")}: ${issue.message}`)
       .join("\n");
 
