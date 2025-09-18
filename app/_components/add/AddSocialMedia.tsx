@@ -84,7 +84,7 @@ export default function AddSocialMedia() {
             >
               <div className="flex items-center">
                 <img
-                  src={`/social-icons/${socialLinks[index].platform}.svg`}
+                  src={`/icons/social/${socialLinks[index].platform}.svg`}
                   height={50}
                   width={50}
                   alt=""
