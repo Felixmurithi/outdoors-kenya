@@ -38,7 +38,7 @@ interface IconProps {
 
 export function SocialMediaIcon({
   platform,
-  className = "",
+  className = "text-deepSeaweed-shades-400",
   size = 24,
   color,
 }: IconProps) {

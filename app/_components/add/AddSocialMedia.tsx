@@ -7,6 +7,7 @@ import Error from "@/app/_components/generic/Error";
 import FormRow from "@/app/_components/generic/FormRow";
 import ButtonGroup from "./ButtonGroup";
 import { useSocialMediaForm } from "../../hooks/useSocialMediaForm";
+import { SocialMediaIcon } from "./SocialMediaIcons";
 
 // COMPONENT
 export default function AddSocialMedia() {
@@ -83,12 +84,7 @@ export default function AddSocialMedia() {
               className="flex items-center justify-between"
             >
               <div className="flex items-center">
-                <img
-                  src={`/icons/social/${socialLinks[index].platform}.svg`}
-                  height={50}
-                  width={50}
-                  alt=""
-                />
+                <SocialMediaIcon platform={socialLinks[index].platform} />
                 <span className="truncate">{socialLinks[index].url}</span>
               </div>
 
