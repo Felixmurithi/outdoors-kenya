@@ -5,7 +5,7 @@ import {
   SOCIAL_PLATFORMS,
   CURRENCIES,
 } from "@/app/_lib/constants";
-
+import validateURLAndPath from "@/app/_utils/validateUrlAndPath";
 // Schema for social media links
 const socialLinkSchema = z
   .object({
@@ -18,11 +18,16 @@ const socialLinkSchema = z
       }),
     url: z
       .string()
-      .url("Must be a valid URL")
-      .max(255, "URL is too long")
-      .refine((url) => url.startsWith("https://"), {
-        message: "URL must start with https://",
-      }),
+      .max(255, "URL must be 255 characters or less")
+      .refine(
+        (url) => {
+          const result = validateURLAndPath(url);
+          return result === true;
+        },
+        {
+          message: "Invalid URL format or path",
+        }
+      ),
   })
   .refine(
     (data) => {
@@ -69,7 +74,7 @@ export const basicDetailsSchema = z.object({
     ),
 });
 export type BasicDetailsFormValues = z.infer<typeof basicDetailsSchema>;
-export type EntranceFeesFormValues = z.infer<typeof entranceFeesSchema>;  
+export type EntranceFeesFormValues = z.infer<typeof entranceFeesSchema>;
 
 // Re-export types for convenience
 

@@ -2,7 +2,7 @@
 
 import { useFormContext, useFormState } from "react-hook-form";
 import Input from "../generic/Input";
-import validateUrl, { validatePlatform } from "@/app/_utils/validateUrl";
+import validateUrl, { validatePlatform } from "@/app/_utils/validateUrlAndPath";
 import Select from "../generic/Select";
 import Button from "../generic/Button";
 
