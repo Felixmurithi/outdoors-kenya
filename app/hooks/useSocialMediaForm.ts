@@ -5,38 +5,16 @@ import {
   useWatch,
 } from "react-hook-form";
 import { useState } from "react";
+import { SOCIAL_PLATFORMS } from "@/app/_lib/constants";
 
-/**
- * Represents a social media link with its platform and URL
- * @property {string} platform - The social media platform identifier (e.g., 'facebook', 'instagram')
- * @property {string} url - The complete URL to the social media profile or page
- */
 export type SocialMediaLink = {
   platform: string;
   url: string;
 };
 
-/**
- * Form values structure for the social media links form
- * @property {SocialMediaLink[]} socialLinks - Array of social media links
- */
 export type FormValues = {
   socialLinks: SocialMediaLink[];
 };
-
-/**
- * Available social media platforms with their display names
- * @constant
- */
-export const platforms = {
-  facebook: "Facebook",
-  instagram: "Instagram",
-  x: "X (Twitter)",
-  linkedin: "LinkedIn",
-  youtube: "YouTube",
-  tiktok: "TikTok",
-  website: "Website",
-} as const;
 
 /**
  * Custom hook for managing social media form state and validation
@@ -72,8 +50,8 @@ export function useSocialMediaForm() {
   });
 
   const [editingIndex, setEditingIndex] = useState<number | null>(0);
-  const [availablePlatforms, setAvailablePlatforms] = useState<string[]>(
-    Object.keys(platforms)
+  const [availablePlatforms, setAvailablePlatforms] = useState<string[] | null>(
+    SOCIAL_PLATFORMS
   );
 
   return {

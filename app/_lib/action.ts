@@ -6,6 +6,7 @@ import { basicDetailsSchema } from "./basicDetailsSchema";
 export async function createUpdateBasicDetailsAction(basicDetails: any) {
   console.log(basicDetails);
   const result = basicDetailsSchema.safeParse(basicDetails);
+  console.log(result);
 
   return result;
 

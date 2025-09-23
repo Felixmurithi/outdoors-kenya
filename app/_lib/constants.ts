@@ -64,6 +64,6 @@ export const SOCIAL_PLATFORMS = [
   "youtube",
   "tiktok",
   "website",
-] as const;
+];
 
 export const CURRENCIES = ["kes", "usd"] as const;

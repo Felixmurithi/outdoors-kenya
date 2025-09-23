@@ -1,10 +1,8 @@
 "use client";
 
-import { useFormContext, useFormState } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import Input from "../generic/Input";
-import validateUrl, { validatePlatform } from "@/app/_utils/validateUrlAndPath";
 import Select from "../generic/Select";
-import Button from "../generic/Button";
 
 export default function PlatformEdit({
   index,
@@ -23,9 +21,12 @@ export default function PlatformEdit({
         className="self-start"
         label="platform"
         register={{
-          ...register(`socialLinks.${index}.platform`, {
-            required: "Platform is required",
-          }),
+          ...register(
+            `socialLinks.${index}.platform`
+            //   , {
+            //   required: "Platform is required",
+            // }
+          ),
         }}
         options={availablePlatforms}
       />
@@ -33,23 +34,26 @@ export default function PlatformEdit({
       <Input
         type="url"
         register={{
-          ...register(`socialLinks.${index}.url`, {
-            required: "URL is required",
+          ...register(
+            `socialLinks.${index}.url`
+            //   , {
+            //   required: "URL is required",
 
-            //validate URL
-            validate: (value: string) => {
-              const urlValid = validateUrl(value);
-              if (urlValid !== true) return urlValid;
-              return validatePlatform(
-                value,
-                value === "website"
-                  ? ""
-                  : platformValue === "x"
-                  ? ["twitter", "x"]
-                  : platformValue
-              );
-            },
-          }),
+            //   //validate URL
+            //   validate: (value: string) => {
+            //     const urlValid = validateUrl(value);
+            //     if (urlValid !== true) return urlValid;
+            //     return validatePlatform(
+            //       value,
+            //       value === "website"
+            //         ? ""
+            //         : platformValue === "x"
+            //         ? ["twitter", "x"]
+            //         : platformValue
+            //     );
+            //   },
+            // }
+          ),
         }}
       />
     </div>

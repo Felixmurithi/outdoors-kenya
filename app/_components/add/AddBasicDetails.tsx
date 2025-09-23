@@ -15,14 +15,14 @@ import { createUpdateBasicDetailsAction } from "@/app/_lib/action";
 import { type BasicDetailsFormValues } from "@/app/_lib/basicDetailsSchema";
 // Default values with placeholders
 const defaultValues: BasicDetailsFormValues = {
-  name: "",
+  name: "ff",
   county: "nairobi",
   type: "forest reserve",
   socialLinks: [{ platform: "instagram", url: "https://www.instagram.com" }],
   fees: {
     currency: ["kes", "kes", "usd"],
-    adult: [0, 0, 0],
-    child: [0, 0, 0],
+    adult: [1, 2, 3],
+    child: [4, 5, 6],
   },
 };
 

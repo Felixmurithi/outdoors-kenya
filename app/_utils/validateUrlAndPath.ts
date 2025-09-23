@@ -1,5 +1,5 @@
 // I, VALIDATE URL
-export default function validateURL(url: string): true | string {
+export default function validateURLAndPath(url: string): true | string {
   try {
     const urlObj = new URL(url);
     if (urlObj.protocol !== "https:") {

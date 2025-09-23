@@ -17,7 +17,6 @@ export default function AddSocialMedia() {
     fields,
     append,
     remove,
-    isValid,
     socialLinksErrors,
     socialLinks,
     editingIndex,
@@ -27,16 +26,22 @@ export default function AddSocialMedia() {
   } = useSocialMediaForm();
 
   //SAVE PLATFORM
-  async function savePlatform(index: number) {
+  /**
+   * Saves the platform at the specified index by triggering the validation and updating the  editing to null to not show any  <PlatformEdit /> platfrom and removing the saved platfrom from the available platforms array.
+   * @param index - The index of the platform to save.
+   * @returns {Promise<boolean>} A Promise that resolves to `true` if the platform was successfully saved, or `false` otherwise.
+   */
+  async function savePlatform(index: number): Promise<boolean> {
     //1. trigger validation manually
     const inputsValid = await trigger(`socialLinks.${index}`);
 
-    if (!inputsValid) return;
+    if (!inputsValid) return false;
 
     setEditingIndex(null);
 
     const currentPlatform = getValues(`socialLinks.${index}.platform`);
     setAvailablePlatforms((prev) => prev.filter((p) => p !== currentPlatform));
+
     return true;
   }
 
@@ -135,40 +140,43 @@ export default function AddSocialMedia() {
         </Fragment>
       ))}
 
-      {availablePlatforms.length > 0 && (
-        <Button
-          // className="text-deepSeaweed-tints-600 bg-accent-orange-50 font-semibold text-lg "
-          className="mx-auto bg-amber-300 hover:bg-amber-400"
-          style="icon"
-          onClick={async () => {
-            if (editingIndex !== null) {
-              const validEntry = await savePlatform(editingIndex);
-              if (!validEntry) return;
-            }
-            if (availablePlatforms.length >= 1) {
-              //fields.length works because editing index starts at 0
-              setEditingIndex(fields.length);
-              append({
-                platform: "",
-                url: "",
-              });
-            }
-          }}
-        >
-          <div className="flex gap-2 px-1">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="24px"
-              viewBox="0 -960 960 960"
-              width="24px"
-              className="rounded"
-            >
-              <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
-            </svg>
-            <span>Add New Platform</span>
-          </div>
-        </Button>
-      )}
+      {
+        //III, ADD NEW PLATFORM
+        availablePlatforms.length > 0 && (
+          <Button
+            // className="text-deepSeaweed-tints-600 bg-accent-orange-50 font-semibold text-lg "
+            className="mx-auto bg-amber-300 hover:bg-amber-400"
+            style="icon"
+            onClick={async () => {
+              if (editingIndex !== null) {
+                const validEntry = await savePlatform(editingIndex);
+                if (!validEntry) return;
+              }
+              if (availablePlatforms.length >= 1) {
+                //fields.length works because editing index starts at 0
+                setEditingIndex(fields.length);
+                append({
+                  platform: "",
+                  url: "",
+                });
+              }
+            }}
+          >
+            <div className="flex gap-2 px-1">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24px"
+                viewBox="0 -960 960 960"
+                width="24px"
+                className="rounded"
+              >
+                <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
+              </svg>
+              <span>Add New Platform</span>
+            </div>
+          </Button>
+        )
+      }
     </FormRow>
   );
 }

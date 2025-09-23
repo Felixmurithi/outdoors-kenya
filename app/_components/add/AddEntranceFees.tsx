@@ -101,7 +101,7 @@ export default function AddEntranceFees() {
                 defaultValue={fees.child[index]}
                 type="number"
                 register={{
-                  ...register(`fees.child.${index}`),
+                  ...register(`fees.child.${index}`, { valueAsNumber: true }),
                 }}
                 error={feesErrors?.child?.[index] ? true : false}
               />

@@ -6,41 +6,45 @@ import {
   CURRENCIES,
 } from "@/app/_lib/constants";
 import validateURLAndPath from "@/app/_utils/validateUrlAndPath";
+import validateSocialPlatform from "@/app/_lib/validateSocialPlatform";
+import { normalize } from "path";
+
 // Schema for social media links
 const socialLinkSchema = z
   .object({
     platform: z
       .string()
       .min(1, "Platform is required")
-      .max(100, "Platform name is invalid")
+      .max(20, "Platform name is invalid")
+      .transform((val) => val.toLowerCase())
       .refine((val) => SOCIAL_PLATFORMS.includes(val as any), {
         message: "Invalid platform",
       }),
     url: z
       .string()
-      .max(255, "URL must be 255 characters or less")
+      .normalize()
+      .min(15, "Enter Valid URL")
+      .max(100, "URL must be 100 characters or less")
+      .transform((val) => val.toLowerCase())
       .refine(
-        (url) => {
+        (url: string) => {
           const result = validateURLAndPath(url);
           return result === true;
         },
         {
-          message: "Invalid URL format or path",
+          message: "URL must be valid and include a path",
         }
       ),
   })
   .refine(
     (data) => {
-      try {
-        const domain = new URL(data.url).hostname;
-        return domain.includes(data.platform);
-      } catch {
-        return false;
-      }
+      if (data.platform === "website") return true;
+
+      return validateSocialPlatform(data.url, data.platform);
     },
     {
-      message: "URL must match the selected platform's domain",
-      path: ["url"],
+      message: `URL must be from the selected platform`,
+      path: ["platform"],
     }
   );
 
@@ -61,7 +65,8 @@ export const basicDetailsSchema = z.object({
   name: z
     .string()
     .min(3, "Name must be at least 3 characters")
-    .max(100, "Name cannot exceed 100 characters"),
+    .max(100, "Name cannot exceed 100 characters")
+    .transform((val) => val.toLowerCase()),
   county: z.enum(KENYA_COUNTIES, { message: "Please select a valid county" }),
   type: z.enum(PARK_TYPES, { message: "Please select a valid type" }),
 
